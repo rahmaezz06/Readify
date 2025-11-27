@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مكتبة المعرفة - كتّاب عرب وإنجليز</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style2.css">
+
+<style>
+/* 🎨 التنسيقات العامة */
+    body {
+        font-family: 'Tajawal','Poppins',sans-serif;
+        /* تدرج لوني دافئ يميل إلى اللون البني والذهبي */
+        background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+        margin: 0;
+        padding: 0;
+        color: #2E2E2E;
+        line-height: 1.6;
+    }
+    /* قسم الهيدر الرئيسي */
+    .hero-section {
+        margin-top: 150px;
+        text-align: center;
+        padding: 15px 20px;
+    }
+
+    .hero-title {
+        color: #FFF8E7;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        line-height: 1.4;
+    }
+
+    .hero-subtitle {
+        color: #E7B10A;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* عنوان الصفحة داخل مستطيل */
+    .header-box {
+        background-color: rgba(250, 243, 224, 0.9);
+        border: 2px solid #E7B10A;
+        border-radius: 20px;
+        width: fit-content;
+        margin: 120px auto 15px;
+        padding: 12px 35px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    }
+
+    .header-box h1 {
+        color: #E7B10A;
+        font-size: 2.2rem;
+        margin: 0;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* الجملة التعريفية (لم تعد تستخدم كعنوان فرعي، فقط كتنسيق عام) */
+    .subtitle {
+        text-align: center;
+        font-size: 1rem;
+        color: #FFF8E7;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+    
+    /* 🧑‍💻 أقسام الكتّاب */
+    .author-section {
+        display:flex;
+        gap:20px;
+        background:#FAF3E0;
+        border-radius:20px;
+        padding:20px;
+        border:2px solid #E7B10A;
+        box-shadow:0 8px 20px rgba(0,0,0,0.15);
+        margin: 20px auto;
+        max-width: 900px; 
+        align-items:center;
+        transition: transform 0.3s ease;
+    }
+    
+    .author-section:hover {
+        transform: translateY(-5px);
+    }
+    
+    .author-image{
+        width:150px;
+        height:150px;
+        border-radius:50%;
+        object-fit:cover;
+        border:4px solid #D98E04;
+        flex-shrink:0;
+        background-color: #E6DDD0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8B5E3C;
+        font-size: 14px;
+        text-align: center;
+        padding: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* لضمان ظهور الصورة داخل الدائرة عند استخدام رابط مباشر */
+    .author-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+    
+    .author-image:hover img {
+        transform: scale(1.05);
+    }
+
+    .author-info{
+        flex:1;
+    }
+    .author-name{
+        font-size:1.6rem;
+        color:#4B2E05;
+        margin-bottom:5px;
+    }
+    .author-bio{
+        line-height:1.5;
+        margin-bottom:10px;
+    }
+    .author-details{
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+    }
+    .detail-card{
+        background:#E6DDD0;
+        padding:10px;
+        border-radius:10px;
+        border:1px solid #D98E04;
+        font-size:0.9rem;
+        flex:1 1 150px;
+        transition: all 0.3s ease;
+    }
+    
+    .detail-card:hover {
+        background: #D98E04;
+        color: #FFF8E7;
+    }
+
+    @media(max-width:768px){
+        .author-section{
+            flex-direction:column;
+            text-align:center;
+        }
+        .author-details{
+            justify-content:center;
+        }
+    }
+    
+    /* رسالة التحميل */
+    .loading-message {
+        text-align: center;
+        color: #FFF8E7;
+        font-size: 1.2rem;
+        margin: 20px 0;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+    <div class="header-box">
+        <h1>🖋️ تعرف على أبرز الكتّاب</h1>
+    </div>
+    
+    <section class="hero-section">
+        <h1 class="hero-title">اكتشف أفكارهم وإبداعاتهم التي شكلت الأدب والعلم والثقافة.</h1>
+    </section>
+
+    <!-- رسالة التحميل -->
+    <div class="loading-message" id="loadingMessage">جاري تحميل الصور...</div>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\نجيب محفوظ.jpg" 
+                 alt="نجيب محفوظ" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'نجيب محفوظ')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">نجيب محفوظ</h2>
+            <p class="author-bio">كاتب مصري حائز على جائزة نوبل، تناول الحياة الاجتماعية والسياسية في مصر بأسلوب واقعي وتحليلي.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> القاهرة، مصر</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 11 ديسمبر 1911</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> حوالي 66 مؤلفًا</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات الواقعية الاجتماعية</div>
+            </div>
+        </div>
+    </section>
+
+   <section class="author-section">
+    <div class="author-image">
+        <img src="D:\elgam3a\second year\first term\web designing\web project\authers\طه حسين.jpg" 
+             alt="طه حسين" 
+             loading="lazy"
+             onerror="handleImageError(this, 'طه حسين')">
+    </div>
+    <div class="author-info">
+        <h2 class="author-name">طه حسين</h2>
+        <p class="author-bio">أديب وناقد مصري، يُعتبر أحد أعمدة الأدب العربي الحديث، اهتم بقضايا التعليم والثقافة والتنوير.</p>
+        <div class="author-details">
+            <div class="detail-card"><strong>مكان الميلاد:</strong> قرية الكيلو، مصر</div>
+            <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1889</div>
+            <div class="detail-card"><strong>عدد الكتب:</strong> أكثر من 20 كتابًا</div>
+            <div class="detail-card"><strong>التخصص:</strong> الأدب والنقد والتاريخ الثقافي</div>
+        </div>
+    </div>
+</section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\غسان كنفاني.jpg" 
+                 alt="غسان كنفاني" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'غسان كنفاني')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">غسان كنفاني</h2>
+            <p class="author-bio">كاتب فلسطيني وناشط سياسي، كتب روايات وقصص تعكس قضية الشعب الفلسطيني.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> عكا، فلسطين</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 8 أبريل 1936</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> حوالي 6 روايات + قصص</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات السياسية والوطنية</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\غادة السمان.jpg" 
+                 alt="غادة السمان" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'غادة السمان')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">غادة السمان</h2>
+            <p class="author-bio">كاتبة وصحافية سورية، تتميز بأسلوب شعري في الروايات والمقالات.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> دمشق، سوريا</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1942</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> حوالي 15 كتابًا</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات الاجتماعية والفلسفية</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\أحمد خالد توفيق.jpg" 
+                 alt="أحمد خالد توفيق" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'أحمد خالد توفيق')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">أحمد خالد توفيق</h2>
+            <p class="author-bio">كاتب مصري حديث، معروف بسلسلة "ما وراء الطبيعة" وروايات الشباب والفانتازيا.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> مصر</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> يونيو 1962</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> أكثر من 50 كتابًا</div>
+                <div class="detail-card"><strong>التخصص:</strong> روايات الرعب والفانتازيا والشباب</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\أحلام مستغانمي.jpg" 
+                 alt="أحلام مستغانمي" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'أحلام مستغانمي')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">أحلام مستغانمي</h2>
+            <p class="author-bio">كاتبة جزائرية، تركز أعمالها على الهوية والتاريخ العربي والرومانسية.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> تونس</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1953</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> حوالي 12 رواية</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات الرومانسية والتاريخية والاجتماعية</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\الطيب صالح.jpg" 
+                 alt="الطيب صالح" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'الطيب صالح')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">الطيب صالح</h2>
+            <p class="author-bio">كاتب سوداني، كتب روايات تتناول موضوع الاستعمار والهوية والصراع بين الشرق والغرب.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> السودان</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1929</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> أكثر من 10 روايات</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات التاريخية والاجتماعية</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\رضوى عاشور.jpg" 
+                 alt="رضوى عاشور" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'رضوى عاشور')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">رضوى عاشور</h2>
+            <p class="author-bio">كاتبة فلسطينية اهتمت بالأحداث التاريخية العربية وقضايا المرأة.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> فلسطين</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1953</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> أكثر من 8 روايات</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات التاريخية والاجتماعية</div>
+            </div>
+        </div>
+    </section>
+
+   <section class="author-section">
+    <div class="author-image">
+        <img src="D:\elgam3a\second year\first term\web designing\web project\authers\ميرنا المهدي.jpg" 
+             alt="ميرنا المهدي" 
+             loading="lazy"
+             onerror="handleImageError(this, 'ميرنا المهدي')">
+    </div>
+    <div class="author-info">
+        <h2 class="author-name">ميرنا المهدي</h2>
+        <p class="author-bio">كاتبة مصرية تهتم بالأدب الحديث والروايات الاجتماعية والثقافية.</p>
+        <div class="author-details">
+            <div class="detail-card"><strong>مكان الميلاد:</strong> القاهرة، مصر</div>
+            <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1985</div>
+            <div class="detail-card"><strong>عدد الكتب:</strong> 7 روايات</div>
+            <div class="detail-card"><strong>التخصص:</strong> الروايات الاجتماعية والثقافية</div>
+        </div>
+    </div>
+</section>
+
+    <section class="author-section">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\إبراهيم إسحق.jpg" 
+                 alt="إبراهيم إسحق" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'إبراهيم إسحق')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">إبراهيم إسحق</h2>
+            <p class="author-bio">كاتب سوداني ركز على الثقافة المحلية في دارفور والتقاليد والصراعات الإنسانية.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>مكان الميلاد:</strong> دارفور، السودان</div>
+                <div class="detail-card"><strong>تاريخ الميلاد:</strong> 1946</div>
+                <div class="detail-card"><strong>عدد الكتب:</strong> 6 روايات تقريبًا</div>
+                <div class="detail-card"><strong>التخصص:</strong> الروايات الاجتماعية والثقافية</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\Agatha Christie.jpg" 
+                 alt="Agatha Christie" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'Agatha Christie')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">Agatha Christie</h2>
+            <p class="author-bio">English writer famous for her detective novels, featuring intricate plots and suspense.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Torquay, England</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> September 15, 1890</div>
+                <div class="detail-card"><strong>Number of Books:</strong> 74 novels</div>
+                <div class="detail-card"><strong>Specialty:</strong> Detective and mystery novels</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\aldous huxley.jpg" 
+                 alt="Aldous Huxley" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'Aldous Huxley')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">Aldous Huxley</h2>
+            <p class="author-bio">English writer and philosopher, famous for Brave New World.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Godalming, Surrey, England</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> July 26, 1894</div>
+                <div class="detail-card"><strong>Number of Books:</strong> Around 50 books</div>
+                <div class="detail-card"><strong>Specialty:</strong> Science fiction and philosophical novels</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\george orwell.jpg" 
+                 alt="George Orwell" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'George Orwell')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">George Orwell</h2>
+            <p class="author-bio">English writer, known for novels critiquing totalitarian regimes and social injustice.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Motihari, India</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> June 25, 1903</div>
+                <div class="detail-card"><strong>Number of Books:</strong> Around 9 major novels + essays</div>
+                <div class="detail-card"><strong>Specialty:</strong> Dystopian and political novels</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\J. R. R. Tolkien.jpg" 
+                 alt="J. R. R. Tolkien" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'J.R.R. Tolkien')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">J. R. R. Tolkien</h2>
+            <p class="author-bio">English author of The Lord of the Rings and The Hobbit, famous for fantasy worlds.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Bloemfontein, South Africa</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> January 3, 1892</div>
+                <div class="detail-card"><strong>Number of Books:</strong> Several novels</div>
+                <div class="detail-card"><strong>Specialty:</strong> Fantasy, epic storytelling</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\jane austen.jpg" 
+                 alt="Jane Austen" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'Jane Austen')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">Jane Austen</h2>
+            <p class="author-bio">English novelist famous for Pride and Prejudice and Emma, exploring social life and romance.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Steventon, England</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> December 16, 1775</div>
+                <div class="detail-card"><strong>Number of Books:</strong> 6 major novels</div>
+                <div class="detail-card"><strong>Specialty:</strong> Social commentary and romance</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\charles dickens.jpg" 
+                 alt="Charles Dickens"  
+                 loading="lazy"
+                 onerror="handleImageError(this, 'Charles Dickens')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">Charles Dickens</h2>
+            <p class="author-bio">English writer, social critic, and novelist famous for works like Oliver Twist.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Portsmouth, England</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> February 7, 1812</div>
+                <div class="detail-card"><strong>Number of Books:</strong> 15 major novels</div>
+                <div class="detail-card"><strong>Specialty:</strong> Social novels and realism</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\william shakespeare.jpg" 
+                 alt="William Shakespeare" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'William Shakespeare')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">William Shakespeare</h2>
+            <p class="author-bio">English playwright, poet, and actor, widely regarded as the greatest writer in the English language.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Stratford-upon-Avon, England</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> April 23, 1564</div>
+                <div class="detail-card"><strong>Number of Books:</strong> 39 plays, 154 sonnets</div>
+                <div class="detail-card"><strong>Specialty:</strong> Plays, poetry, literature</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="author-section" style="direction: ltr; text-align: left;">
+        <div class="author-image">
+            <img src="D:\elgam3a\second year\first term\web designing\web project\authers\mark twain.jpg" 
+                 alt="Mark Twain" 
+                 loading="lazy"
+                 onerror="handleImageError(this, 'Mark Twain')">
+        </div>
+        <div class="author-info">
+            <h2 class="author-name">Mark Twain</h2>
+            <p class="author-bio">American-English writer famous for The Adventures of Tom Sawyer and Huckleberry Finn.</p>
+            <div class="author-details">
+                <div class="detail-card"><strong>Place of Birth:</strong> Florida, Missouri, USA</div>
+                <div class="detail-card"><strong>Date of Birth:</strong> November 30, 1835</div>
+                <div class="detail-card"><strong>Number of Books:</strong> 28 major works</div>
+                <div class="detail-card"><strong>Specialty:</strong> Satire, social commentary, fiction</div>
+            </div>
+        </div>
+    </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}// إخفاء رسالة التحميل بعد تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+  const loadingMessage = document.getElementById('loadingMessage');
+  setTimeout(() => {
+    loadingMessage.style.display = 'none';
+  }, 2000);
+});
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+</script>
+
+</body>
+</html>

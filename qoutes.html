@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اقتباسات الكتب الملهمة</title>
+
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(75, 46, 5, 0.95);
+            padding: 12px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between; /* بدل center */
+            align-items: center; /* بدل none */
+            direction: ltr;
+        }
+
+        .logo {
+            color: #E7B10A;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: left;
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #F5E0B7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            color: #E7B10A;
+        }
+
+        .nav-links .active a {
+            color: #E7B10A;
+            font-weight: bold;
+        }
+
+        /* Categories Dropdown Styles */
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px !important;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7em;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(75, 46, 5, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid #E7B10A;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(75, 46, 5, 0.4);
+            min-width: 250px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 10px 0;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            color: #F5E0B7 !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(231, 177, 10, 0.2);
+            font-weight: 500;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05 !important;
+            transform: translateX(10px);
+            font-weight: 600;
+        }
+
+        /* Hide other items when dropdown is active */
+        .navbar.dropdown-active .hidden-on-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Show only categories when dropdown is active */
+        .navbar.dropdown-active .nav-links {
+            position: relative;
+        }
+
+        .navbar.dropdown-active .nav-links > *:not(.dropdown) {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+        }
+
+        .navbar.dropdown-active .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: all;
+        }
+
+        /* Animation for dropdown items */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .dropdown-menu.show .dropdown-item {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .dropdown-menu.show .dropdown-item:nth-child(1) { animation-delay: 0.05s; }
+        .dropdown-menu.show .dropdown-item:nth-child(2) { animation-delay: 0.1s; }
+        .dropdown-menu.show .dropdown-item:nth-child(3) { animation-delay: 0.15s; }
+        .dropdown-menu.show .dropdown-item:nth-child(4) { animation-delay: 0.2s; }
+        .dropdown-menu.show .dropdown-item:nth-child(5) { animation-delay: 0.25s; }
+        .dropdown-menu.show .dropdown-item:nth-child(6) { animation-delay: 0.3s; }
+        .dropdown-menu.show .dropdown-item:nth-child(7) { animation-delay: 0.35s; }
+        .dropdown-menu.show .dropdown-item:nth-child(8) { animation-delay: 0.4s; }
+        .dropdown-menu.show .dropdown-item:nth-child(9) { animation-delay: 0.45s; }
+
+        /* Search Form */
+        #search {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            gap: 10px;
+        }
+
+        .form-control {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 25px;
+            background: #FAF3E0;
+            color: #2E2E2E;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(231, 177, 10, 0.5);
+        }
+
+        .btn-outline-success {
+            background: #D98E04;
+            color: #2E2E2E;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background: #E7B10A;
+            transform: translateY(-2px);
+        }
+
+        /* Login/Signup Buttons */
+        .ctn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+
+        .ctn a {
+            color: #2E2E2E !important;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            display: none;
+            width: 30px;
+            cursor: pointer;
+        }
+/* ===== MOBILE NAVIGATION ===== */
+@media (max-width: 768px) {
+
+    .menu-btn {
+        display: block;
+        width: 35px;
+        cursor: pointer;
+    }
+
+    /* نخفي اللينكات في الموبايل */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 70px;
+        width: 100%;
+        background: rgba(75, 46, 5, 0.97);
+        padding: 25px 0;
+        gap: 20px;
+        text-align: center;
+        border-top: 2px solid #E7B10A;
+    }
+
+    /* تظهر عند فتح المينيو */
+    .nav-links.mobile-menu {
+        display: flex !important;
+    }
+
+    /* تكبير اللينكات */
+    .nav-links a {
+        font-size: 18px;
+        padding: 10px 0;
+    }
+
+    /* إخفاء search في الموبايل */
+    #search {
+        display: none;
+    }
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+    color: #2E2E2E;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 🟤 عنوان الصفحة داخل مستطيل */
+.header-box {
+    background-color: rgba(250, 243, 224, 0.9);
+    border: 2px solid #E7B10A;
+    border-radius: 20px;
+    width: fit-content;
+    margin: 30px auto 20px;
+    padding: 15px 40px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+.header-box h1 {
+    color: #E7B10A;
+    font-size: 2.2rem;
+    margin-top: 50px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ✨ الجملة التعريفية */
+.subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #FFF8E7;
+    margin-bottom: 30px;
+}
+
+/* 📝 حاوية الاقتباسات */
+.quotes-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 50px;
+}
+
+/* 💬 فقاعة الاقتباس على شكل فقاعة دردشة */
+.quote-bubble {
+    background-color: #FAF3E0;
+    border-radius: 25px;
+    padding: 20px 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #E7B10A;
+    max-width: 85%;
+    /* شكل الفقاعة مع الذيل */
+    clip-path: polygon(
+        0% 0%, 
+        100% 0%, 
+        100% calc(100% - 20px), 
+        calc(100% - 20px) 100%,
+        0% 100%
+    );
+}
+
+/* فقاعات متبادلة مع ذيول في اتجاهات مختلفة */
+.quote-bubble:nth-child(odd) {
+    align-self: flex-start;
+    background: #FAF3E0;
+    clip-path: polygon(
+        0% 0%, 
+        100% 0%, 
+        100% 100%, 
+        20px 100%,
+        0% calc(100% - 20px)
+    );
+}
+
+.quote-bubble:nth-child(even) {
+    align-self: flex-end;
+    background: #F0E6CC;
+    clip-path: polygon(
+        0% 0%, 
+        100% 0%, 
+        100% calc(100% - 20px), 
+        calc(100% - 20px) 100%,
+        0% 100%
+    );
+}
+
+.quote-bubble:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* نص الاقتباس */
+.quote-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4B2E05;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* معلومات الكتاب */
+.quote-info {
+    font-size: 0.9rem;
+    color: #8B5E3C;
+    border-top: 1px dashed #D98E04;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.book-name {
+    font-weight: bold;
+}
+
+.author-name {
+    font-style: italic;
+}
+
+/* أزرار التصفية */
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background-color: #D98E04;
+    color: #FFF8E7;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: #E7B10A;
+    color: #2E2E2E;
+    transform: scale(1.05);
+}
+
+/* زر العودة */
+.back-btn {
+    display: block;
+    margin: 30px auto;
+    background-color: #D98E04;
+    color: #FFF8E7;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    width: fit-content;
+}
+
+.back-btn:hover {
+    background-color: #E7B10A;
+    color: #2E2E2E;
+    transform: scale(1.05);
+}
+
+/* تأثيرات الظهور */
+.quote-bubble {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* تأخيرات مختلفة للفقاعات */
+.quote-bubble:nth-child(1) { animation-delay: 0.1s; }
+.quote-bubble:nth-child(2) { animation-delay: 0.2s; }
+.quote-bubble:nth-child(3) { animation-delay: 0.3s; }
+.quote-bubble:nth-child(4) { animation-delay: 0.4s; }
+.quote-bubble:nth-child(5) { animation-delay: 0.5s; }
+.quote-bubble:nth-child(6) { animation-delay: 0.6s; }
+.quote-bubble:nth-child(7) { animation-delay: 0.7s; }
+.quote-bubble:nth-child(8) { animation-delay: 0.8s; }
+.quote-bubble:nth-child(9) { animation-delay: 0.9s; }
+.quote-bubble:nth-child(10) { animation-delay: 1.0s; }
+
+/* تحسين الاستجابة للجوال */
+@media (max-width: 768px) {
+    .quotes-container {
+        padding: 15px;
+    }
+    
+    .quote-bubble {
+        max-width: 95%;
+        padding: 15px 20px;
+    }
+    
+    .header-box h1 {
+        font-size: 1.8rem;
+    }
+    
+    .filter-buttons {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <header>
+        <div class="header-box">
+            <h1>💬 اقتباسات ملهمة من الكتب</h1>
+        </div>
+    </header>
+
+    <!-- أزرار التصفية -->
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">جميع الاقتباسات</button>
+        <button class="filter-btn" data-filter="arabic">العربية</button>
+        <button class="filter-btn" data-filter="english">English</button>
+        <button class="filter-btn" data-filter="motivational">تحفيزية</button>
+        <button class="filter-btn" data-filter="educational">تعليمية</button>
+    </div>
+
+    <main class="quotes-container" id="quotesContainer">
+        <!-- الاقتباسات سيتم إضافتها بواسطة JavaScript -->
+    </main>
+
+    <!-- زر العودة للصفحة الرئيسية -->
+    <a href="index.html" class="back-btn">العودة إلى مكتبة الكتب</a>
+
+    <script >
+    document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+
+
+
+        // بيانات الـ 100 اقتباس
+const quotes = [
+    // الـ 50 اقتباس الأولى (معلومات ومفاهيم مهمة)
+    {
+        text: "الجزء الذي تختار الاحتفاظ به لنفسك لا يقل عن عشر ما تكسبه، هو بذرة ثروتك.",
+        book: "أغنى رجل في بابل",
+        author: "جورج س. كلاسون",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "المفتاح في فن التعامل مع الناس هو أن تشعرهم بأهميتهم بصدق.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "العزلة ضرورية أحياناً، ففيها يجد الإنسان ذاته التي ضاعت في ضجيج العالم.",
+        book: "شاي بالنعناع",
+        author: "أحمد خالد توفيق",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "المعجزة الحقيقية ليست أننا نطير أو نسير على الماء، بل أننا نسير على الأرض بسلام.",
+        book: "أولاد حارتنا",
+        author: "نجيب محفوظ",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "الغضب هو عقابك أنت على خطأ ارتكبه شخص آخر.",
+        book: "إدارة الغضب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "لتبدأ في بناء ثقة ذاتية، يجب عليك أولاً أن تتقبل فكرة الضعف البشري.",
+        book: "تحليل الشخصية",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "العلم يبدأ من حيث ينتهي العقل، والعقل يبدأ من حيث ينتهي الحس.",
+        book: "عالم الأسرار",
+        author: "مصطفى محمود",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "التخطيط ليس مجرد رسم أهداف، بل هو عملية اتخاذ قرارات حول المستقبل.",
+        book: "فنجان من التخطيط",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "الكيمياء الكهربية هي دراسة التفاعلات الكيميائية التي تنتج أو تستهلك تيارًا كهربائيًا.",
+        book: "الكيمياء الكهربية",
+        author: "د. ماهر محمد عبدالعزيز",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "في النهاية، نحن محصلة العادات البسيطة التي نكررها كل يوم.",
+        book: "53 قاعدة لحياة أفضل",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "كل شخص تقابله يتفوق عليك في شيء ما، فتعلم منه.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "ميكانيكا الكم ونظرية النسبية هما الدعامتان الأساسيتان للفيزياء الحديثة.",
+        book: "مفاهيم ونظريات الفيزياء الحديثة",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "Self-confidence at work is heavily influenced by organizational support and team environment.",
+        book: "Self-confidence at work",
+        author: "Anna KANE",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "التركيز الحقيقي يكمن في قول 'لا' لكل ما يشتت انتباهك عن الهدف الأهم.",
+        book: "قوة التركيز",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "لكي تنجح في إنقاذ نفسك، يجب أن تتوقف عن التفكير في الضحية.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "لا يوجد شيء اسمه اليأس، هناك فقط العجز عن الرؤية.",
+        book: "الحرافيش",
+        author: "نجيب محفوظ",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "Trust is a functional, measurable aspect of human relationships, not just an abstract quality.",
+        book: "The Science of Interpersonal Trust",
+        author: "Randy Borum",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "فقه النفس هو محاولة لربط السلوك البشري بالمقاصد الروحية والدينية.",
+        book: "فقه النفس",
+        author: "د. محمد أحمد النابلسي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The C programming language is considered the foundation language upon which most modern operating systems are built.",
+        book: "The C Programming Language",
+        author: "Kernighan & Ritchie",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "إدارة الغضب تبدأ بتحديد 'الزناد' الذي يطلق ردة فعلك العاطفية.",
+        book: "إدارة الغضب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "مفتاح تنظيم الوقت هو التخلص من الأنشطة قليلة القيمة بدلاً من إضافة مهام جديدة.",
+        book: "نظم وقتك في 60 ثانية",
+        author: "جيف ديفيدسون",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "It wasn't pain alone that united us, but also the feeling of helplessness.",
+        book: "The Metamorphosis",
+        author: "Franz Kafka",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "تطوير الذات هو عملية مستمرة، وليس نقطة وصول ثابتة.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "Proofs are the most powerful weapon, but imagination is the first step towards discovery.",
+        book: "The Hound of the Baskervilles",
+        author: "Arthur Conan Doyle",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "Pride can close doors that would have opened happiness for you.",
+        book: "Pride and Prejudice",
+        author: "Jane Austen",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "عقل الإنسان هو أعظم آلة حاسبة ومعالج معلومات على وجه الأرض.",
+        book: "عجائب العقل البشري",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "أفضل طريقة لإقناع شخص ما هي تركه يستنتج الفكرة بنفسه.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "Nothing in this world can harm a man as much as his own ignorance.",
+        book: "The Trial",
+        author: "Franz Kafka",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "النضج الحقيقي ليس في عدم الغضب، بل في اختيار كيفية التعبير عنه.",
+        book: "إدارة الغضب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The most important keys to academic and professional success are non-cognitive habits (such as perseverance and discipline).",
+        book: "Habits of Success",
+        author: "Eliot Levine",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "قبل أن تبدأ، يجب أن تعرف بالضبط ما تحاول تحقيقه.",
+        book: "فنجان من التخطيط",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "الكيمياء الحديثة تتجاوز العناصر الأساسية لتشمل التركيب الجزيئي والتفاعلات المعقدة.",
+        book: "عناصر الكيمياء الحديثة",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "It's never too late to be what you might have been.",
+        book: "The Guest",
+        author: "Charles Dickens",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "الذكاءات المتعددة مفهوم يوسع نظرتنا إلى القدرات البشرية خارج نطاق القدرة اللغوية والمنطقية.",
+        book: "الذكاءات المتعددة",
+        author: "هاورد غاردنر (مفهوم النظرية)",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The fundamental component of C# is the managed code environment provided by the .NET Framework.",
+        book: "C# From Darkness to Dawn",
+        author: "Souhail Laghchim",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "الفشل ليس هو السقوط، بل عدم القدرة على النهوض مجدداً.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "Trust is a functional, measurable aspect of human relationships, not just an abstract quality.",
+        book: "The Science of Interpersonal Trust",
+        author: "Randy Borum",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "لم يكن هناك خيار في حارة العمال سوى القوة أو الهلاك.",
+        book: "أولاد حارتنا",
+        author: "نجيب محفوظ",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The most basic rule in programming is that the computer will do exactly what you tell it to do, which is rarely what you want it to do.",
+        book: "The C Programming Language",
+        author: "Kernighan & Ritchie",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "لابد أن يجد الإنسان معنى لحياته، وإلا عاش في عبث.",
+        book: "عالم الأسرار",
+        author: "مصطفى محمود",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "لكي تفهم نفسك، يجب أن تحلل ردود أفعالك تجاه المواقف غير المتوقعة.",
+        book: "تحليل الشخصية",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "التاريخ يعيد نفسه، لكن في كل مرة يرتدي ثوباً مختلفاً.",
+        book: "1919",
+        author: "أحمد مراد",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The development of a strong self-esteem is a critical foundation for mental resilience in adolescents.",
+        book: "A Confidence and Self-Esteem Self-Help Workbook",
+        author: "Cardiff and Vale University Health Board",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "Every man has his dark side, and he who does not see it is truly blind.",
+        book: "White Nights",
+        author: "Fyodor Dostoevsky",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "الاستمرار في التعلم هو الوقود الذي يدفع العقل البشري إلى الأمام.",
+        book: "عجائب العقل البشري",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "The best way to predict the future is to create it.",
+        book: "The 10 rules of success",
+        author: "Paolo A. Ruggeri",
+        language: "english",
+        type: "educational"
+    },
+    {
+        text: "كن شخصاً يترك الناس أفضل حالاً مما كانوا عليه قبل مقابلته.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "لقد كان الخوف هو الحاكم الفعلي على المدينة.",
+        book: "القاهرة الجديدة",
+        author: "نجيب محفوظ",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "الأمل لا يموت، ولكنه قد ينام طويلاً.",
+        book: "وإذا الصحف نُشِرَت",
+        author: "أدهم شرقاوي",
+        language: "arabic",
+        type: "educational"
+    },
+    {
+        text: "الخيال هو السلاح الوحيد الذي لا يستطيع الواقع قتله.",
+        book: "قصه تكملها انت",
+        author: "أحمد خالد توفيق",
+        language: "arabic",
+        type: "educational"
+    },
+
+    // الـ 50 اقتباس الثانية (تحفيزية)
+    {
+        text: "ابدأ من حيث انتهيت، فالنجاح ليس فشلاً نهائياً، بل هو نقطة انطلاق جديدة.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "القوة الحقيقية ليست في العضلات، بل في الإرادة التي لا تُقهر.",
+        book: "حدائق الحكمة",
+        author: "سالم الفلاحات",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "لا تخف من الأخطاء، بل خف من الجمود في مكانك.",
+        book: "53 قاعدة لحياة أفضل",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "عندما تركز طاقتك، فإنك لا تجذب ما تريده، بل تخلق ما تريده.",
+        book: "قوة التركيز",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "كن مستمعاً جيداً لتكن مُحاوراً عظيماً.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "التخطيط الجيد يجعلك تركض نحو أهدافك بعينين مفتوحتين.",
+        book: "فنجان من التخطيط",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "تعلّم أن تقول 'لا' لكي تقول 'نعم' لأولوياتك.",
+        book: "نظم وقتك في 60 ثانية",
+        author: "جيف ديفيدسون",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "الشخص الناجح هو الذي يبني من الحجارة التي يرميها عليه الفاشلون جسراً.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "لتسيطر على حياتك، عليك أولاً أن تسيطر على انفعالاتك.",
+        book: "إدارة الغضب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "Make every challenge an opportunity to discover strength you didn't know you had.",
+        book: "The 7 Keys to Success",
+        author: "Will Edwards",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "لا تفاوض على وقتك، بل استثمره في ما يعود عليك بالنفع الأكبر.",
+        book: "نظم وقتك في 60 ثانية",
+        author: "جيف ديفيدسون",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "قوة الإرادة هي العضلة التي يجب أن تدربها كل يوم.",
+        book: "قوة التركيز",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "لا تطلب أن تكون الحياة أسهل، بل اطلب أن تكون أنت أقوى.",
+        book: "حدائق الحكمة",
+        author: "سالم الفلاحات",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "Self-confidence is half the way to achieving the goal.",
+        book: "A Simple Guide to Boosting Your Confidence",
+        author: "Matt Landry",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "الخطط الطموحة تتطلب تنفيذاً دقيقاً لا يعرف التردد.",
+        book: "فنجان من التخطيط",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "لا تلتفت إلى الماضي، ابدأ الآن في رسم مستقبلك.",
+        book: "حياتك من الفشل إلى النجاح",
+        author: "بول ج. ماير",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "اجعل همتك أعلى من الجبال؛ لن ترى صغائر الأمور.",
+        book: "فقه النفس",
+        author: "د. محمد أحمد النابلسي",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "التسامح ليس ضعفاً، بل هو قوة التحكم في رد الفعل.",
+        book: "إدارة الغضب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "العبقرية هي أن تعيش اللحظة بكل طاقتك.",
+        book: "شاي بالنعناع",
+        author: "أحمد خالد توفيق",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "لا يمكن أن يتقدم المجتمع دون أن يتقدم الفرد أولاً.",
+        book: "القاهرة الجديدة",
+        author: "نجيب محفوظ",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "الشجاعة هي أن تفعل ما يجب عليك فعله، حتى لو كنت خائفاً.",
+        book: "لا مكانا للهروب",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "الإيجابية ليست غياب المشاكل، بل هي طريقة التعامل معها.",
+        book: "53 قاعدة لحياة أفضل",
+        author: "مجهول / مختص",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "إذا لم تستطع إقناعهم، أربكهم بالحقائق.",
+        book: "فن التعامل مع الناس",
+        author: "ديل كارنيجي",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "Success is a decision, not a destiny.",
+        book: "The 10 rules of success",
+        author: "Paolo A. Ruggeri",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "استثمر في عقلك، فهو البنك الذي لا تنفد أمواله.",
+        book: "أغنى رجل في بابل",
+        author: "جورج س. كلاسون",
+        language: "arabic",
+        type: "motivational"
+    },
+    {
+        text: "Where there is great love, there are always miracles.",
+        book: "The Adventures of Sherlock Holmes",
+        author: "Arthur Conan Doyle",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Focus on yourself until you win. Distractions are the enemy of achievement.",
+        book: "FOCUS ON YOU UNTIL YOU WIN",
+        author: "Author unknown",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",
+        book: "A Simple Guide to Boosting Your Confidence",
+        author: "Matt Landry",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The road to success is always under construction.",
+        book: "The 10 rules of success",
+        author: "Paolo A. Ruggeri",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Pay yourself first, and let the gold multiply.",
+        book: "The Richest Man in Babylon",
+        author: "George S. Clason",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "One minute invested in planning saves ten minutes in execution.",
+        book: "Organize Your Time in 60 Seconds",
+        author: "Jeff Davidson",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Self-confidence is not a belief; it's a habit you develop.",
+        book: "A Simple Guide to Boosting Your Confidence",
+        author: "Matt Landry",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The man who moves a mountain begins by carrying away small stones.",
+        book: "The 7 Keys to Success",
+        author: "Will Edwards",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Your time is your most valuable resource; manage it fiercely.",
+        book: "Organize Your Time in 60 Seconds",
+        author: "Jeff Davidson",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "If you want to conquer fear, don't sit home and think about it. Go out and get busy.",
+        book: "How to Win Friends and Influence People",
+        author: "Dale Carnegie",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Trust is earned when actions meet words.",
+        book: "The Science of Interpersonal Trust",
+        author: "Randy Borum",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The key to life is not what happens to you, but what you do about what happens to you.",
+        book: "Your Life from Failure to Success",
+        author: "Paul J. Meyer",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Control your reaction, not the person who angered you. That is where your true power lies.",
+        book: "Anger Management",
+        author: "Author unknown",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Focus is the ability to sustain attention on one goal until it is achieved.",
+        book: "The Power of Focus",
+        author: "Author unknown",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Develop the success habits now; they are the foundation for learning, work, and life.",
+        book: "Habits of Success",
+        author: "Eliot Levine",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Life is what happens to you while you're busy making other plans.",
+        book: "General Life Wisdom",
+        author: "مجهول",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+        book: "Your Life from Failure to Success",
+        author: "Paul J. Meyer",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Confidence comes from discipline and training.",
+        book: "A Confidence and Self-Esteem Self-Help Workbook",
+        author: "Cardiff and Vale University Health Board",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The best advice is to take advice from others, but make your own decisions.",
+        book: "The 10 rules of success",
+        author: "Paolo A. Ruggeri",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Courage is resistance to fear, mastery of fear—not absence of fear.",
+        book: "How to Win Friends and Influence People",
+        author: "Dale Carnegie",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The greatest waste of energy is getting angry.",
+        book: "Anger Management",
+        author: "Author unknown",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Be kind, for everyone you meet is fighting a harder battle.",
+        book: "General Wisdom",
+        author: "مجهول",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Success is not an accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing or learning to do.",
+        book: "The 7 Keys to Success",
+        author: "Will Edwards",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "Do not confuse movement with progress.",
+        book: "Organize Your Time in 60 Seconds",
+        author: "Jeff Davidson",
+        language: "english",
+        type: "motivational"
+    },
+    {
+        text: "The journey of a thousand miles begins with a single step.",
+        book: "General Philosophy",
+        author: "مجهول",
+        language: "english",
+        type: "motivational"
+    }
+];
+
+// دالة لإنشاء فقاعة اقتباس
+ function createQuoteBubble(quote) {
+        const quoteDiv = document.createElement('div');
+        quoteDiv.className = 'quote-bubble';
+        quoteDiv.setAttribute('data-language', quote.language);
+        quoteDiv.setAttribute('data-type', quote.type);
+        quoteDiv.innerHTML = `
+            <div class="quote-text">${quote.text}</div>
+            <div class="quote-info">
+                <span class="book-name">${quote.book}</span>
+                <span class="author-name">${quote.author}</span>
+            </div>`;
+        return quoteDiv;
+    }
+
+    function displayQuotes(filter = 'all') {
+        const quotesContainer = document.getElementById('quotesContainer');
+        quotesContainer.innerHTML = '';
+        const filteredQuotes = filter === 'all'
+            ? quotes
+            : quotes.filter(q => q.language === filter || q.type === filter);
+
+        filteredQuotes.forEach(q => quotesContainer.appendChild(createQuoteBubble(q)));
+    }
+
+    displayQuotes();
+
+    // أزرار الفلترة
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            displayQuotes(this.dataset.filter);
+        });
+    });
+
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+    </script>
+</body>
+</html>

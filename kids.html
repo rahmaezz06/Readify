@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>كتب الأطفال</title>
+    <link rel="stylesheet" href="style2.css">
+
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+            color: #2E2E2E;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+         /* قسم الهيدر الرئيسي */
+        .hero-section {
+            margin-top: 100px;
+            text-align: center;
+            padding: 15px 20px;
+        }
+
+        .hero-title {
+            color: #FFF8E7;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.4;
+        }
+
+        .hero-subtitle {
+            color: #E7B10A;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        /* 🟤 عنوان الصفحة داخل مستطيل */
+        .header-box {
+            background-color: rgba(250, 243, 224, 0.9);
+            border: 2px solid #E7B10A;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 70px auto 15px;
+            padding: 12px 35px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .header-box h1 {
+            color: #E7B10A;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+
+        /* ✨ الجملة التعريفية */
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #FFF8E7;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* 📚 شبكة عرض الكتب */
+        .books-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 15px 30px 40px;
+        }
+
+        /* 📘 الكارت - حجم متناسق */
+        .book-card {
+            position: relative;
+            background-color: #FAF3E0;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* تأخير مختلف لكل كتاب */
+        .book-card:nth-child(1) { animation-delay: 0.1s; }
+        .book-card:nth-child(2) { animation-delay: 0.2s; }
+        .book-card:nth-child(3) { animation-delay: 0.3s; }
+        .book-card:nth-child(4) { animation-delay: 0.4s; }
+        .book-card:nth-child(5) { animation-delay: 0.5s; }
+        .book-card:nth-child(6) { animation-delay: 0.6s; }
+        .book-card:nth-child(7) { animation-delay: 0.7s; }
+        .book-card:nth-child(8) { animation-delay: 0.8s; }
+        .book-card:nth-child(9) { animation-delay: 0.9s; }
+        .book-card:nth-child(10) { animation-delay: 1s; }
+
+        /* الصورة - تاخد معظم المساحة */
+        .book-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            flex-grow: 1;
+        }
+
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+
+        /* العنوان الأساسي - في الأسفل بنفس طريقة العنوان الرئيسي */
+        .book-title {
+            padding: 18px 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #483600;
+            font-weight: 700;
+            background: #FAF3E0;
+            margin: 0;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #E7B10A;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* overlay hover - بيكون يظهر عند الـ hover بس */
+        .book-hover {
+            position: absolute;
+            inset: 0;
+            background: rgba(75,46,5,0.95);
+            color: #FFF8E7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 20px;
+            z-index: 8;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover .book-hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* معلومات الـ hover */
+        .book-hover h3 {
+            font-size: 1rem;
+            color: #E7B10A;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .book-hover p {
+            font-size: 14px;
+            color: #FFF8E7;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .book-hover .author {
+            font-size: 0.9rem;
+            color: #FFD166;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* النجوم */
+        .stars {
+            color: #FFD166;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* الزر */
+        .read-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            background-color: #D98E04;
+            color: #FFF8E7;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .read-btn:hover {
+            background-color: #E7B10A;
+            color: #2E2E2E;
+            transform: scale(1.05);
+        }
+
+        /* رفع الكارت عند hover */
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+        }
+
+        /* ⭐ أنيميشن جديدة للسكرول */
+        @keyframes bookScrollEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotate(-5deg);
+            }
+            70% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        /* تأثير ظل أثناء الأنيميشن */
+        .book-card {
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .form-control {
+                width: 150px;
+            }
+
+            .header-box {
+                margin: 60px auto 15px;
+                padding: 10px 25px;
+            }
+
+            .header-box h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-section {
+                margin-top: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .books-container {
+                padding: 10px 20px 30px;
+                gap: 15px;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .book-card {
+                height: 320px;
+            }
+
+            .book-image {
+                height: 245px;
+            }
+
+            .book-title {
+                height: 75px;
+                font-size: 1.3rem;
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+ <nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- 🟤 عنوان الصفحة داخل مستطيل -->
+    <div class="header-box">
+        <h1>🧸 مكتبة الأطفال</h1>
+    </div>
+    
+    <!-- قسم الهيدر الرئيسي -->
+    <section class="hero-section">
+        <h1 class="hero-title">اكتشف أفضل القصص والكتب المصورة للأطفال</h1>
+    </section>
+
+    <!-- 📚 شبكة عرض الكتب -->
+    <div class="books-container">
+        <!-- كتب الأطفال العربية -->
+        <!-- كتاب 1 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/18527.webp" alt="سلسلة البيت الأخضر">
+            <div class="book-title">سلسلة البيت الأخضر</div>
+            <div class="book-hover">
+                <h3>سلسلة البيت الأخضر</h3>
+                <p>سلسلة قصصية مصورة للأطفال تعزز القيم الإيجابية والسلوكيات الحميدة في بيئة ممتعة وجذابة.</p>
+                <p class="author">👤 المؤلف: سارة فارون</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/19Dwu9VHrzC0GjvK3A8iPK1r0ZRGDgzkp/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 2 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/17849.webp" alt="العجوز والعصفور">
+            <div class="book-title">العجوز والعصفور</div>
+            <div class="book-hover">
+                <h3>العجوز والعصفور</h3>
+                <p>قصة مؤثرة عن صداقة غير متوقعة بين عجوز وعصفور صغير، تعلم الأطفال قيمة الرحمة والصداقة.</p>
+                <p class="author">👤 المؤلف: محاسن جادو</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1fn9DFa2cNAZR0jta7UG6uYjjQv672pWs/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 3 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/8/8/9/871d4edf94889e9959b64bde7eecf317.png.webp" alt="الأصدقاء والغول">
+            <div class="book-title">الأصدقاء والغول</div>
+            <div class="book-hover">
+                <h3>الأصدقاء والغول</h3>
+                <p>قصة مغامرة شيقة عن مجموعة أصدقاء يواجهون غولاً شريراً، تعزز قيم التعاون والشجاعة.</p>
+                <p class="author">👤 المؤلف: محاسن جادو</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1OFGeOEuz--HGnpqqtX-BJq-92ixl8F1R/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 4 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.wonderland-stories.com/image/cache/catalog/%20%D8%A7%D9%84%D8%AD%D8%A8%D8%A9%20%D8%A7%D9%84%D8%B9%D8%A7%D8%B4%D8%B1%D8%A9-500x500.JPG" alt="الحبة العاشرة">
+            <div class="book-title">الحبة العاشرة</div>
+            <div class="book-hover">
+                <h3>الحبة العاشرة</h3>
+                <p>قصة تعلم الأطفال قيمة الصبر والعمل الجاد من خلال مغامرة زراعية ممتعة.</p>
+                <p class="author">👤 المؤلف: محاسن جادو</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/12qFoqiY5S_2aVLfDR_xPSfkXGcy4n1vz/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 5 -->
+        <div class="book-card">
+            <img class="book-image" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8ACZc-azKGZDCrC5rzdtq43BufF9st1TF1zD2TU2c2SVFa8Yep8GD0QuxDUq5pq4xd4J5PXKeY1urS82k5AxfZgqip3_CD0Us88xogtXYiYKrJw1Zy9M8mgLyCpfDLg2NsAwbHVnNKt_Iihko03LzTfi7V2_YlRKwm7wzFOk31RPV-1lfOO4uZhyphenhyphen8VuM/s530/%D8%B0%D8%A7%D8%AA-%D8%A7%D9%84%D8%B1%D8%AF%D8%A7%D8%A1-%D8%A7%D9%84%D8%A3%D8%AE%D8%B6%D8%B1.jpg" alt="ذات الرداء الأخضر">
+            <div class="book-title">ذات الرداء الأخضر</div>
+            <div class="book-hover">
+                <h3>ذات الرداء الأخضر</h3>
+                <p>قصة مغامرة عن فتاة شجاعة ترتدي رداءً أخضر، تتعلم خلالها دروساً مهمة عن السلامة والذكاء.</p>
+                <p class="author">👤 المؤلف: محاسن جادو </p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick=" openBook('https://drive.google.com/file/d/1HuCKgVDha9t82mXrIyMcLOTktsk7xc1z/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 6 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/18172.webp" alt="لغز البحر الميت">
+            <div class="book-title">لغز البحر الميت</div>
+            <div class="book-hover">
+                <h3>لغز البحر الميت</h3>
+                <p>قصة مغامرة بوليسية شيقة تدور أحداثها حول لغز غامض في منطقة البحر الميت التاريخية.</p>
+                <p class="author">👤 المؤلف: محمود سالم </p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/14UCpuWep4nCFtA8gfw_DFGIqoy89BMkg/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 7 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/13235.webp" alt="مكة المكرمة">
+            <div class="book-title">مكة المكرمة</div>
+            <div class="book-hover">
+                <h3>مكة المكرمة</h3>
+                <p>كتاب تعليمي مصور يقدم معلومات مبسطة عن مكة المكرمة وأهميتها في الإسلام للأطفال.</p>
+                <p class="author">👤 المؤلف: أحمد سويلم</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1X74vLb5Q16orWCxBoc9nu59U8rq9jLi1/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 8 -->
+        <div class="book-card">
+            <img class="book-image" src="https://books-library.website/files/books-library.net-04092247Wa4I7.JPG" alt="رحلة إلى السماء">
+            <div class="book-title">رحلة إلى السماء</div>
+            <div class="book-hover">
+                <h3>رحلة إلى السماء</h3>
+                <p>قصة مصورة تشرح للطفال رحلة الإسراء والمعراج بطريقة مبسطة وجذابة.</p>
+                <p class="author">👤 المؤلف: احمد نجيب </p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/14ke2RKBiwO9S1KLtkqKZ79M_Dn76-oij/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 9 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/13307.webp" alt="البوق والناقوس">
+            <div class="book-title">البوق والناقوس</div>
+            <div class="book-hover">
+                <h3>البوق والناقوس</h3>
+                <p>قصة تعلم الأطفال قيم التسامح والتعايش بين الأديان المختلفة في المجتمع.</p>
+                <p class="author">👤 المؤلف: أحمد نجيب</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick=" openBook('https://drive.google.com/file/d/152U72s1V6TeiX9nOTc4Q_PosLOpC4fSr/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- كتب الأطفال الإنجليزية -->
+        <!-- كتاب 10 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/51UBJuZCuZL._SX342_SY445_QL70_FMwebp_.jpg" alt="HOMEWORK YUCK!">
+            <div class="book-title">HOMEWORK YUCK!</div>
+            <div class="book-hover">
+                <h3>HOMEWORK YUCK!</h3>
+                <p>A fun story addressing children's dislike for homework while teaching responsibility and perseverance.</p>
+                <p class="author">👤 Author: T Albert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1aTYHxz-Br1u9B00r8TfkWOJboGPyRmWY/view?usp=drive_link')" >Read Now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 11 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/51YMHors0mL._SY445_SX342_QL70_FMwebp_.jpg" alt="Sunny Meadows Woodland School">
+            <div class="book-title">Sunny Meadows Woodland School</div>
+            <div class="book-hover">
+                <h3>Sunny Meadows Woodland School</h3>
+                <p>Join animal friends on an educational school trip exploring nature and learning about cooperation.</p>
+                <p class="author">👤 Author: T.Fibert</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn"  onclick=" openBook('https://drive.google.com/file/d/1vJuS7Gxg-qrB4C7jtnb2g8Jk41NIHBQl/view?usp=drive_link')">Read Now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 12 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/619BV17wnML._SY445_SX342_FMwebp_.jpg" alt="The Case of the Missing Smile">
+            <div class="book-title">The Case of the Missing Smile</div>
+            <div class="book-hover">
+                <h3>The Case of the Missing Smile</h3>
+                <p>A delightful mystery where a young detective searches for a lost smile, teaching about happiness and emotions.</p>
+                <p class="author">👤 Author: T Albert</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1FqAQ4nnqReUmXsD-y20qaT3VQsVN2RO3/view?usp=drive_link')">Read Now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 13 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1602431144i/55626882.jpg" alt="The Tooth Fairies">
+            <div class="book-title">The Tooth Fairies</div>
+            <div class="book-hover">
+                <h3>The Tooth Fairies</h3>
+                <p>A magical story about tooth fairies and their cleaning factory, promoting dental hygiene in a fun way.</p>
+                <p class="author">👤 Author: Zani Mathos</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick=" openBook('https://drive.google.com/file/d/1n00Lj3CnMDOyGnNzd09YkuYmLpPzTIm8/view?usp=drive_link')">Read Now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 14 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1594516942i/54477424.jpg" alt="Abe the Service Dog">
+            <div class="book-title">Abe the Service Dog</div>
+            <div class="book-hover">
+                <h3>Abe the Service Dog</h3>
+                <p>An emotional story about a dedicated service dog and his important work, teaching empathy and compassion.</p>
+                <p class="author">👤 Author: T.Albert</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1zYrO9tfl0M0H9ln2Z43-FYVNnJvyQGg2/view?usp=drive_link')" >Read Now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 15 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1476279269i/32595902.jpg" alt="Captain Fantastic">
+            <div class="book-title">Captain Fantastic</div>
+            <div class="book-hover">
+                <h3>Captain Fantastic</h3>
+                <p>An exciting space adventure featuring Captain Fantastic and his alien companion, promoting teamwork and bravery.</p>
+                <p class="author">👤 Author: T Flbert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick=" openBook('https://drive.google.com/file/d/1-xbFjxegNR84bjcgsyQHOJlQ_viFmkXG/view?usp=drive_link')">Read Now</button>
+            </div>
+        </div>
+
+        <!-- أماكن إضافية لـ 4 كتب إنجليزية -->
+        <!-- كتاب إضافي 1 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/61gBNQa7h5L._SY342_.jpg" alt="DOING MY CHORES">
+            <div class="book-title">DOING MY CHORES</div>
+            <div class="book-hover">
+                <h3>DOING MY CHORES</h3>
+                <p>A children’s story teaching responsibility and pride through helping with chores.</p>
+                <p class="author">👤 Author: T. Albert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1mOglS2YeRoAPGLmDNBLStzoMc1JjXLpS/view?usp=drive_link')" >Read Now</button>
+            </div>
+        </div>
+
+        <!-- كتاب إضافي 2 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1548979385i/43801188.jpg" alt="GINGER THE GIRAFFE">
+            <div class="book-title">GINGER THE GIRAFFE</div>
+            <div class="book-hover">
+                <h3>GINGER THE GIRAFFE</h3>
+                <p>A children’s story about Ginger the giraffe that teaches self-acceptance, friendship, and appreciation of nature and wildlife.</p>
+                <p class="author">👤 Author: T. Albert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/10WQWc85fbHfrWDgKhOQWTZvaET0r8l2O/view?usp=drive_link')" >Read Now</button>
+            </div>
+        </div>
+
+        <!-- كتاب إضافي 3 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/51eeofgSw1L._SX342_SY445_FMwebp_.jpg" alt="HAMMY THE HAMSTER">
+            <div class="book-title">HAMMY THE HAMSTER</div>
+            <div class="book-hover">
+                <h3>HAMMY THE HAMSTER</h3>
+                <p>A fun animal story about Hammy the hamster, teaching courage, curiosity, and enjoying nature’s small adventures, while encouraging imagination and empathy in children.</p>
+                <p class="author">👤 Author: T. Albert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1cuHXy1e59A1vvCai4J2ewkMP1BKLwRRY/view?usp=drive_link')" >Read Now</button>
+            </div>
+        </div>
+
+        <!-- كتاب إضافي 4 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1594425542i/54457855.jpg" alt="HIDE AND SEEK">
+            <div class="book-title">HIDE AND SEEK</div>
+            <div class="book-hover">
+                <h3>HIDE AND SEEK</h3>
+                <p>A fun tale about children playing hide-and-seek, capturing the excitement of the game while teaching patience, teamwork, and observation skills.</p>
+                <p class="author">👤 Author: T. Albert</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick=" openBook('https://drive.google.com/file/d/1k5QlFOHwfGoKyq_Erdt-UNBzph8rAVC-/view?usp=drive_link')">Read Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+            // تأثيرات ظهور الكتب تدريجي مع السكرول
+            function animateOnScroll() {
+                const books = document.querySelectorAll('.book-card');
+                
+                // إلغاء الأنيميشن الافتراضية عشان نتحكم فيها بالسكرول
+                books.forEach(book => {
+                    book.style.animation = 'none';
+                    book.style.opacity = '0';
+                    book.style.transform = 'translateY(50px)';
+                });
+                
+                // المراقب اللي بيشوف العناصر لما تدخل الشاشة
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // لما الكتاب يدخل منطقة الشاشة، شغل الأنيميشن
+                            setTimeout(() => {
+                                entry.target.style.animation = 'bookScrollEntrance 0.8s ease forwards';
+                            }, 100 * Array.from(books).indexOf(entry.target)); // تأخير مختلف لكل كتاب
+                        }
+                    });
+                }, { 
+                    threshold: 0.1, // لما 10% من العنصر يظهر
+                    rootMargin: '0px 0px -50px 0px' // علشان يبدأ الأنيميشن شوية قبل ما يوصل
+                });
+                
+                // ابدأ مراقبة كل الكتب
+                books.forEach(book => observer.observe(book));
+            }
+
+            // تشغيل بعد ما الصفحة تحمل
+            animateOnScroll();
+            
+            // دالة فتح الكتب
+            window.openBook = function(url) {
+                window.open(url, '_blank');
+            };
+            // ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+    </script>
+</body>
+</html>

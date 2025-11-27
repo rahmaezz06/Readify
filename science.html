@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>كتب علمية</title>
+    <link rel="stylesheet" href="style2.css">
+
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+            color: #2E2E2E;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+
+        /* قسم الهيدر الرئيسي */
+        .hero-section {
+            margin-top: 100px;
+            text-align: center;
+            padding: 15px 20px;
+        }
+
+        .hero-title {
+            color: #FFF8E7;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.4;
+        }
+
+        .hero-subtitle {
+            color: #E7B10A;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* 🟤 عنوان الصفحة داخل مستطيل */
+        .header-box {
+            background-color: rgba(250, 243, 224, 0.9);
+            border: 2px solid #E7B10A;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 70px auto 15px;
+            padding: 12px 35px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .header-box h1 {
+            color: #E7B10A;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* ✨ الجملة التعريفية */
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #FFF8E7;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* 📚 شبكة عرض الكتب */
+        .books-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 15px 30px 40px;
+        }
+
+        /* 📘 الكارت - حجم متناسق */
+        .book-card {
+            position: relative;
+            background-color: #FAF3E0;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* تأخير مختلف لكل كتاب */
+        .book-card:nth-child(1) { animation-delay: 0.1s; }
+        .book-card:nth-child(2) { animation-delay: 0.2s; }
+        .book-card:nth-child(3) { animation-delay: 0.3s; }
+        .book-card:nth-child(4) { animation-delay: 0.4s; }
+        .book-card:nth-child(5) { animation-delay: 0.5s; }
+        .book-card:nth-child(6) { animation-delay: 0.6s; }
+        .book-card:nth-child(7) { animation-delay: 0.7s; }
+        .book-card:nth-child(8) { animation-delay: 0.8s; }
+        .book-card:nth-child(9) { animation-delay: 0.9s; }
+        .book-card:nth-child(10) { animation-delay: 1s; }
+        .book-card:nth-child(11) { animation-delay: 1.1s; }
+        .book-card:nth-child(12) { animation-delay: 1.2s; }
+        .book-card:nth-child(13) { animation-delay: 1.3s; }
+        .book-card:nth-child(14) { animation-delay: 1.4s; }
+        .book-card:nth-child(15) { animation-delay: 1.5s; }
+
+        /* الصورة - تاخد معظم المساحة */
+        .book-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            flex-grow: 1;
+        }
+
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+
+        /* العنوان الأساسي - في الأسفل بنفس طريقة العنوان الرئيسي */
+        .book-title {
+            padding: 18px 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #483600;
+            font-weight: 700;
+            background: #FAF3E0;
+            margin: 0;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #E7B10A;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* overlay hover - بيكون يظهر عند الـ hover بس */
+        .book-hover {
+            position: absolute;
+            inset: 0;
+            background: rgba(75,46,5,0.95);
+            color: #FFF8E7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 20px;
+            z-index: 8;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover .book-hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* معلومات الـ hover */
+        .book-hover h3 {
+            font-size: 1rem;
+            color: #E7B10A;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .book-hover p {
+            font-size: 14px;
+            color: #FFF8E7;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .book-hover .author {
+            font-size: 0.9rem;
+            color: #FFD166;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* النجوم */
+        .stars {
+            color: #FFD166;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* الزر */
+        .read-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            background-color: #D98E04;
+            color: #FFF8E7;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .read-btn:hover {
+            background-color: #E7B10A;
+            color: #2E2E2E;
+            transform: scale(1.05);
+        }
+
+        /* رفع الكارت عند hover */
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+        }
+
+        /* ⭐ أنيميشن جديدة للسكرول */
+        @keyframes bookScrollEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotate(-5deg);
+            }
+            70% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        /* تأثير ظل أثناء الأنيميشن */
+        .book-card {
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .form-control {
+                width: 150px;
+            }
+
+            .header-box {
+                margin: 60px auto 15px;
+                padding: 10px 25px;
+            }
+
+            .header-box h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-section {
+                margin-top: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .books-container {
+                padding: 10px 20px 30px;
+                gap: 15px;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .book-card {
+                height: 320px;
+            }
+
+            .book-image {
+                height: 245px;
+            }
+
+            .book-title {
+                height: 75px;
+                font-size: 1.3rem;
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- 🟤 عنوان الصفحة داخل مستطيل -->
+    <div class="header-box">
+        <h1>🔬 كتب علمية</h1>
+    </div>
+    
+    <!-- قسم الهيدر الرئيسي -->
+    <section class="hero-section">
+        <h1 class="hero-title">اكتشف أفضل الكتب العلمية لتطوير معرفتك وفهم العالم من حولك</h1>
+    </section>
+
+    <!-- 📚 شبكة عرض الكتب -->
+    <div class="books-container">
+        <!-- كتاب 1 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/71ZPgUTDn6L._SY385_.jpg" alt="Mathematics for Machine Learning">
+            <div class="book-title">Mathematics for Machine Learning</div>
+            <div class="book-hover">
+                <h3>Mathematics for Machine Learning</h3>
+                <p>A book covering the fundamental mathematical concepts required to understand and develop machine learning algorithms, including linear algebra, calculus, and probability theory.</p>
+                <p class="author">👤 Auther: Marc Peter Deisenroth</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/17niANJRFQjO3RE6xORvknR4T40l2SE8i/view?usp=drive_link')" >READ NOW</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 2 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/4184XbAtS7L._SX342_SY445_FMwebp_.jpg" alt="Discrete Mathematics and Its Applications">
+            <div class="book-title">Discrete Mathematics and Its Applications</div>
+            <div class="book-hover">
+                <h3>Discrete Mathematics and Its Applications</h3>
+                <p>A comprehensive book covering the fundamentals of discrete mathematics for computer science, including set theory, logic, combinatorics, and graph theory.</p>
+                <p class="author">👤 Auther: Kenneth H. Rosen</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1TNL-1KJDEJyK9p6GkG6ifu7eiFKh9A9H/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 3 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/91N-q80HVHL._SL1500_.jpg" alt="The Math Book">
+            <div class="book-title">The Math Book</div>
+            <div class="book-hover">
+                <h3>The Math Book</h3>
+                <p>An engaging reference book that provides an overview of the history of mathematics and key mathematical concepts in a simple and appealing way suitable for all levels.</p>
+                <p class="author">👤 Auther: DK Publications</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick="openBook('https://drive.google.com/file/d/1UKG5m-idMmPPrO1qaRsZcttYmvaV30ja/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 4 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/41qni5hCMfL._SY445_SX342_QL70_FMwebp_.jpg" alt="Python From Darkness to Dawn">
+            <div class="book-title">Python From Darkness to Dawn</div>
+            <div class="book-hover">
+                <h3>Python From Darkness to Dawn</h3>
+                <p>A comprehensive tutorial guide that introduces the Python programming language from basics to advanced techniques, suitable for both beginners and professional programmers.</p>
+                <p class="author">👤 Auther: Souhaili Lughchim</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1YeSz00bQhe02gFAa6fVJq5W_27cLftno/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 5 -->
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/41ymNJo8BOL._SY445_SX342_FMwebp_.jpg" alt="The C Programming Language">
+            <div class="book-title">The C Programming Language</div>
+            <div class="book-hover">
+                <h3>The C Programming Language</h3>
+                <p>The standard reference book for the C programming language, explaining its structural fundamentals, including pointers and data structures.</p>
+                <p class="author">👤 Auther: Brian W. Kernighan</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1ZzUf4FjYubTO_UW4Ud2HtDtsrntOKbjW/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 6 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/2/5/9/f/2ffd428f7359f3c8396fdec73295ead6.jpg.webp" alt="C From Darkness to Dawn">
+            <div class="book-title">C From Darkness to Dawn</div>
+            <div class="book-hover">
+                <h3>C From Darkness to Dawn</h3>
+                <p>An educational book that introduces the C# programming language from the basics to advanced applications, suitable for developing Windows, web, and game applications.</p>
+                <p class="author">👤 Auther: Souhail Jayachim</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn"  onclick="openBook('https://drive.google.com/file/d/1AepUQjK_GfG8cW2E-fSSvVQMbuyd6HLw/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/31YVphVZCkL._SY445_SX342_FMwebp_.jpg" alt="basic math">
+            <div class="book-title">basic math</div>
+            <div class="book-hover">
+                <h3>basic math</h3>
+                <p>The book covers Basic Mathematics, focusing on essential concepts in arithmetic, algebra, and geometry.</p>
+                <p class="author">👤 Publich: Colimbia Universty</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1iMUIDEl8IumN98HCBKvWptfuU6DReV5_/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        
+        <div class="book-card">
+            <img class="book-image" src="https://m.media-amazon.com/images/I/41xQ9at6GlL._SY445_SX342_FMwebp_.jpg" alt="Concepts and Theories of Modern Physics 2">
+            <div class="book-title">Concepts and Theories of Modern Physics 2</div>
+            <div class="book-hover">
+                <h3>Concepts and Theories of Modern Physics 2</h3>
+                <p>A Modern Physics book covering Relativity, Quantum Mechanics, and Particle Physics, explaining the behavior of matter and energy at atomic and subatomic levels.</p>
+                <p class="author">👤 Auther: James Bradstreet</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1eI2rnQxqai9G5qUqpomWFcCNd5jCSe2J/view?usp=drive_link')">READ NOW</button>
+            </div>
+        </div>
+        <!-- كتاب 7 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/4/f/1/8/3c809f3ceef1820584f4d4caa6dd2a7e.png.webp" alt="مملكة تصميم المواقع">
+            <div class="book-title">مملكة تصميم المواقع</div>
+            <div class="book-hover">
+                <h3>مملكة تصميم المواقع</h3>
+                <p>دليل تطبيقي في مجال تصميم وتطوير المواقع الإلكترونية، يركز على مفهوم التصميم المتجاوب والعمل على مختلف الأجهزة.</p>
+                <p class="author">👤 المؤلف: محمد عواد</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1CmUt8d4csNY3q3YpAV0vDxXjkYWNm8jh/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 8 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/21/4/b/7/270ef5825c4b70d7f54dd43eca3a8748.jpg.webp" alt="عناصر الكيمياء الحديثة">
+            <div class="book-title">عناصر الكيمياء الحديثة</div>
+            <div class="book-hover">
+                <h3>عناصر الكيمياء الحديثة</h3>
+                <p>كتاب يغطي مجال الكيمياء الحديثة والمبادئ الكيميائية المتقدمة وتطبيقاتها في الصناعات الكيميائية والتكنولوجيا.</p>
+                <p class="author">👤 المؤلف: غير معروف</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/13bGYqu3cJLd7j_WfRpS7rSGYqUZxphg3/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 9 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/2/2/d/f304453f3722d2f2613e98143a43367d.png.webp" alt="الذكاءات المتعددة">
+            <div class="book-title">الذكاءات المتعددة</div>
+            <div class="book-hover">
+                <h3>الذكاءات المتعددة</h3>
+                <p>كتاب يتناول نظرية الذكاءات المتعددة في علم النفس التربوي، وكيف يمكن تطبيقها في العملية التعليمية وتنمية الفهم.</p>
+                <p class="author">👤 المؤلف: د. جابر عبد الحميد جابر</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1cVAqTrqKBO-Xdk-FEs5JcILCh8jZEeIn/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- كتاب 10 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/8/d/f/2f3d1852c78dfc43d4c22a1938d33c8a.png.webp" alt="الطب المصري القديم">
+            <div class="book-title">الطب المصري القديم</div>
+            <div class="book-hover">
+                <h3>الطب المصري القديم</h3>
+                <p>كتاب يختص بتاريخ الطب والآثار الطبية، يدرس الممارسات الطبية والنظام الصحي في مصر القديمة بناءً على البرديات والآثار.</p>
+                <p class="author">👤 المؤلف: د. حسن كمال</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1SPFV3ugLusG9wLYplPrOROAAXIm20nFj/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- كتاب 11 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.neelwafurat.com/images/lb/abookstore/covers/hard/170/170907.jpg" alt="القانون في الطب">
+            <div class="book-title">القانون في الطب</div>
+            <div class="book-hover">
+                <h3>القانون في الطب</h3>
+                <p>المرجع التاريخي الشهير لابن سينا الذي يغطي كل فروع المعرفة الطبية في العصور الوسطى ويعتبر عملاً تأسيسياً في تاريخ الطب.</p>
+                <p class="author">👤 المؤلف: ابن سينا</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/19ToUZHf6DwGrW3jdoJTWkN8ANuVLxjVL/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- كتاب 12 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/18223.webp" alt="باثولوجيا الأنسجة">
+            <div class="book-title">باثولوجيا الأنسجة</div>
+            <div class="book-hover">
+                <h3>باثولوجيا الأنسجة</h3>
+                <p>كتاب متخصص في علم الأمراض الباثولوجي، يدرس التغيرات المورفولوجية والوظيفية في الأنسجة والخلايا نتيجة الأمراض.</p>
+                <p class="author">👤 المؤلف: غير معروف</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1R6K0Tsjw00RcE_FJavY5_q2tva5_1-fp/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- كتاب 13 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/6/a/6/6c4c2107796a66ef527fc1dbdac9f244.png.webp" alt="معجم المصطلحات الطبية">
+            <div class="book-title">معجم المصطلحات الطبية</div>
+            <div class="book-hover">
+                <h3>معجم المصطلحات الطبية</h3>
+                <p>قاموس متخصص يهدف إلى توضيح وشرح المصطلحات المستخدمة في العلوم الطبية والصحية لمختلف فروع الطب.</p>
+                <p class="author">👤 المؤلف: غير معروف</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1E-ko-9ch0v79JxfHldNpvgjkUYhHDK-p/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+
+        <!-- أماكن إضافية لـ 3 كتب إنجليزية -->
+
+        <!-- كتاب إضافي 3 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/2/f/6/d/7d512768cef6de78454cc5d73a56f936.jpg.webp" alt="الكمياء الكهربائية">
+            <div class="book-title">الكمياء الكهربائية</div>
+            <div class="book-hover">
+                <h3>الكمياء الكهربائية</h3>
+                <p>كتاب في الكيمياء الكهربية يشرح تفاعل الكيمياء مع الكهرباء ويغطي الخلايا الكهربائية وتطبيقاتها العملية مثل البطاريات وتآكل المعادن.</p>
+                <p class="author">👤 المؤلف: د.ماهر محمد عبدالعزيز محمد</p>
+                <div class="stars">★★★★☆</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1HqHzTkGBzuDXW-D0-9UWgnLP6lw3j9kk/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+            // تأثيرات ظهور الكتب تدريجي مع السكرول
+            function animateOnScroll() {
+                const books = document.querySelectorAll('.book-card');
+                
+                // إلغاء الأنيميشن الافتراضية عشان نتحكم فيها بالسكرول
+                books.forEach(book => {
+                    book.style.animation = 'none';
+                                        book.style.opacity = '0';
+                    book.style.transform = 'translateY(50px)';
+                });
+                
+                // المراقب اللي بيشوف العناصر لما تدخل الشاشة
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // لما الكتاب يدخل منطقة الشاشة، شغل الأنيميشن
+                            setTimeout(() => {
+                                entry.target.style.animation = 'bookScrollEntrance 0.8s ease forwards';
+                            }, 100 * Array.from(books).indexOf(entry.target)); // تأخير مختلف لكل كتاب
+                        }
+                    });
+                }, { 
+                    threshold: 0.1, // لما 10% من العنصر يظهر
+                    rootMargin: '0px 0px -50px 0px' // علشان يبدأ الأنيميشن شوية قبل ما يوصل
+                });
+                
+                // ابدأ مراقبة كل الكتب
+                books.forEach(book => observer.observe(book));
+            }
+
+            // تشغيل بعد ما الصفحة تحمل
+            animateOnScroll();
+            
+            // دالة فتح الكتب
+            window.openBook = function(url) {
+                window.open(url, '_blank');
+            };
+            // ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+    </script>
+</body>
+</html>
+                   

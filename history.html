@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>كتب التاريخ والثقافة</title>
+    <link rel="stylesheet" href="style2.css">
+
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+            color: #2E2E2E;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+
+        /* قسم الهيدر الرئيسي */
+        .hero-section {
+            margin-top: 100px;
+            text-align: center;
+            padding: 15px 20px;
+        }
+
+        .hero-title {
+            color: #FFF8E7;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.4;
+        }
+
+        .hero-subtitle {
+            color: #E7B10A;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* 🟤 عنوان الصفحة داخل مستطيل */
+        .header-box {
+            background-color: rgba(250, 243, 224, 0.9);
+            border: 2px solid #E7B10A;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 70px auto 15px;
+            padding: 12px 35px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .header-box h1 {
+            color: #E7B10A;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* ✨ الجملة التعريفية */
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #FFF8E7;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* 📚 شبكة عرض الكتب */
+        .books-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 15px 30px 40px;
+        }
+
+        /* 📘 الكارت - حجم متناسق */
+        .book-card {
+            position: relative;
+            background-color: #FAF3E0;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* تأخير مختلف لكل كتاب */
+        .book-card:nth-child(1) { animation-delay: 0.1s; }
+        .book-card:nth-child(2) { animation-delay: 0.2s; }
+        .book-card:nth-child(3) { animation-delay: 0.3s; }
+        .book-card:nth-child(4) { animation-delay: 0.4s; }
+        .book-card:nth-child(5) { animation-delay: 0.5s; }
+        .book-card:nth-child(6) { animation-delay: 0.6s; }
+        .book-card:nth-child(7) { animation-delay: 0.7s; }
+        .book-card:nth-child(8) { animation-delay: 0.8s; }
+        .book-card:nth-child(9) { animation-delay: 0.9s; }
+        .book-card:nth-child(10) { animation-delay: 1s; }
+
+        /* الصورة - تاخد معظم المساحة */
+        .book-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+            flex-grow: 1;
+        }
+
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+
+        /* العنوان الأساسي - في الأسفل بنفس طريقة العنوان الرئيسي */
+        .book-title {
+            padding: 18px 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #483600;
+            font-weight: 700;
+            background: #FAF3E0;
+            margin: 0;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 2px solid #E7B10A;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* overlay hover - بيكون يظهر عند الـ hover بس */
+        .book-hover {
+            position: absolute;
+            inset: 0;
+            background: rgba(75,46,5,0.95);
+            color: #FFF8E7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 20px;
+            text-align: center;
+            border-radius: 20px;
+            z-index: 8;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover .book-hover {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* معلومات الـ hover */
+        .book-hover h3 {
+            font-size: 1rem;
+            color: #E7B10A;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .book-hover p {
+            font-size: 14px;
+            color: #FFF8E7;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .book-hover .author {
+            font-size: 0.9rem;
+            color: #FFD166;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* النجوم */
+        .stars {
+            color: #FFD166;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* الزر */
+        .read-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 25px;
+            background-color: #D98E04;
+            color: #FFF8E7;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .read-btn:hover {
+            background-color: #E7B10A;
+            color: #2E2E2E;
+            transform: scale(1.05);
+        }
+
+        /* رفع الكارت عند hover */
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+        }
+
+        /* ⭐ أنيميشن جديدة للسكرول */
+        @keyframes bookScrollEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) rotate(-5deg);
+            }
+            70% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        /* تأثير ظل أثناء الأنيميشن */
+        .book-card {
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .form-control {
+                width: 150px;
+            }
+
+            .header-box {
+                margin: 60px auto 15px;
+                padding: 10px 25px;
+            }
+
+            .header-box h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-section {
+                margin-top: 50px;
+            }
+
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .books-container {
+                padding: 10px 20px 30px;
+                gap: 15px;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .book-card {
+                height: 320px;
+            }
+
+            .book-image {
+                height: 245px;
+            }
+
+            .book-title {
+                height: 75px;
+                font-size: 1.3rem;
+                padding: 15px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+    
+    <!-- 🟤 عنوان الصفحة داخل مستطيل -->
+    <div class="header-box">
+        <h1>🏛️ مكتبة التاريخ والثقافة</h1>
+    </div>
+    
+    <!-- قسم الهيدر الرئيسي -->
+    <section class="hero-section">
+        <h1 class="hero-title">اكتشف أفضل الكتب التي تأخذك في رحلة عبر التاريخ والثقافات</h1>
+    </section>
+
+    <!-- 📚 شبكة عرض الكتب -->
+    <div class="books-container">
+        <!-- الكتب الأصلية -->
+        <!-- كتاب 1 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/1/a/a/7/3d63da68c7aa7a0cd252adbf85bdbb80.jpg.webp" alt="منهج البحث التاريخي">
+            <div class="book-title">منهج البحث التاريخي</div>
+            <div class="book-hover">
+                <h3>منهج البحث التاريخي</h3>
+                <p>كتاب عن منهجيات البحث التاريخي يركز على الأدوات والإجراءات العلمية لضمان الدقة والموضوعية والمصداقية في التحليل التاريخي.</p>
+                <p class="author">👤 تأليف: د. حسن عثمان</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1kDvutftcHTzu8l8vRHs3arNJ7JVwOwyr/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 2 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/23142.webp" alt="مقدمة ابن خلدون">
+            <div class="book-title">مقدمة ابن خلدون</div>
+            <div class="book-hover">
+                <h3>مقدمة ابن خلدون</h3>
+                <p>كتاب "المقدمة" لابن خلدون يشرح صعود وسقوط الدول وتأثير العصبية والبيئة والاقتصاد على المجتمعات.</p>
+                <p class="author">👤 تأليف: ابن خلدون</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/12HAXGu_8RDwlE55PgN0k79vb8eI74eNC/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 3 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/f/3/c/31f1c1285df3c39b389f7ecf003379f1.png.webp" alt="مصر الفرعونية">
+            <div class="book-title">مصر الفرعونية</div>
+            <div class="book-hover">
+                <h3>مصر الفرعونية</h3>
+                <p>كتاب <strong>مصر الفرعونية</strong> لأحمد فخري يشرح بإيجاز حياة المصريين القدماء وحضارتهم المميزة.</p>
+                <p class="author">👤 تأليف: أحمد فخري</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1lxTtu4y4ynd421Up3nsB3rUv5TqiHYmk/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 4 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/23366.webp" alt="قبل أن يغادرنا التاريخ">
+            <div class="book-title">قبل أن يغادرنا التاريخ</div>
+            <div class="book-hover">
+                <h3>قبل أن يغادرنا التاريخ</h3>
+                <p>مذكرات زيد عبد الكعبي تقدم رؤية داخلية لأحداث العراق الحديثة، شاملاً الجوانب العسكرية والسياسية خلال فترات حرب الخليج.</p>
+                <p class="author">👤 تأليف: رعد مجيد الحمداني</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1xXmaRfdz5xfWf6jS-hH7qqBXg4dryAA_/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 5 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/6/2/d/7/ddef9dfbac2d7dfb93eb435afaf8cc62.png.webp" alt="تاريخ أوروبا فى العصور الوسطى">
+            <div class="book-title">تاريخ أوروبا فى العصور الوسطى</div>
+            <div class="book-hover">
+                <h3>تاريخ أوروبا فى العصور الوسطى</h3>
+                <p>كتاب عن تاريخ أوروبا في العصور الوسطى يدرس النظام الإقطاعي ودور الكنيسة والحروب والغزوات والوباء الأسود، كمرجع لفهم تطور أوروبا قبل عصر النهضة.</p>
+                <p class="author">👤 تأليف: موريس بيشوب</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/10koFmPNy3Uyx9ZqFLX0VFhFo3A1YzWoI/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 6 -->
+        <div class="book-card">
+            <img class="book-image" src="https://ketabpedia.com/wp-content/uploads/2020/07/bnr3605.png" alt="تاريخ الدولة العثمانية">
+            <div class="book-title">تاريخ الدولة العثمانية</div>
+            <div class="book-hover">
+                <h3> تاريخ الدولة العثمانية</h3>
+                <p>كتاب عن تاريخ الدولة العثمانية منذ نشأتها حتى سقوطها، يستعرض صعودها كإمبراطورية قوية ثم تراجعها وصولاً إلى قيام الجمهورية التركية.</p>
+                <p class="author">👤 تأليف:  يلماز أوزتونا</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/10koFmPNy3Uyx9ZqFLX0VFhFo3A1YzWoI/view?usp=drive_link')">
+                    إقرا الأن
+                </button>
+            </div>
+        </div>
+        
+        <!-- كتاب 7 -->
+        <div class="book-card">
+            <img class="book-image" src="https://ebook.univeyes.com/wp-content/uploads/history2_img/univeyes.history.2.07867.jpg" alt="تاريخ الأمم والملوك تاريخ">
+            <div class="book-title">تاريخ الأمم والملوك تاريخ</div>
+            <div class="book-hover">
+                <h3>تاريخ الأمم والملوك تاريخ</h3>
+                <p>كتاب عن تاريخ الدولة العثمانية يتتبع نشأتها وصعودها كإمبراطورية قوية ثم ضعفها وسقوطها مع قيام الجمهورية التركية عام 1922.</p>
+                <p class="author">👤 تأليف: الطبري</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn"  onclick="openBook('https://drive.google.com/file/d/1qvFZ33FqGfBJyiemjqs80wYrrUvv_omk/view?usp=drive_link')" >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 8 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/25033.webp" alt="التيجان في ملوك حمير">
+            <div class="book-title">التيجان في ملوك حمير</div>
+            <div class="book-hover">
+                <h3>التيجان في ملوك حمير</h3>
+                <p>كتاب عن تاريخ ملوك مملكة حمير في جنوب الجزيرة العربية، يستعرض حياتهم السياسية والاجتماعية وعلاقاتهم الإقليمية قبل الإسلام.</p>
+                <p class="author">👤 نشر: مركز الدراسات والأبحاث اليمنيه</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn"  onclick="openBook('https://drive.google.com/file/d/1lKoBfn1gSxGyQYFHFZwS3fo5fRLHln07/view?usp=drive_link')"  >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 9 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.noor-book.com/publice/covers_cache_webp/1/f/e/e/52891f5420fee3ee08fca1b1da1ecc2e.jpg.webp" alt="التوراة جاءت من جزيرة العرب">
+            <div class="book-title">التوراة جاءت من جزيرة العرب</div>
+            <div class="book-hover">
+                <h3>التوراة جاءت من جزيرة العرب</h3>
+                <p>كتاب كمال الصليبي يقدم فرضية تاريخية جريئة تقول إن أحداث التوراة وقعت في غرب الجزيرة العربية، مستنداً إلى تحليل لغوي وجغرافي مثير للجدل.</p>
+                <p class="author">👤 تظاليف: كمال الصليبي</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1gdlg8SlDy1o_jbyUj_rMe3wITAd_JJp5/view?usp=drive_link')"  >اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 10 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.alarabimag.com/images/thumbs/mid/23789.webp" alt="التربية عبر التاريخ من العصور">
+            <div class="book-title">التربية عبر التاريخ من العصور</div>
+            <div class="book-hover">
+                <h3>التربية عبر التاريخ من العصور</h3>
+                <p>كتاب عن تطور الفكر التربوي عبر العصور، يستعرض أنظمة التعليم من الحضارات القديمة حتى العصور الوسطى، محللاً أهداف وأساليب التربية ودورها في بناء الإنسان والمجتمع.</p>
+                <p class="author">👤 تظاليف: دزعبدالله عبدالدائم</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1qEZq6W3J3a2mLtbXS7jMN23_mq9wk28D/view?usp=drive_link')">اقرأ الآن</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 11 -->
+        <div class="book-card">
+            <img class="book-image" src="https://i.ebayimg.com/images/g/mKUAAOSwU6lgAUUQ/s-l1600.webp" alt="Battle River Plate">
+            <div class="book-title">Battle River Plate</div>
+            <div class="book-hover">
+                <h3>Battle River Plate</h3>
+                <p>A book on the 1939 Graf Spee naval battle, highlighting British pursuit, deception, and WWII naval strategy.</p>
+                <p class="author">👤 Author: Pat Fogwill</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1o_DXSu_qw8TdHZrt6SBta-YC6n5mlrTl/view?usp=drive_link')" >Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 12 -->
+        <div class="book-card">
+            <img class="book-image" src="https://html.scribdassets.com/4j5xncxn5scb2ibu/images/1-f6870a5da6.jpg" alt="flights by the wrights">
+            <div class="book-title">flights by the wrights</div>
+            <div class="book-hover">
+                <h3>flights by the wrights</h3>
+                <p>A book about the Wright brothers’ pioneering flight, exploring their experiments, innovations, and engineering breakthroughs that launched the age of aviation.</p>
+                <p class="author">👤 Author:Brothers Orville & Wilbur Wright</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn"  onclick="openBook('https://drive.google.com/file/d/1adkNFMxhZy9oddpeiNl901fVLp45VJbG/view?usp=drive_link')"> Read now </button>
+            </div>
+        </div>
+        
+        <!-- كتاب 13 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images-cache/pony-express-ebook-cover-obooko-c34a31d4db80b27fb1f5961d95cbee2a.jpg" alt="pony express the story">
+            <div class="book-title">pony express the story</div>
+            <div class="book-hover">
+                <h3>pony express the story</h3>
+                <p>A book about the Pony Express, tracing its brief but heroic role in carrying mail across the U.S., highlighting the bravery of its riders and its end with the rise of the telegraph.</p>
+                <p class="author">👤 Author: Willis Baron</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn"onclick="openBook('https://drive.google.com/file/d/1L7FNgyy58Yugrr5x6IuAVF1brq1rBgGe/view?usp=drive_link')">Read now </button>
+            </div>
+        </div>
+        
+        <!-- كتاب 14 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images/covers/pretty-dukkys-love-letters-to-anne-boleyn.jpg" alt="PrettyDukkys">
+            <div class="book-title">PrettyDukkys</div>
+            <div class="book-hover">
+                <h3>PrettyDukkys</h3>
+                <p>A collection of King Henry VIII’s love letters to Anne Boleyn, revealing his passion and motives behind the English Reformation and offering a personal view of Tudor history.</p>
+                <p class="author">👤Author: Henry VIII </p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/11ss-o9Xx9gC6y5EMdWlFjg2fK_Uwv6-O/view?usp=drive_link')"> Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 15 -->
+        <div class="book-card">
+            <img class="book-image" src="https://cdn.britannica.com/47/182247-050-644E75E2/Richard-III-panel-artist.jpg?w=300" alt="Richard3">
+            <div class="book-title">Richard3</div>
+            <div class="book-hover">
+                <h3>Richard3</h3>
+                <p>Shakespeare’s "Richard III" portrays the ruthless rise and fall of King Richard III, exploring ambition, corruption, and the abuse of power, with one of literature’s most iconic villains at its center.</p>
+                <p class="author">👤 Author:William Shakespeare</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1JBrW40HJubDHfWtQf26faG4BVhqMKYr2/view?usp=drive_link')">Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 16 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images/covers/tanks-1914-1918-war.jpg" alt="tanks in the great war 1914-1918">
+            <div class="book-title">tanks in the great war 1914-1918</div>
+            <div class="book-hover">
+                <h3>tanks in the great war 1914-1918</h3>
+                <p>A book by J.F.C. Fuller on the development and tactics of tank warfare in WWI, blending history and military theory that shaped modern mechanized combat.</p>
+                <p class="author">👤 Author:Fuller</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1IkGwJkZAy-VsYGs6lmu2ZjcULoCLS2j9/view?usp=drive_link')" >Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 17 -->
+        <div class="book-card">
+            <img class="book-image" src="https://cornellpress-us.imgix.net/covers/9781501755798.jpg?auto=format&w=298" alt="the currency of empire barth">
+            <div class="book-title">the currency of empire barth</div>
+            <div class="book-hover">
+                <h3>the currency of empire barth</h3>
+                <p>A study of how money and currency control in England’s colonies shaped tensions leading to American independence.</p>
+                <p class="author">👤 Author:Jonathan Barth</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1H2Cv9ULiMfl2r3Vgh6RimKIL9zTo5vJL/view?usp=drive_link')" >Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 18 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images-cache/empresses-of-rome-obooko-history-ebook-a0b812c95a76bb87c1c45ba10e81c3ca.jpg" alt="the empresses of rome">
+            <div class="book-title">the empresses of rome</div>
+            <div class="book-hover">
+                <h3>the empresses of rome</h3>
+                <p>A book about the Empresses of ancient Rome, highlighting their power, influence, and intrigue in shaping the politics and history of the Roman Empire.</p>
+                <p class="author">👤 Author:Joseph McCabe</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1Iq199bK-7p_J-rD-Fqf9i88iHIBYlBzC/view?usp=drive_link')" >Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 19 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images-cache/right-time-right-place-brian-limmer-obooko-406c7b511f63e3b6de0aa70f4f7be09d.jpg" alt="the right time the right place limmer">
+            <div class="book-title">the right time the right place </div>
+            <div class="book-hover">
+                <h3>the right time the right place </h3>
+                <p>A memoir or historical account about strategy, timing, and decisive action, exploring how being in the right place at the right time shapes critical historical or military outcomes.</p>
+                <p class="author">👤 Author:Brian B.R. Limmer</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1mZo4J7imNBGEoG4TD5zPvbP0gEUWHMy-/view?usp=drive_link')">Read now</button>
+            </div>
+        </div>
+        
+        <!-- كتاب 20 -->
+        <div class="book-card">
+            <img class="book-image" src="https://www.obooko.com/images-cache/we-the-people-constitution-obooko-ebook-cover-2f607b93c405868e1bc3aa66df6540ca.jpg" alt="We the People: The Constitution of the United States">
+            <div class="book-title">We the People: The Constitution of the United States</div>
+            <div class="book-hover">
+                <h3>We the People: The Constitution of the United States</h3>
+                <p>A book containing the full text of the U.S. Constitution and its 27 Amendments, serving as a foundation for American law, government, and individual rights.</p>
+                <p class="author">👤 Author:James Madison</p>
+                <div class="stars">★★★★★</div>
+                <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1IzZlD5Xl1SjcLwcuo5L-0T2heeK_OprT/view?usp=drive_link')">Read now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+            // تأثيرات ظهور الكتب تدريجي مع السكرول
+            function animateOnScroll() {
+                const books = document.querySelectorAll('.book-card');
+                
+                // إلغاء الأنيميشن الافتراضية عشان نتحكم فيها بالسكرول
+                books.forEach(book => {
+                    book.style.animation = 'none';
+                    book.style.opacity = '0';
+                    book.style.transform = 'translateY(50px)';
+                });
+                
+                // المراقب اللي بيشوف العناصر لما تدخل الشاشة
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // لما الكتاب يدخل منطقة الشاشة، شغل الأنيميشن
+                            setTimeout(() => {
+                                entry.target.style.animation = 'bookScrollEntrance 0.8s ease forwards';
+                            }, 100 * Array.from(books).indexOf(entry.target)); // تأخير مختلف لكل كتاب
+                        }
+                    });
+                }, { 
+                    threshold: 0.1, // لما 10% من العنصر يظهر
+                    rootMargin: '0px 0px -50px 0px' // علشان يبدأ الأنيميشن شوية قبل ما يوصل
+                });
+                
+                // ابدأ مراقبة كل الكتب
+                books.forEach(book => observer.observe(book));
+            }
+
+            // تشغيل بعد ما الصفحة تحمل
+            animateOnScroll();
+            
+            // دالة فتح الكتب
+            window.openBook = function(url) {
+                window.open(url, '_blank');
+            };
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+    </script>
+</body>
+</html>

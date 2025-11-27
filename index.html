@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>READFIY</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="hero-main-title">READ. LEARN. DOMINATE.</h1>
+            <h2 class="hero-subtitle">Fuel Your Mind with Free Knowledge</h2>
+            <p class="hero-description">Join Thousands of Readers in Their Learning Journey</p>
+            <!-- ربط الزر بالدالة الجديدة -->
+            <button class="cta-button" onclick="scrollToBooks()">READ NOW</button>
+        </div>
+    </header>
+   
+    <section class="books-section" id="books-section">
+        <div class="container">
+            <h2 class="section-title">Featured E-Books</h2>
+            <div class="books-grid">
+                
+                <!-- الكتاب الأول -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <div class="book-design" style="background: linear-gradient(135deg, #8B5E3C, #4B2E05);">
+                           <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Time_machine.jpg/250px-Time_machine.jpg" alt="the-time-machine-h-g-wells" class="book-image">
+                        </div>
+                        <div class="book-overlay">
+                            <h3 class="book-title">The Time Machine</h3>
+                            <p class="book-author">H. G. Wells</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <p class="book-description">
+                        An English scientist travels to the future and finds humanity divided into Eloi and Morlocks.
+                        <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1q6daU0lgoKiUExCdcMlYhh24pSyLziEN/view')">
+                            READ NOW
+                        </button>
+                    </div>
+                </div>
+
+                <!-- الكتاب الثاني -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <div class="book-design" style="background: linear-gradient(135deg, #4B2E05, #8B5E3C);">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGRmyaNmuswLccXR-etnqneZ931wImB2rSIg&s" alt="مصر_الفرعونية" class="book-image">
+                        </div>
+                        <div class="book-overlay">
+                            <h3 class="book-title">مصر الفرعونية</h3>
+                            <p class="book-author">تأليف: أحمد فخري</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <p class="book-description">
+                            يعد العالم المصري أحمد فخري أحد رواد علم المصريات، ويقدم في هذا الكتاب مدخلاً شاملاً وواضحاً لحضارة مصر الفرعونية العريقة....→---
+                        </p>
+                        <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1lxTtu4y4ynd421Up3nsB3rUv5TqiHYmk/view')">
+                            اقرأ الآن
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الـ Quotes -->
+    <section class="quotes-section">
+        <div class="container">
+            <h2 class="section-title">Inspirational Quotes</h2>
+            
+            <div class="quotes-grid">
+                <!-- Quote 1 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        أفضل طريقة لإقناع شخص ما هي تركه يستنتج الفكرة بنفسه.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: فن التعامل مع الناس</span>
+                        <span class="quote-author">الكاتب: ديل كارنيجي</span>
+                    </div>
+                </div>
+
+                <!-- Quote 2 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        Trust is a functional, measurable aspect of human relationships, not just an abstract quality.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: The Science of Interpersonal Trust</span>
+                        <span class="quote-author">الكاتب: Randy Borum</span>
+                    </div>
+                </div>
+
+                <!-- Quote 3 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        لتسيطر على حياتك، عليك أولاً أن تسيطر على انفعالاتك.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: إدارة الغضب</span>
+                        <span class="quote-author">الكاتب: (مجهول / مختص)</span>
+                    </div>
+                </div>
+            </div>
+            
+           <div class="quotes-cta">
+    <a href="qoutes.html" class="view-more-btn">VIEW ALL QUOTES</a>
+</div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>123 Fifth Avenue, NY 10160, New York, USA | Phone: 830-123-456 | Email: contact@readfiy.com</p>
+            <p class="copyright">
+                © 2024 READFIY - All books are provided for educational purposes under fair use.<br>
+                All rights reserved to their respective authors and publishers.
+            </p>
+            <p class="disclaimer">
+                Disclaimer: All books available on this platform are for educational and personal use only.<br>
+                We respect intellectual property rights and encourage users to purchase original copies.
+            </p>
+        </div>
+    </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الخارجية أو الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+</script>
+
+
+
+
+</body>
+</html>

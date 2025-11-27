@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>كتب تحولت لأفلام</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+            color: #2E2E2E;
+            margin: 0;
+            padding: 0;
+            min-height: 110vh;
+            overflow-x: hidden;
+        }
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(75, 46, 5, 0.95);
+            padding: 12px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between; /* بدل center */
+            align-items: center; /* بدل none */
+            direction: ltr;
+        }
+
+        .logo {
+            color: #E7B10A;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: left;
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #F5E0B7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            color: #E7B10A;
+        }
+
+        .nav-links .active a {
+            color: #E7B10A;
+            font-weight: bold;
+        }
+
+        /* Categories Dropdown Styles */
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px !important;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7em;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(75, 46, 5, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid #E7B10A;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(75, 46, 5, 0.4);
+            min-width: 250px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 10px 0;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            color: #F5E0B7 !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(231, 177, 10, 0.2);
+            font-weight: 500;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05 !important;
+            transform: translateX(10px);
+            font-weight: 600;
+        }
+
+        /* Hide other items when dropdown is active */
+        .navbar.dropdown-active .hidden-on-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Show only categories when dropdown is active */
+        .navbar.dropdown-active .nav-links {
+            position: relative;
+        }
+
+        .navbar.dropdown-active .nav-links > *:not(.dropdown) {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+        }
+
+        .navbar.dropdown-active .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: all;
+        }
+
+        /* Animation for dropdown items */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .dropdown-menu.show .dropdown-item {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .dropdown-menu.show .dropdown-item:nth-child(1) { animation-delay: 0.05s; }
+        .dropdown-menu.show .dropdown-item:nth-child(2) { animation-delay: 0.1s; }
+        .dropdown-menu.show .dropdown-item:nth-child(3) { animation-delay: 0.15s; }
+        .dropdown-menu.show .dropdown-item:nth-child(4) { animation-delay: 0.2s; }
+        .dropdown-menu.show .dropdown-item:nth-child(5) { animation-delay: 0.25s; }
+        .dropdown-menu.show .dropdown-item:nth-child(6) { animation-delay: 0.3s; }
+        .dropdown-menu.show .dropdown-item:nth-child(7) { animation-delay: 0.35s; }
+        .dropdown-menu.show .dropdown-item:nth-child(8) { animation-delay: 0.4s; }
+        .dropdown-menu.show .dropdown-item:nth-child(9) { animation-delay: 0.45s; }
+
+        /* Search Form */
+        #search {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            gap: 10px;
+        }
+
+        .form-control {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 25px;
+            background: #FAF3E0;
+            color: #2E2E2E;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(231, 177, 10, 0.5);
+        }
+
+        .btn-outline-success {
+            background: #D98E04;
+            color: #2E2E2E;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background: #E7B10A;
+            transform: translateY(-2px);
+        }
+
+        /* Login/Signup Buttons */
+        .ctn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+
+        .ctn a {
+            color: #2E2E2E !important;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            display: none;
+            width: 30px;
+            cursor: pointer;
+        }
+/* ===== MOBILE NAVIGATION ===== */
+@media (max-width: 768px) {
+
+    .menu-btn {
+        display: block;
+        width: 35px;
+        cursor: pointer;
+    }
+
+    /* نخفي اللينكات في الموبايل */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 70px;
+        width: 100%;
+        background: rgba(75, 46, 5, 0.97);
+        padding: 25px 0;
+        gap: 20px;
+        text-align: center;
+        border-top: 2px solid #E7B10A;
+    }
+
+    /* تظهر عند فتح المينيو */
+    .nav-links.mobile-menu {
+        display: flex !important;
+    }
+
+    /* تكبير اللينكات */
+    .nav-links a {
+        font-size: 18px;
+        padding: 10px 0;
+    }
+
+    /* إخفاء search في الموبايل */
+    #search {
+        display: none;
+    }
+}
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-top: 120px;
+            padding: 40px 20px;
+            direction: ltr;
+        }
+
+        /* العنوان في مربع */
+        .title-container {
+            background: rgba(75, 46, 5, 0.8);
+            border: 3px solid #E7B10A;
+            border-radius: 20px;
+            padding: 25px 40px;
+            text-align: center;
+            margin: 0 auto 60px;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+        }
+
+        .page-title {
+            color: #FFF8E7;
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .title-sub {
+            color: #F5E0B7;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* الاستيكر */
+        .sticker {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            transform: rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        /* قسم المؤلف */
+        .author-section {
+            margin-bottom: 80px;
+            background: rgba(255, 248, 231, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(75, 46, 5, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .author-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+        }
+
+        /* معلومات المؤلف */
+        .author-info {
+            flex: 0 0 300px;
+            text-align: center;
+            background: rgba(255, 248, 231, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* تعديل الصورة لتكون مربعة وأكبر */
+        .author-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 4px solid #E7B10A;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .author-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .author-name {
+            color: #4B2E05;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .author-bio {
+            color: #2E2E2E;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* كاروسل الكتب */
+        .books-container {
+            flex: 1;
+            min-height: 500px;
+        }
+
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: visible;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            justify-content: center;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 420px;
+            background: #FAF3E0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid transparent;
+            background: linear-gradient(145deg, #FAF3E0, #E6DDD0);
+            cursor: pointer;
+        }
+
+        .card.active {
+            transform: translateY(-15px) scale(1.05);
+            z-index: 10;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 3px solid #E7B10A;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+            z-index: 2;
+        }
+
+        /* تصغير حجم الصور في الكروت */
+        .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 3px solid #E7B10A;
+            transition: all 0.3s ease;
+        }
+
+        .card.active .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card-title {
+            color: #4B2E05;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-year {
+            color: #8B5E3C;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: #2E2E2E;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            margin-bottom: 10px;
+        }
+
+        /* جعل زر الفيلم ثابتًا في الأسفل ويظهر فوق الـ hover */
+        .card-film {
+            padding: 8px 12px;
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            border-radius: 8px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(217, 142, 4, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+            text-decoration: none;
+            display: block;
+        }
+
+        .card-film:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(217, 142, 4, 0.4);
+        }
+
+        /* تفاصيل الكتاب عند التمرير */
+        .book-details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(75, 46, 5, 0.95);
+            color: #F5E0B7;
+            padding: 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .card:hover .book-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .book-details-title {
+            color: #E7B10A;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .book-details-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .book-transformation {
+            background: rgba(231, 177, 10, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #E7B10A;
+        }
+
+        .book-transformation h4 {
+            color: #E7B10A;
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .book-transformation p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* عناصر التحكم */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .indicators {
+            display: flex;
+            gap: 12px;
+        }
+
+        .indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #E6DDD0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .indicator.active {
+            background: #E7B10A;
+            transform: scale(1.3);
+            box-shadow: 0 4px 12px rgba(231, 177, 10, 0.4);
+        }
+
+        .indicator:hover {
+            transform: scale(1.2);
+            background: #D98E04;
+        }
+
+        /* التذييل */
+        .footer {
+            background: rgba(75, 46, 5, 0.9);
+            color: #F5E0B7;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-top: 3px solid #E7B10A;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* تأثيرات للهواتف */
+        @media (max-width: 768px) {
+            .author-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .author-info {
+                flex: none;
+                width: 100%;
+                height: auto;
+            }
+            
+            .author-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .gallery {
+                height: 420px;
+            }
+            
+            .card {
+                width: 250px;
+                height: 380px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .author-name {
+                font-size: 1.8rem;
+            }
+            
+            .title-container {
+                padding: 20px;
+            }
+            
+            .controls {
+                gap: 15px;
+            }
+            
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="main-content">
+        <!-- العنوان في مربع مع الاستيكر -->
+        <div class="title-container">
+            <div class="sticker">الأكثر مشاهدة</div>
+            <h1 class="page-title">كتب تحولت إلى أفلام رائعة</h1>
+            <div class="title-sub">اكتشف القصص التي انتقلت من الصفحات إلى الشاشة الكبيرة</div>
+        </div>
+        
+        <!-- المؤلف الأول - نجيب محفوظ -->
+        <section class="author-section">
+            <div class="author-info">
+                <img src="https://s3.amazonaws.com/new.contributors.hindawi.org/Images/71616385.jpg" alt="نجيب محفوظ" class="author-image">
+                <h2 class="author-name">نجيب محفوظ</h2>
+                <p class="author-bio">أديب مصري حائز على جائزة نوبل في الأدب عام 1988، ويعد من أبرز الروائيين العرب. تميزت أعماله بالواقعية والنقد الاجتماعي، وتحولت معظم رواياته إلى أفلام سينمائية ومسلسلات تلفزيونية ناجحة.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery1">
+                    <ul class="cards" id="cards1">
+                        <!-- سيتم إضافة الكتب هنا عبر JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" data-gallery="1">السابق</button>
+                    <div class="indicators" id="indicators1">
+                        <!-- سيتم إضافة المؤشرات هنا عبر JavaScript -->
+                    </div>
+                    <button class="control-btn next-btn" data-gallery="1">التالي</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- المؤلف الثاني - إحسان عبد القدوس -->
+        <section class="author-section">
+            <div class="author-info">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdnccZKu08IDr7GM3RmNgrD2qdhFN1r-iGHw&s" alt="إحسان عبد القدوس" class="author-image">
+                <h2 class="author-name">إحسان عبد القدوس</h2>
+                <p class="author-bio">روائي وصحفي مصري، يعد من أهم كتاب الرواية والقصص القصيرة في الأدب العربي الحديث. تميزت أعماله بالجرأة في تناول القضايا الاجتماعية والسياسية، وتحولت العديد من رواياته إلى أفلام سينمائية ناجحة.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery2">
+                    <ul class="cards" id="cards2">
+                        <!-- سيتم إضافة الكتب هنا عبر JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" data-gallery="2">السابق</button>
+                    <div class="indicators" id="indicators2">
+                        <!-- سيتم إضافة المؤشرات هنا عبر JavaScript -->
+                    </div>
+                    <button class="control-btn next-btn" data-gallery="2">التالي</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- المؤلف الثالث - أجاثا كريستي -->
+        <section class="author-section">
+            <div class="author-info">
+                <img src="https://i0.wp.com/oldtowncrier.com/wp-content/uploads/2020/09/last-word-agatha-christie.jpg?fit=794%2C1024&ssl=1" alt="أجاثا كريستي" class="author-image">
+                <h2 class="author-name">Agatha Christie</h2>
+                <p class="author-bio">An English author renowned for her crime and mystery novels, she is one of the best-selling authors in history. Many of her novels have been adapted into successful films and television series, and her characters</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery3">
+                    <ul class="cards" id="cards3">
+                        <!-- سيتم إضافة الكتب هنا عبر JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" data-gallery="3">السابق</button>
+                    <div class="indicators" id="indicators3">
+                        <!-- سيتم إضافة المؤشرات هنا عبر JavaScript -->
+                    </div>
+                    <button class="control-btn next-btn" data-gallery="3">التالي</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- المؤلف الرابع - ستيفن كينغ -->
+        <section class="author-section">
+            <div class="author-info">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjXMNUhyy2MSXYCm4WxVS4I5Iv0rTszSfccnDy8c9O0A_nf09ZXeG_GHfQCH4XqDX2xk9Jz5FdFVeXZZqXkWWbNl8wCMzTW7EC4AynhdtxbOHZnu2HXpfECguP9etdWjF04I2V8DavrVwio/s640/%25D8%25B3%25D8%25AA.jpg" alt="ستيفن كينغ" class="author-image">
+                <h2 class="author-name">Stephen King</h2>
+                <p class="author-bio">An American author known for his horror and fantasy novels. Many of his novels have been adapted into successful films and television series, making him one of the most frequently adapted authors</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery4">
+                    <ul class="cards" id="cards4">
+                        <!-- سيتم إضافة الكتب هنا عبر JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" data-gallery="4">السابق</button>
+                    <div class="indicators" id="indicators4">
+                        <!-- سيتم إضافة المؤشرات هنا عبر JavaScript -->
+                    </div>
+                    <button class="control-btn next-btn" data-gallery="4">التالي</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2023 READFIY - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        // بيانات الكتب
+        const authorsData = [
+            {
+                id: 1,
+                name: "نجيب محفوظ",
+                books: [
+                    {
+                        title: 'اللص والكلاب',
+                        year: 1961,
+                        description: 'رواية تدور حول سجين هارب يبحث عن الانتقام ممن خانه، تعكس صراع الفرد ضد المجتمع.',
+                        film: 'فيلم اللص والكلاب',
+                        image: 'https://upload.wikimedia.org/wikipedia/ar/5/53/%D8%A7%D9%84%D9%84%D8%B5_%D9%88%D8%A7%D9%84%D9%83%D9%84%D8%A7%D8%A8.jpg',
+                        transformation: 'تحولت الرواية إلى فيلم عام 1962 من إخراج كمال الشيخ، ويعد من أشهر الأفلام المصرية الكلاسيكية التي تناولت قضايا اجتماعية عميقة.',
+                        details: 'تعتبر هذه الرواية من أهم أعمال محفوظ التي تناقش قضية العدالة الاجتماعية والخيانة. تميز الفيلم بأداء رائع للممثل شكري سرحان.',
+                        filmLink: 'https://youtu.be/vzn7_i0HMw8?si=eanVUKjU3tTvLhen'
+                    },
+                    {
+                        title: 'بداية ونهاية',
+                        year: 1960,
+                        description: 'قصة عائلة تكافح من أجل البقاء بعد وفاة الأب، تتعامل مع قضايا الفقر والطبقات الاجتماعية.',
+                        film: 'فيلم بداية ونهاية',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeVFUGMwEX8nGyXbE7Q-x8DAvc8SjQQbkoCw&s',
+                        transformation: 'تحولت إلى فيلم عام 1960 من إخراج صلاح أبو سيف، ويعد من الأعمال السينمائية المهمة التي صورت الحياة المصرية في منتصف القرن العشرين.',
+                        details: 'الرواية تقدم تحليلًا عميقًا للعلاقات الأسرية والصراع الطبقي. الفيلم نجح في نقل هذه الأجواء ببراعة.',
+                        filmLink: 'https://youtu.be/JkSToRsFthc?si=sA26hi1cX-ctHToV'
+                    },
+                    {
+                        title: 'الثلاثية',
+                        year: 1956,
+                        description: 'ملحمة أدبية تروي قصة عائلة عبد الجواد عبر ثلاثة أجيال في القاهرة ما قبل الثورة.',
+                        film: 'أفلام ومسلسلات الثلاثية',
+                        image: 'https://www.ktbbh.com/wp-content/uploads/2023/06/kutub-pdf.net_n8E5y.jpg.pagespeed.ce_.g6LEYXY3Oq.jpg',
+                        transformation: 'تحولت الثلاثية إلى مسلسل تلفزيوني ناجح عام 1987، كما تم إنتاج أفلام مستقلة عن أجزاء منها.',
+                        details: 'تعتبر الثلاثية من أعظم الأعمال الأدبية العربية، وتقدم صورة شاملة للمجتمع المصري خلال فترة مهمة من تاريخه.',
+                        filmLink: 'https://youtu.be/0X4O1AugiWA?si=7lzN0PLmNIzyb-Lt'
+                    },
+                    {
+                        title: 'زقاق المدق',
+                        year: 1947,
+                        description: 'رواية ترصد حياة سكان حي شعبي في القاهرة وتناقش قضايا الحب والخيانة والصراع الطبقي.',
+                        film: 'فيلم زقاق المدق',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZtdOnk9isevtokLNwOIdmWekuiB4yTF85rg&s',
+                        transformation: 'تحولت إلى فيلم عام 1963 من إخراج حسن الإمام، وتميز بتصوير واقعي للحياة الشعبية في القاهرة القديمة.',
+                        details: 'الرواية تقدم نقدًا لاذعًا للطبقات الاجتماعية والعلاقات الإنسانية في المجتمع المصري التقليدي.',
+                        filmLink: '#'
+                    },
+                    {
+                        title: 'ميرامار',
+                        year: 1967,
+                        description: 'تدور أحداث الرواية في بنسيون ميرامار بالإسكندرية وترصد التغيرات الاجتماعية بعد ثورة 1952.',
+                        film: 'فيلم ميرامار',
+                        image: 'https://downloads.hindawi.org/covers/svg/270x360/85804642.svg?v=2',
+                        transformation: 'تحولت إلى فيلم عام 1969 من إخراج كمال الشيخ، وتميز بطابعه السياسي والاجتماعي العميق.',
+                        details: 'تمثل الرواية مرحلة مهمة في تطور فكر محفوظ، حيث تنتقل من الهم الاجتماعي إلى الهم السياسي والوجودي.',
+                        filmLink: 'https://youtu.be/-fWWtRbkSDE?si=xm0HTOawNOgq1BJS'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "إحسان عبد القدوس",
+                books: [
+                    {
+                        title: 'لا أنام',
+                        year: 1957,
+                        description: 'قصة امرأة تواجه تقاليد المجتمع وتكافح من أجل حريتها واستقلالها.',
+                        film: 'فيلم لا أنام',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5P2DjSs-w4xsiU5JLB8s6_UieBU0icxEtpQ&s',
+                        transformation: 'تحولت إلى فيلم عام 1957 من إخراج صلاح أبو سيف، ويعد من الأفلام المهمة التي ناقشت قضية حرية المرأة.',
+                        details: 'الرواية تعتبر من الأعمال الرائدة في تناول قضية تحرر المرأة في المجتمع الشرقي.',
+                        filmLink: '#'
+                    },
+                    {
+                        title: 'في بيتنا رجل',
+                        year: 1961,
+                        description: 'رواية سياسية تتناول الصراع بين الإخوان المسلمين والنظام الحاكم في مصر.',
+                        film: 'فيلم في بيتنا رجل',
+                        image: 'https://img.youm7.com/ArticleImgs/2020/1/22/25839-%D9%81%D9%8A-%D8%A8%D9%8A%D8%AA%D9%86%D8%A7--%D8%B1%D8%AC%D9%84.jpg',
+                        transformation: 'تحولت إلى فيلم عام 1961 من إخراج أحمد ضياء الدين، وواجهت صعوبات في العرض بسبب طابعها السياسي.',
+                        details: 'تعتبر من أكثر روايات عبد القدوس جرأة في تناول القضايا السياسية الحساسة.',
+                        filmLink: 'https://youtu.be/Ff1_XcngQr0?si=ESPA83bxZfHmxP2F'
+                    },
+                    {
+                        title: 'أنا حرة',
+                        year: 1959,
+                        description: 'قصة امرأة شابة ترفض القيود الاجتماعية وتناضل من أجل تحقيق ذاتها وحريتها.',
+                        film: 'فيلم أنا حرة',
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSZKVCa8YKurlVr5YoTI1Z7eB2lrKKuw7jF8yQRJG9kwos1HywoSE5LTdv1vlNgbaK2Dc7eBCy9t7K97h9nd6pcrJ5RJs4HTrsp-9VxmFs_OSo5BAWp3gMoT1IURXx0KR0sTZOPFQgPFZP/s666/ka574.jpg',
+                        transformation: 'تحولت إلى فيلم عام 1959 من إخراج صلاح أبو سيف، وساهمت في تغيير نظرة المجتمع للمرأة العاملة.',
+                        details: 'الرواية كانت بمثابة بيان لتحرر المرأة المصرية في الخمسينيات.',
+                        filmLink: 'https://youtu.be/eIW-9bNVQp0?si=JVEBqp03mniOaqHe'
+                    },
+                    {
+                        title: 'الوسادة الخالية',
+                        year: 1956,
+                        description: 'دراما عاطفية تروي قصة حب معقدة بين شاب وفتاة من خلفيات اجتماعية مختلفة.',
+                        film: 'فيلم الوسادة الخالية',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPbbIzRMXP1DXu7bpQxwUro4agpbGO5iX3UQ&s',
+                        transformation: 'تحولت إلى فيلم عام 1956 من إخراج أحمد ضياء الدين، وتميز بأداء رائع لفاتن حمامة وعمر الشريف.',
+                        details: 'من أنجح الروايات الرومانسية في الأدب العربي الحديث.',
+                        filmLink: 'https://youtu.be/-RFM1UjhQA0?si=y_RKPQF9JShu25z-'
+                    },
+                    {
+                        title: 'أبي فوق الشجرة',
+                        year: 1969,
+                        description: 'كوميديا اجتماعية عن أب يقرر تغيير نمط حياته والعيش على شجرة احتجاجًا على أسرته.',
+                        film: 'فيلم أبي فوق الشجرة',
+                        image: '',
+                        transformation: 'تحولت إلى فيلم عام 1969 من إخراج حسين كمال، وكان من أنجح الكوميديات في السينما المصرية.',
+                        details: 'تميزت الرواية بنقدها الساخر للعلاقات الأسرية والتقاليد البالية.',
+                        filmLink: 'https://youtu.be/nBdG_Btm3SM?si=o0lvHJxG-CIQ0hrH'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "أجاثا كريستي",
+                books: [
+                    {
+                        title: 'Murder on the Orient Express',
+                        year: 1934,
+                        description: 'Hercule Poirot investigates a murder that occurred on a snowbound train',
+                        film: 'Murder on the Orient Express',
+                        image: 'https://m.media-amazon.com/images/I/81tlk1inIhL._AC_UF894,1000_QL80_.jpg',
+                        transformation: 'Adapted into a film in 1974 directed by Sidney Lumet, then remade in 2017 by Kenneth Branagh.',
+                        details: 'Considered one of the most famous detective novels in the world, known for its complex plot and diverse characters.',
+                        filmLink: 'https://youtu.be/VZHwN5PQAR4?si=GyO8MOb0KSmBs8mM'
+                    },
+                    {
+                        title: 'Death on the Nile',
+                        year: 1937,
+                        description: 'Poirot investigates a murder that occurred on a cruise ship on the Nile River during a tourist trip.',
+                        film: 'Death on the Nile',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqBZSuPtWciTW1R-l0f70gfouSIT2FZMxA_Q&s',
+                        transformation: 'Adapted into a film in 1978 and remade in 2022, featuring stunning cinematography of the Nile and Luxor.',
+                        details: 'The novel combines mystery and romance against the beautiful backdrop of Egypt.',
+                        filmLink: 'https://youtu.be/IyZ9550zmw0?si=yYhTIRhfLspYfIoz'
+                    },
+                    {
+                        title: 'Hercule Poirot\'s Christmas',
+                        year: 1938,
+                        description: 'Poirot investigates a murder that occurred in a family home during Christmas celebrations.',
+                        film: 'Hercule Poirot\'s Christmas',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT91ubzLlg3ktlFVnlCblC07AZMXKdB2Wb-xA&s',
+                        transformation: 'Adapted into an episode of the Poirot TV series in 1994, then into a film in 2018.',
+                        details: 'The novel is distinguished by its traditional British Christmas atmosphere mixed with mystery and crime.',
+                        filmLink: 'https://youtu.be/89pmoH2rndk?si=G8qeA98701rWH5I4'
+                    },
+                    {
+                        title: 'Mrs McGinty\'s Dead',
+                        year: 1953,
+                        description: 'Miss Marple investigates a series of mysterious crimes occurring in a small village.',
+                        film: 'Mrs McGinty\'s Dead',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNEMg1sqeAtjWSu88vA4rOcgbMxbvf-_8Uyg&s',
+                        transformation: 'Adapted into an episode of the Miss Marple TV series in 2008, known for its peaceful English village atmosphere.',
+                        details: 'One of the few novels that brings together Poirot and Miss Marple in one story.',
+                        filmLink: 'https://youtu.be/VVMvzHFLmk4?si=9EsCQPvQ8CF4ugLC'
+                    },
+                    {
+                        title: 'Easy to Kill',
+                        year: 1939,
+                        description: 'Poirot investigates a murder that appears to be suicide but is actually a carefully planned crime.',
+                        film: 'Easy to Kill',
+                        image: 'https://thegreencapsuleblog.wordpress.com/wp-content/uploads/2023/06/easytokill.jpg?w=500',
+                        transformation: 'Adapted into a film in 1990 then into a Poirot series episode in 2003, known for its complex plot.',
+                        details: 'Considered one of Christie\'s most complex novels in terms of plot and multiple suspects.',
+                        filmLink: 'https://youtu.be/sUmWLclVEK0?si=IrqD485tMTTDKFFy'
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "ستيفن كينغ",
+                books: [
+                    {
+                        title: 'The Shining',
+                        year: 1977,
+                        description: 'A writer moves with his family to an isolated hotel during winter, where terrifying events begin to occur.',
+                        film: 'The Shining',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6slQO4bZZfr5qHF1TeHlJu-ThFLFFR3uxbQ&s',
+                        transformation: 'considered one of the most famous horror films in history.',
+                        details: 'The novel is considered one of the most important works of modern horror literature, and the film featured an outstanding performance by Jack Nicholson.',
+                        filmLink: 'https://youtu.be/0tWMbYGAF00?si=TipuQlz2XLI_BIhX'
+                    },
+                    {
+                        title: 'Misery',
+                        year: 1987,
+                        description: 'A successful novelist is rescued from a car accident by an obsessive nurse, and their relationship turns into a nightmare.',
+                        film: 'Misery',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz6Cy0zmY5kRSm45MjRpWH-GTRX5T0IBKfqw&s',
+                        transformation: 'Adapted into a film in 1990 directed by Rob Reiner, with Kathy Bates winning an Oscar for Best Actress for her role.',
+                        details: 'Considered one of King\'s most successful novels in portraying psychological horror and complex human relationships.',
+                        filmLink: 'https://youtu.be/cWB9HIJ0boo?si=BqEeMoTAs-XaMzAA'
+                    },
+                    {
+                        title: 'The Green Mile',
+                        year: 1996,
+                        description: 'A death row prisoner discovers supernatural abilities that change his understanding of justice and life.',
+                        film: 'The Green Mile',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbPMr1g8ovu19ihy4eL2W6U7dJbqH2xnHoqg&s',
+                        transformation: 'Adapted into a film in 1999 directed by Frank Darabont, nominated for three Academy Awards.',
+                        details: 'The novel is distinguished by combining elements of fantasy with deep human drama.',
+                        filmLink: 'https://youtu.be/NwXx1Vzi_ds?si=i6gipI0xdvsfYTv7'
+                    },
+                    {
+                        title: 'IT',
+                        year: 1986,
+                        description: 'A group of children confront an evil entity that takes the form of a clown, and return as adults to face it again.',
+                        film: 'IT',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiipBf15to2InLu8djGX00ul0yBqLnzRNeZg&s',
+                        transformation: 'Adapted into a TV series in 1990, then into successful film series in 2017 and 2019.',
+                        details: 'Considered one of King\'s longest and most complex novels, known for combining horror with character development.',
+                        filmLink: 'https://youtu.be/_6U_lUjN4pU?si=Z6fT3vbL3ohNrg93'
+                    },
+                    {
+                        title: 'Rose Madder',
+                        year: 1995,
+                        description: 'A woman suffering from domestic violence escapes her husband and starts a new life, but her past haunts her.',
+                        film: 'Rose Madder',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2g6_j2QsxR6TRj6vo3nYakxIrlb5dB1aW1g&s',
+                        transformation: 'Adapted into a TV film in 2002, known for its strong critique of violence against women.',
+                        details: 'One of the few King novels that focuses on female protagonists and their experiences with violence and liberation.',
+                        filmLink: '#'
+                    },
+                    {
+                        title: '11/22/63',
+                        year: 2011,
+                        description: 'A man prevents the assassination of the US president, discovering his ability to travel through time and change the past.',
+                        film: '11/22/63',
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROGl78NNTYZvja6AgcYoBJsmMuggoZ9teUBg&s',
+                        transformation: 'Adapted into a TV series in 2016 produced by Hulu, known for blending science fiction with history.',
+                        details: 'The novel is distinguished by its accurate historical research and combination of science fiction and historical novel.',
+                        filmLink: 'https://www.youtube.com/live/35FQjHInPEg?si=v8UrLHZC0UJHvEdP'
+                    }
+                ]
+            }
+        ];
+
+        // تهيئة الكاروسلات
+        document.addEventListener('DOMContentLoaded', function() {
+            authorsData.forEach(author => {
+                const galleryId = author.id;
+                const cardsContainer = document.getElementById(`cards${galleryId}`);
+                const indicatorsContainer = document.getElementById(`indicators${galleryId}`);
+                
+                // إضافة الكتب إلى الكاروسل
+                author.books.forEach((book, index) => {
+                    const card = document.createElement('li');
+                    card.className = 'card';
+                    card.dataset.index = index;
+                    
+                    // تحديد اللغة لعنوان التحويل بناءً على المؤلف
+                    const transformationTitle = (author.id === 3 || author.id === 4) ? 
+                        'Transformation to Film' : 'لماذا تحول إلى فيلم؟';
+                    
+                    card.innerHTML = `
+                        <img src="${book.image}" alt="${book.title}" class="card-image">
+                        <div class="card-content">
+                            <h3 class="card-title">${book.title}</h3>
+                            <div class="card-year">
+                                <i class="fas fa-calendar-alt"></i>
+                                ${book.year}
+                            </div>
+                            <p class="card-description">${book.description}</p>
+                            <a href="${book.filmLink}" class="card-film" target="_blank">${book.film}</a>
+                        </div>
+                        <div class="book-details">
+                            <h3 class="book-details-title">${book.title}</h3>
+                            <p class="book-details-text">${book.details}</p>
+                            <div class="book-transformation">
+                                <h4>${transformationTitle}</h4>
+                                <p>${book.transformation}</p>
+                            </div>
+                        </div>
+                    `;
+                    cardsContainer.appendChild(card);
+                    
+                    // إضافة المؤشرات
+                    const indicator = document.createElement('div');
+                    indicator.className = index === 0 ? 'indicator active' : 'indicator';
+                    indicator.dataset.index = index;
+                    indicatorsContainer.appendChild(indicator);
+                });
+                
+                // إعداد حالة الكاروسل
+                const state = {
+                    currentIndex: 0,
+                    totalItems: author.books.length
+                };
+                
+                // تحديث موضع الكروت مع تأثير التدرج
+                function updateCardsPosition() {
+                    const cards = cardsContainer.querySelectorAll('.card');
+                    const centerIndex = state.currentIndex;
+                    
+                    cards.forEach((card, index) => {
+                        const distance = Math.abs(index - centerIndex);
+                        const position = (index - centerIndex) * 90;
+                        
+                        card.style.transform = `translateX(${position}px) scale(${1 - distance * 0.1})`;
+                        card.style.zIndex = state.totalItems - distance;
+                        
+                        if (distance === 0) {
+                            card.classList.add('active');
+                            card.style.opacity = '1';
+                            card.style.filter = 'none';
+                        } else {
+                            card.classList.remove('active');
+                            card.style.opacity = `${1 - distance * 0.3}`;
+                            card.style.filter = `blur(${distance * 2}px)`;
+                        }
+                    });
+                    
+                    // تحديث المؤشرات
+                    const indicators = indicatorsContainer.querySelectorAll('.indicator');
+                    indicators.forEach((indicator, index) => {
+                        if (index === state.currentIndex) {
+                            indicator.classList.add('active');
+                        } else {
+                            indicator.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // أحداث الأزرار
+                document.querySelectorAll(`.prev-btn[data-gallery="${galleryId}"]`).forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (state.currentIndex > 0) {
+                            state.currentIndex--;
+                            updateCardsPosition();
+                        }
+                    });
+                });
+                
+                document.querySelectorAll(`.next-btn[data-gallery="${galleryId}"]`).forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (state.currentIndex < state.totalItems - 1) {
+                            state.currentIndex++;
+                            updateCardsPosition();
+                        }
+                    });
+                });
+                
+                // أحداث المؤشرات
+                indicatorsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('indicator')) {
+                        state.currentIndex = parseInt(e.target.dataset.index);
+                        updateCardsPosition();
+                    }
+                });
+                
+                // التهيئة الأولية
+                updateCardsPosition();
+            });
+        });
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+
+    </script>
+</body>
+</html>

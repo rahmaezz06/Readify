@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مكتبة الكتب الصوتية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        :root {
+            --primary-dark: #4B2E05;
+            --primary-medium: #8B5E3C;
+            --primary-light: #F5E0B7;
+            --accent: #E7B10A;
+            --accent-dark: #D98E04;
+            --background: #FAF3E0;
+            --text-dark: #2E2E2E;
+            --text-medium: #4B2E05;
+            --card-bg: #FFF8E7;
+            --shadow: rgba(0,0,0,0.15);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium), var(--primary-light));
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+         /* ===== NAVBAR ===== */
+        .navbar {
+            background: rgba(75, 46, 5, 0.95);
+            padding: 12px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between; /* بدل center */
+            align-items: center; /* بدل none */
+            direction: ltr;
+        }
+
+        .logo {
+            color: #E7B10A;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: left;
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #F5E0B7;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .nav-links a:hover {
+            color: #E7B10A;
+        }
+
+        .nav-links .active a {
+            color: #E7B10A;
+            font-weight: bold;
+        }
+
+        /* Categories Dropdown Styles */
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            position: relative;
+            padding-right: 20px !important;
+        }
+
+        .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.7em;
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(75, 46, 5, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid #E7B10A;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(75, 46, 5, 0.4);
+            min-width: 250px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            padding: 10px 0;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            color: #F5E0B7 !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(231, 177, 10, 0.2);
+            font-weight: 500;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05 !important;
+            transform: translateX(10px);
+            font-weight: 600;
+        }
+
+        /* Hide other items when dropdown is active */
+        .navbar.dropdown-active .hidden-on-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Show only categories when dropdown is active */
+        .navbar.dropdown-active .nav-links {
+            position: relative;
+        }
+
+        .navbar.dropdown-active .nav-links > *:not(.dropdown) {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            pointer-events: none;
+        }
+
+        .navbar.dropdown-active .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: all;
+        }
+
+        /* Animation for dropdown items */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .dropdown-menu.show .dropdown-item {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .dropdown-menu.show .dropdown-item:nth-child(1) { animation-delay: 0.05s; }
+        .dropdown-menu.show .dropdown-item:nth-child(2) { animation-delay: 0.1s; }
+        .dropdown-menu.show .dropdown-item:nth-child(3) { animation-delay: 0.15s; }
+        .dropdown-menu.show .dropdown-item:nth-child(4) { animation-delay: 0.2s; }
+        .dropdown-menu.show .dropdown-item:nth-child(5) { animation-delay: 0.25s; }
+        .dropdown-menu.show .dropdown-item:nth-child(6) { animation-delay: 0.3s; }
+        .dropdown-menu.show .dropdown-item:nth-child(7) { animation-delay: 0.35s; }
+        .dropdown-menu.show .dropdown-item:nth-child(8) { animation-delay: 0.4s; }
+        .dropdown-menu.show .dropdown-item:nth-child(9) { animation-delay: 0.45s; }
+
+        /* Search Form */
+        #search {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            gap: 10px;
+        }
+
+        .form-control {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 25px;
+            background: #FAF3E0;
+            color: #2E2E2E;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(231, 177, 10, 0.5);
+        }
+
+        .btn-outline-success {
+            background: #D98E04;
+            color: #2E2E2E;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background: #E7B10A;
+            transform: translateY(-2px);
+        }
+
+        /* Login/Signup Buttons */
+        .ctn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            border-radius: 25px;
+            padding: 8px 20px;
+        }
+
+        .ctn a {
+            color: #2E2E2E !important;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            display: none;
+            width: 30px;
+            cursor: pointer;
+        }
+/* ===== MOBILE NAVIGATION ===== */
+@media (max-width: 768px) {
+
+    .menu-btn {
+        display: block;
+        width: 35px;
+        cursor: pointer;
+    }
+
+    /* نخفي اللينكات في الموبايل */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        right: 0;
+        top: 70px;
+        width: 100%;
+        background: rgba(75, 46, 5, 0.97);
+        padding: 25px 0;
+        gap: 20px;
+        text-align: center;
+        border-top: 2px solid #E7B10A;
+    }
+
+    /* تظهر عند فتح المينيو */
+    .nav-links.mobile-menu {
+        display: flex !important;
+    }
+
+    /* تكبير اللينكات */
+    .nav-links a {
+        font-size: 18px;
+        padding: 10px 0;
+    }
+
+    /* إخفاء search في الموبايل */
+    #search {
+        display: none;
+    }
+}
+        /* 🟤 عنوان الصفحة داخل مستطيل */
+        .header-box {
+            background-color: rgba(250, 243, 224, 0.9);
+            border: 2px solid #E7B10A;
+            border-radius: 20px;
+            width: fit-content;
+            margin: 20px auto 15px;
+            padding: 12px 35px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .header-box h1 {
+            color: #E7B10A;
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* ✨ الجملة التعريفية */
+        .intro-text {
+            text-align: center;
+            font-size: 1.7rem;
+            color: #FFF8E7;
+            margin: 10px auto 30px;
+            line-height: 1.6;
+            max-width: 800px;
+            padding: 0 20px;
+            padding: 15px 25px;
+        }
+
+        /* 📚 شبكة الكتب الصوتية */
+        .books-container {
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        /* 🎵 تصميم الكتاب الصوتي */
+        .audio-book {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 8px 25px var(--shadow);
+            border: 2px solid var(--accent);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .audio-book:nth-child(1) { animation-delay: 0.1s; }
+        .audio-book:nth-child(2) { animation-delay: 0.2s; }
+        .audio-book:nth-child(3) { animation-delay: 0.3s; }
+        .audio-book:nth-child(4) { animation-delay: 0.4s; }
+        .audio-book:nth-child(5) { animation-delay: 0.5s; }
+        .audio-book:nth-child(6) { animation-delay: 0.6s; }
+        .audio-book:nth-child(7) { animation-delay: 0.7s; }
+        .audio-book:nth-child(8) { animation-delay: 0.8s; }
+        .audio-book:nth-child(9) { animation-delay: 0.9s; }
+        .audio-book:nth-child(10) { animation-delay: 1.0s; }
+        .audio-book:nth-child(11) { animation-delay: 1.1s; }
+        .audio-book:nth-child(12) { animation-delay: 1.2s; }
+        .audio-book:nth-child(13) { animation-delay: 1.3s; }
+        .audio-book:nth-child(14) { animation-delay: 1.4s; }
+        .audio-book:nth-child(15) { animation-delay: 1.5s; }
+        .audio-book:nth-child(16) { animation-delay: 1.6s; }
+        .audio-book:nth-child(17) { animation-delay: 1.7s; }
+        .audio-book:nth-child(18) { animation-delay: 1.8s; }
+
+        .audio-book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .audio-book:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .audio-book:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* محتوى الكتاب */
+        .book-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .book-cover {
+            width: 120px;
+            height: 160px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            border: 3px solid var(--accent-dark);
+            transition: transform 0.3s ease;
+        }
+
+        .audio-book:hover .book-cover {
+            transform: rotate(2deg) scale(1.05);
+        }
+
+        .book-info {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-medium);
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+        }
+
+        .book-author {
+            color: var(--primary-medium);
+            font-size: 1.1rem;
+            margin: 0 0 12px 0;
+            font-weight: 500;
+        }
+
+        .book-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            background: #E6DDD0;
+            padding: 6px 12px;
+            border-radius: 15px;
+        }
+
+        .language-tag {
+            background: #A1B57D !important;
+            color: var(--text-dark) !important;
+        }
+
+        .book-description {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* زر الاستماع */
+        .listen-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(45deg, var(--accent-dark), var(--accent));
+            color: var(--text-dark);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(217, 142, 4, 0.4);
+            margin-top: 10px;
+        }
+
+        .listen-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(217, 142, 4, 0.6);
+        }
+
+        .listen-btn i {
+            margin-left: 8px;
+        }
+
+        /* 📱 تصميم متجاوب */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .header-box h1 {
+                font-size: 1.8rem;
+            }
+            
+            .intro-text {
+                font-size: 1rem;
+                padding: 12px 20px;
+                margin: 10px 15px 25px;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .book-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .book-cover {
+                align-self: center;
+            }
+            
+            .book-stats {
+                justify-content: center;
+            }
+            
+            .menu-btn {
+                display: block;
+            }
+        }
+
+        /* ⭐ أنيميشن */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* إشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--text-dark);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* تذييل الصفحة */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--card-bg);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-links {
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--card-bg);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* شريط التحميل */
+        .loading-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        /* زر العودة للأعلى */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--accent);
+            color: var(--text-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                    
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <li class="nav-item hidden-on-dropdown ctn"><a href="login.html">Login</a></li>
+            <li class="nav-item hidden-on-dropdown ctn"><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX8LjQxtzbOgGhy1dk0u_ezpEMNsqiSccDvkhshYXx-2YV9-U_ZgsxYFQeNuT2C9L2lV4&usqp=CAU" alt="" class="menu-btn">
+    </nav>
+<!-- طبقة التعتيم (تظهر فقط في الهواتف) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- 🟤 عنوان الصفحة داخل مستطيل -->
+    <div class="header-box">
+        <h1>🎧 مكتبة الكتب الصوتية</h1>
+    </div>
+    
+    <!-- الجملة التعريفية -->
+    <div class="intro-text">
+        اكتشف أفضل الكتب الصوتية لتطوير معرفتك والاستمتاع بأوقاتك مع المعرفة المسموعة
+    </div>
+
+    <!-- 📚 جميع الكتب في قسم واحد -->
+    <div class="books-container">
+        <div class="books-grid">
+            <!-- الكتاب 1 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://www.noor-book.com/publice/covers_cache_webp/13/d/d/3/09183603dcdd39d15cbf5869bfeac4d3.png.webp" alt="عجائب العقل البشري" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">عجائب العقل البشري</h3>
+                        <p class="book-author">راجي عنايت</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>8h 15m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>125K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.8</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">استكشف قدرات العقل البشري الهائلة وكيفية عمل الدماغ والعمليات العقلية مثل التفكير والذاكرة والإبداع في هذا الكتاب الرائع.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=FiF3DztVwI0', 'عجائب العقل البشري')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 2 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://ketabpedia.com/wp-content/uploads/2025/08/%D8%B1%D9%88%D8%A7%D9%8A%D8%A9-%D9%82%D8%B6%D9%8A%D8%A9-%D8%B3%D8%AA-%D8%A7%D9%84%D8%AD%D8%B3%D9%86-%D8%B3%D9%84%D8%B3%D9%84%D8%A9-%D8%AA%D8%AD%D9%82%D9%8A%D9%82%D8%A7%D8%AA-%D9%86%D9%88%D8%AD-%D8%A7%D9%84%D8%A3%D9%84%D9%81%D9%8A-%E2%80%93-%D9%85%D9%8A%D8%B1%D9%86%D8%A7-%D8%A7%D9%84%D9%85%D9%87%D8%AF%D9%8A.jpg" alt="قضية ست الحسن" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">قضية ست الحسن</h3>
+                        <p class="book-author">ميرنا المهدي</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>5h 40m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>98K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.6</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">رواية بوليسية مشوقة تدور حول جريمة قتل غامضة وتتبع أسلوب البحث عن الأدلة والتحليل المنطقي لحل اللغز.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=pg3Hbds4dCg', 'قضية ست الحسن')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 3 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://norkitab.com/storage/book_images/book_img_47a6f8a0bf.png" alt="قضية لوز مر" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">قضية لوز مر</h3>
+                        <p class="book-author">ميزا المهدي</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>6h 20m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>87K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.5</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">قضية جنائية معقدة تتمحور حول جريمة تسمم غامضة تتطلب تحليلاً دقيقاً للجريمة والعثور على دافع الجاني.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=cN5iiS2Oing', 'قضية لوز مر')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 4 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/dfX6kefOxko/sddefault.jpg" alt="المزرعة المنسية" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">المزرعة المنسية</h3>
+                        <p class="book-author">غالية سموفة</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>9h 20m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>134K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">رواية عالمية تدور أحداثها في بيئة ريفية معزولة، تستكشف الصراعات الإنسانية والعلاقات الأسرية وتأثير العزلة على الشخصيات.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=dfX6kefOxko', 'المزرعة المنسية')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 5 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://m.media-amazon.com/images/I/71JuBAo2uML._AC_UF1000,1000_QL80_.jpg" alt="Dating the Rogue Cowboy" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">Dating the Rogue Cowboy</h3>
+                        <p class="book-author">lime peak ranch</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>6h 50m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>167K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A contemporary romance focusing on the dating process and romantic challenges involving a male character who is unconventional or rebellious.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=5av-yRPZs1w', 'Dating the Rogue Cowboy')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 6 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/6gL0EOwfrVc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA47gyh_Wug-vLugW0_D41Wn0oLww" alt="FOCUS ON YOU UNTIL YOU WIN" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">FOCUS ON YOU UNTIL YOU WIN</h3>
+                        <p class="book-author">Brennan Cole</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>6h 45m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>156K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.9</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">Achieve success through intense self-focus and perseverance with actionable advice on blocking out distractions.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=6gL0EOwfrVc', 'FOCUS ON YOU UNTIL YOU WIN')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 7 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://m.media-amazon.com/images/I/91hvc4F1OfL._SY425_.jpg" alt="The Patriot Protocol" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">The Patriot Protocol</h3>
+                        <p class="book-author">C. G. Cooper</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>8h 20m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>98K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.4</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A post-apocalyptic thriller focusing on survival, political intrigue, and the restoration of order in a collapsed society.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=cT7sr3jd0Tk', 'The Patriot Protocol')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 8 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbcuV8mZwhZsTXeBShMyYNpIHjaPrAoDnMQw&s" alt="Pride and Prejudice" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">Pride and Prejudice</h3>
+                        <p class="book-author">Jane Austen</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>11h 40m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>187K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.8</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A classic English novel exploring themes of social class, manners, morality, and marriage in the English gentry during the late 18th century.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=sNBeqZMyBr0', 'Pride and Prejudice')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 9 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/-po9Wg7BIYM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCfb1bajHANIS9UaoyB0shwjwqEaw" alt="Her Captain's Promise" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">Her Captain's Promise</h3>
+                        <p class="book-author">Lucille McLean</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>7h 15m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>112K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.6</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A romance novel focusing on emotional relationships between main characters, featuring themes of commitment and overcoming obstacles.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=-po9Wg7BIYM', 'Her Captains Promise')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 10 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjcIpzJoRMHSUDI1E-g0-GbTTaJCECnY7u6w&s" alt="The Adventures of Sherlock Holmes" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">The Adventures of Sherlock Holmes</h3>
+                        <p class="book-author">Arthur Conan Doyle</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>12h 15m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>245K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.9</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A collection of 12 classic detective stories featuring the famous Sherlock Holmes and his partner Dr. Watson solving complex criminal cases.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=wp_6Jg5pLYc', 'The Adventures of Sherlock Holmes')"">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 11 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoq3zkHn0nAvmVo6wl82J2yDEMgWvY9lz9ug&s" alt="The Case-Book of Sherlock Holmes" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">The Case-Book of Sherlock Holmes</h3>
+                        <p class="book-author">Arthur Conan Doyle</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>10h 55m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>156K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">The final collection of short stories in the original Sherlock Holmes canon, featuring intricate cases and unique detective methodology.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=DncPaMq8Pkw', 'The Case-Book of Sherlock Holmes')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 12 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvD2fH73_y1WkEW_YN8gd0NkBOPLVOaH71Ow&s" alt="The Guest" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">The Guest</h3>
+                        <p class="book-author">Charles Dickens</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>1h 20m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>89K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.3</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">A short Victorian literature piece exploring social commentary, poverty, class issues, and the moral lives of everyday people in 19th-century England.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=-767w5VSCXY', 'The Guest')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتب الإضافية -->
+            <!-- الكتاب 13 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D-6463KWp3A8&psig=AOvVaw16DsQixb-_nDV_x1SZMSqh&ust=1764332959513000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKjJsM2qkpEDFQAAAAAdAAAAABAE" alt="مذكرات سرية" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">مذكرات سرية</h3>
+                        <p class="book-author">د. أحمد خالد توفيق</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>7h 10m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>112K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">رحلة في أعماق النفس البشرية من خلال سرد الأحداث بطابع حميمي وكاشف للتجارب الشخصية والأسرار المخبأة.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=-6463KWp3A8', 'مذكرات سرية')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 14 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/iXJY5cZRddI/sddefault.jpg?v=64750575" alt="عالم الأسرار" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">عالم الأسرار</h3>
+                        <p class="book-author">مصطفى محمود</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>5h 50m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>143K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.8</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">يجمع الدكتور مصطفى محمود بين العلم والتصوف ليناقش قضايا ما وراء الطبيعة والأحلام والظواهر الخارقة وأسرار الكون والحياة.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=iXJY5cZRddI', 'عالم الأسرار')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 15 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://ketabpedia.com/wp-content/uploads/2025/02/%D9%83%D8%AA%D8%A7%D8%A8-%D9%81%D9%86-%D8%A7%D9%84%D8%AA%D8%B9%D8%A7%D9%85%D9%84-%D9%85%D8%B9-%D8%A7%D9%84%D9%86%D8%A7%D8%B3-%D9%83%D8%A7%D8%B1%D9%86%D9%8A%D8%AC%D9%8A.jpg" alt="فن التعامل مع الناس" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">فن التعامل مع الناس</h3>
+                        <p class="book-author">ديل كارنيجي</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>7h 30m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>198K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.9</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">أحد أشهر المراجع في مجال العلاقات الشخصية ومهارات التواصل والتأثير على الآخرين مع مبادئ وقواعد عملية مدعومة بقصص واقعية.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=FqkZnjVGS6U', 'فن التعامل مع الناس')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 16 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/ijXQJf_fQ7A/maxresdefault.jpg" alt="لا مكاناً للهروب" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">لا مكاناً للهروب</h3>
+                        <p class="book-author">حسين علي</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>8h 10m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>121K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.6</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">رواية تشويق نفسي تدور حول شخصية تجد نفسها محاصرة أو مطاردة، حيث تتصاعد الأحداث في جو من التوتر والغموض.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=ijXQJf_fQ7A', 'لا مكاناً للهروب')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 17 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/enMGJXj_6Bs/hqdefault.jpg" alt="تحليل الشخصية" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">تحليل الشخصية</h3>
+                        <p class="book-author">د. محمد خليفه بركات</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>6h 30m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>145K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.7</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-language"></i>
+                                <span>عربي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">كتاب يختص بمجال علم النفس وتحليل الشخصية وأنماط السلوك، يهدف إلى مساعدة القارئ على فهم مكونات الشخصية البشرية.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=enMGJXj_6Bs', 'تحليل الشخصية')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+
+            <!-- الكتاب 18 -->
+            <div class="audio-book">
+                <div class="book-header">
+                    <img src="https://i.ytimg.com/vi/HjCidiUAM2o/mqdefault.jpg" alt="The Secret of the King's Tomb" class="book-cover">
+                    <div class="book-info">
+                        <h3 class="book-title">The Secret of the King's Tomb</h3>
+                        <p class="book-author">Garrett Drake</p>
+                        <div class="book-stats">
+                            <div class="stat">
+                                <i class="far fa-clock"></i>
+                                <span>9h 05m</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-headphones"></i>
+                                <span>134K</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star" style="color: #E7B10A;"></i>
+                                <span>4.5</span>
+                            </div>
+                            <div class="stat language-tag">
+                                <i class="fas fa-globe"></i>
+                                <span>English</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="book-description">An adventure thriller revolving around exploration of ancient history, archaeology, and uncovering hidden secrets associated with a royal burial site.</p>
+                <button class="listen-btn" onclick="openYoutubeVideo('https://www.youtube.com/watch?v=HjCidiUAM2o', 'The Secret of the Kings Tomb')">
+                    <i class="fas fa-play-circle"></i> استمع الآن
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- تذييل الصفحة -->
+    <footer class="footer">
+        <p>© 2023 مكتبة الكتب الصوتية - جميع الحقوق محفوظة</p>
+        <div class="footer-links">
+            <a href="#">سياسة الخصوصية</a> | 
+            <a href="#">شروط الاستخدام</a> | 
+            <a href="#">اتصل بنا</a>
+        </div>
+    </footer>
+    
+    <!-- زر العودة للأعلى -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- إشعار -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // فتح فيديو اليوتيوب مباشرة
+        function openYoutubeVideo(youtubeUrl, title) {
+            if (youtubeUrl) {
+                window.open(youtubeUrl, '_blank');
+                showNotification(`جاري فتح "${title}" على يوتيوب`);
+            } else {
+                showNotification('عذراً، رابط الفيديو غير متوفر');
+            }
+        }
+
+        // إظهار الإشعارات
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+       document.addEventListener('DOMContentLoaded', function() {
+
+    // ===== Dropdown Categories ===== //
+    const categoriesDropdown = document.getElementById('categoriesDropdown');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const navbar = document.querySelector('.navbar');
+    const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+
+    function closeDropdown() {
+        if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+        if (categoriesMenu) categoriesMenu.classList.remove('show');
+        if (navbar) navbar.classList.remove('dropdown-active');
+    }
+
+    if (categoriesDropdown && categoriesMenu) {
+        categoriesDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isActive = this.classList.contains('active');
+            closeDropdown();
+            if (!isActive) {
+                this.classList.add('active');
+                categoriesMenu.classList.add('show');
+                if (navbar && hiddenItems.length > 0) {
+                    navbar.classList.add('dropdown-active');
+                }
+            }
+        });
+
+        // إغلاق dropdown عند الضغط خارجياً
+        document.addEventListener('click', function(e) {
+            if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // إغلاق dropdown عند الضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDropdown();
+        });
+
+        // فتح روابط dropdown مباشرة
+        const dropdownItems = categoriesMenu.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = this.getAttribute('href');
+            });
+        });
+    }
+
+    // ===== Mobile Menu Toggle ===== //
+    const menuBtn = document.querySelector('.menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('mobile-menu');
+        });
+    }
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html','user review.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+});
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+// ===== Auto Toggle Mobile Menu on Resize ===== //
+function handleResize() {
+    const navLinks = document.querySelector('.nav-links');
+    if (!navLinks) return;
+
+    if (window.innerWidth > 768) { // لو الشاشة أكبر من 768px اعتبرها ديسكتوب
+        navLinks.classList.remove('mobile-menu');
+    } 
+    // مش لازم تضيف حاجة لو أصغر من 768 لأن الزر موجود بالفعل للتحكم
+}
+
+// شغّل الدالة عند تحميل الصفحة
+handleResize();
+
+// شغّل الدالة كل مرة يتم فيها تغيير حجم الشاشة
+window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>
