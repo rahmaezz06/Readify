@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>READFIY</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+    <style>
+        /* ===== تحسينات عامة للسكرو ===== */
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        /* ===== HEADER & HERO SECTION ===== */
+        header {
+            background: url('https://i.pinimg.com/1200x/36/a0/85/36a085785eabcc6add04d35e8c97be37.jpg') center/cover no-repeat;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Overlay layer */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(75, 46, 5, 0.4);
+            z-index: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 40px 20px;
+            color: #FFF8E7;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(45deg, #E7B10A, #F5E0B7, #E7B10A);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            white-space: normal;
+            word-wrap: break-word;
+            animation: titleEntrance 1.2s ease-out, gradientShift 3s ease-in-out infinite 1.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #F5E0B7;
+            line-height: 1.3;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            animation: subtitleEntrance 1s ease-out 0.6s both;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            color: #FAF3E0;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+            animation: descriptionEntrance 1s ease-out 0.9s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #2E2E2E;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 25px rgba(217, 142, 4, 0.6);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            animation: buttonEntrance 0.8s ease-out 1.2s both, buttonPulse 2s ease-in-out infinite 2s;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(217, 142, 4, 0.8);
+            background: linear-gradient(45deg, #E7B10A, #D98E04);
+            color: #2E2E2E;
+            animation: none;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* ===== BOOKS SECTION ===== */
+        .books-section {
+            background: #FAF3E0;
+            padding: 120px 20px 80px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #4B2E05;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            justify-items: center;
+        }
+
+        .book-card {
+            background: #FFFFFF;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(75, 46, 5, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            max-width: 350px;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(75, 46, 5, 0.2);
+        }
+
+        .book-cover {
+            position: relative;
+            height: 250px;
+            background: linear-gradient(135deg, #8B5E3C, #4B2E05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .book-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(75, 46, 5, 0.8));
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .book-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #F5E0B7;
+        }
+
+        .book-author {
+            font-size: 1rem;
+            color: #E7B10A;
+            font-style: italic;
+        }
+
+        .book-info {
+            padding: 25px;
+        }
+
+        .book-description {
+            color: #2E2E2E;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .read-btn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #2E2E2E;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .read-btn:hover {
+            background: linear-gradient(45deg, #E7B10A, #D98E04);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(217, 142, 4, 0.4);
+        }
+
+        /* ===== QUOTES SECTION ===== */
+        .quotes-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #FAF3E0 0%, #E6DDD0 100%);
+            min-height: 100vh;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .quote-card {
+            background: #FFFFFF;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(75, 46, 5, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(75, 46, 5, 0.15);
+            border-color: #E7B10A;
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: #E7B10A;
+            font-family: serif;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #2E2E2E;
+            margin-bottom: 25px;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .quote-meta {
+            border-top: 1px solid #E6DDD0;
+            padding-top: 20px;
+        }
+
+        .quote-book {
+            display: block;
+            color: #8B5E3C;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .quote-author {
+            display: block;
+            color: #D98E04;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .quotes-cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .view-more-btn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #2E2E2E;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(217, 142, 4, 0.3);
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .view-more-btn:hover {
+            background: linear-gradient(45deg, #E7B10A, #D98E04);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(217, 142, 4, 0.5);
+            color: #2E2E2E;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #4B2E05;
+            color: #F5E0B7;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .copyright {
+            color: #E7B10A;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #F5E0B7;
+            opacity: 0.8;
+            margin-top: 15px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes titleEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(80px) scale(0.8);
+                filter: blur(10px);
+            }
+            60% {
+                transform: translateY(-10px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes subtitleEntrance {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes descriptionEntrance {
+            0% {
+                opacity: 0;
+                transform: translateX(50px);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes buttonEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-10deg);
+            }
+            70% {
+                transform: scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(217, 142, 4, 0.6);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 8px 35px rgba(217, 142, 4, 0.9), 0 0 30px rgba(217, 142, 4, 0.4);
+                transform: scale(1.03);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .hero-main-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-main-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-main-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.6rem;
+            }
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            .cta-button {
+                padding: 16px 40px;
+                font-size: 1.1rem;
+            }
+            .form-control {
+                width: 150px;
+            }
+            .books-grid,
+            .quotes-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .book-card,
+            .quote-card {
+                max-width: 100%;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-main-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            .cta-button {
+                padding: 14px 35px;
+                font-size: 1rem;
+            }
+            .logo {
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .quote-card {
+                padding: 25px 15px;
+            }
+            .quote-icon {
+                font-size: 3rem;
+            }
+            .quote-text {
+                font-size: 1.1rem;
+            }
+            .view-more-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        
+        <!-- زر المينيو - تم وضعه هنا ليكون على اليمين -->
+        <button class="menu-btn" id="mobileMenuBtn">☰</button>
+        
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <!-- Login/Signup Buttons - IMPROVED -->
+            <li class="nav-item hidden-on-dropdown">
+                <div class="login-signup-container">
+                    <button class="ctn signup-btn">
+                        <a href="signup.html">Sign Up</a>
+                    </button>
+                    <button class="ctn login-btn">
+                        <a href="login.html">Login</a>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Overlay للقائمة المتنقلة (يتم إنشاؤه بواسطة JavaScript) -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="hero-main-title">READ. LEARN. DOMINATE.</h1>
+            <h2 class="hero-subtitle">Fuel Your Mind with Free Knowledge</h2>
+            <p class="hero-description">Join Thousands of Readers in Their Learning Journey</p>
+            <!-- تم تعديل الزر للتمرير إلى قسم الكتب -->
+            <button class="cta-button" onclick="scrollToBooks()">READ NOW</button>
+        </div>
+    </header>
+   
+    <section class="books-section" id="books-section">
+        <div class="container">
+            <h2 class="section-title">Featured E-Books</h2>
+            <div class="books-grid">
+                
+                <!-- الكتاب الأول -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <div class="book-design" style="background: linear-gradient(135deg, #8B5E3C, #4B2E05);">
+                           <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6f/Time_machine.jpg/250px-Time_machine.jpg" alt="the-time-machine-h-g-wells" class="book-image">
+                        </div>
+                        <div class="book-overlay">
+                            <h3 class="book-title">The Time Machine</h3>
+                            <p class="book-author">H. G. Wells</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <p class="book-description">
+                        An English scientist travels to the future and finds humanity divided into Eloi and Morlocks.
+                        </p>
+                        <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1q6daU0lgoKiUExCdcMlYhh24pSyLziEN/view')">
+                            READ NOW
+                        </button>
+                    </div>
+                </div>
+
+                <!-- الكتاب الثاني -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <div class="book-design" style="background: linear-gradient(135deg, #4B2E05, #8B5E3C);">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGRmyaNmuswLccXR-etnqneZ931wImB2rSIg&s" alt="مصر_الفرعونية" class="book-image">
+                        </div>
+                        <div class="book-overlay">
+                            <h3 class="book-title">مصر الفرعونية</h3>
+                            <p class="book-author">تأليف: أحمد فخري</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <p class="book-description">
+                            يعد العالم المصري أحمد فخري أحد رواد علم المصريات، ويقدم في هذا الكتاب مدخلاً شاملاً وواضحاً لحضارة مصر الفرعونية العريقة.
+                        </p>
+                        <button class="read-btn" onclick="openBook('https://drive.google.com/file/d/1lxTtu4y4ynd421Up3nsB3rUv5TqiHYmk/view')">
+                            اقرأ الآن
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الـ Quotes -->
+    <section class="quotes-section">
+        <div class="container">
+            <h2 class="section-title">Inspirational Quotes</h2>
+            
+            <div class="quotes-grid">
+                <!-- Quote 1 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        أفضل طريقة لإقناع شخص ما هي تركه يستنتج الفكرة بنفسه.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: فن التعامل مع الناس</span>
+                        <span class="quote-author">الكاتب: ديل كارنيجي</span>
+                    </div>
+                </div>
+
+                <!-- Quote 2 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        Trust is a functional, measurable aspect of human relationships, not just an abstract quality.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: The Science of Interpersonal Trust</span>
+                        <span class="quote-author">الكاتب: Randy Borum</span>
+                    </div>
+                </div>
+
+                <!-- Quote 3 -->
+                <div class="quote-card">
+                    <div class="quote-icon">"</div>
+                    <p class="quote-text">
+                        لتسيطر على حياتك، عليك أولاً أن تسيطر على انفعالاتك.
+                    </p>
+                    <div class="quote-meta">
+                        <span class="quote-book">الكتاب: إدارة الغضب</span>
+                        <span class="quote-author">الكاتب: (مجهول / مختص)</span>
+                    </div>
+                </div>
+            </div>
+            
+           <div class="quotes-cta">
+                <a href="qoutes.html" class="view-more-btn">VIEW ALL QUOTES</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>123 Fifth Avenue, NY 10160, New York, USA | Phone: 830-123-456 | Email: contact@readfiy.com</p>
+            <p class="copyright">
+                © 2024 READFIY - All books are provided for educational purposes under fair use.<br>
+                All rights reserved to their respective authors and publishers.
+            </p>
+            <p class="disclaimer">
+                Disclaimer: All books available on this platform are for educational and personal use only.<br>
+                We respect intellectual property rights and encourage users to purchase original copies.
+            </p>
+        </div>
+    </footer>
+<script>
+ 
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر DOM الأساسية
+            const categoriesDropdown = document.getElementById('categoriesDropdown');
+            const categoriesMenu = document.getElementById('categoriesMenu');
+            const navbar = document.querySelector('.navbar');
+            const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+            const menuBtn = document.querySelector('.menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+            
+            // إنشاء طبقة Overlay للإغلاق
+            const menuOverlay = document.createElement('div');
+            menuOverlay.className = 'menu-overlay';
+            document.body.appendChild(menuOverlay);
+            
+            // ===== دالة إغلاق القائمة والdropdowns =====
+            function closeAllMenus() {
+                // إغلاق القائمة المتنقلة
+                navLinks.classList.remove('mobile-menu');
+                body.classList.remove('menu-open');
+                menuBtn.innerHTML = '☰';
+                
+                // إغلاق dropdowns الكمبيوتر
+                if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+                if (categoriesMenu) categoriesMenu.classList.remove('show');
+                if (navbar) navbar.classList.remove('dropdown-active');
+                
+                // إغلاق dropdowns الموبايل
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+                document.querySelectorAll('.dropdown-toggle').forEach(toggle => toggle.classList.remove('active'));
+            }
+            
+            // ===== دالة فتح/إغلاق القائمة المتنقلة =====
+            function toggleMobileMenu() {
+                navLinks.classList.toggle('mobile-menu');
+                body.classList.toggle('menu-open');
+                
+                // تغيير أيقونة الزر
+                if (navLinks.classList.contains('mobile-menu')) {
+                    menuBtn.innerHTML = '✕';
+                    menuBtn.setAttribute('aria-label', 'Close menu');
+                } else {
+                    menuBtn.innerHTML = '☰';
+                    menuBtn.setAttribute('aria-label', 'Open menu');
+                    closeAllMenus();
+                }
+            }
+            
+            // ===== سلوك dropdown للكمبيوتر فقط =====
+            if (categoriesDropdown && categoriesMenu) {
+                categoriesDropdown.addEventListener('click', function(e) {
+                    // تنفيذ فقط في وضع الكمبيوتر
+                    if (window.innerWidth > 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const isActive = this.classList.contains('active');
+                        closeAllMenus();
+                        if (!isActive) {
+                            this.classList.add('active');
+                            categoriesMenu.classList.add('show');
+                            if (navbar && hiddenItems.length > 0) {
+                                navbar.classList.add('dropdown-active');
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // ===== النقر خارج dropdown يغلقه (للحاسوب) =====
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth > 768) {
+                    if (categoriesDropdown && categoriesMenu) {
+                        if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                            closeAllMenus();
+                        }
+                    }
+                }
+            });
+            
+            // ===== النقر على Overlay يغلق القائمة (للموبايل) =====
+            menuOverlay.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeAllMenus();
+                }
+            });
+            
+            // ===== النقر في أي مكان خارج القائمة يغلقها (للموبايل) =====
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    // إذا كانت القائمة مفتوحة
+                    if (navLinks.classList.contains('mobile-menu')) {
+                        // إذا النقر ليس داخل القائمة ولا على زر المينيو
+                        if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+                            closeAllMenus();
+                        }
+                    }
+                }
+            });
+            
+            // ===== إغلاق القائمة عند الضغط على ESC =====
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllMenus();
+                }
+            });
+            
+            // ===== سلوك الموبايل =====
+            // فتح/إغلاق القائمة المتنقلة
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // ===== سلوك dropdowns في الموبايل - FIXED =====
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    // للموبايل فقط
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const menu = this.nextElementSibling;
+                        
+                        // التأكد من أن menu موجود وهو dropdown-menu
+                        if (menu && menu.classList.contains('dropdown-menu')) {
+                            const isActive = menu.classList.contains('show');
+                            
+                            // إغلاق جميع dropdowns الأخرى
+                            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                                if (m !== menu) m.classList.remove('show');
+                            });
+                            document.querySelectorAll('.dropdown-toggle').forEach(t => {
+                                if (t !== this) t.classList.remove('active');
+                            });
+                            
+                            // تبديل حالة dropdown الحالي
+                            if (!isActive) {
+                                menu.classList.add('show');
+                                this.classList.add('active');
+                                
+                                // إصلاح إضافي: تأكد من عرض جميع العناصر
+                                setTimeout(() => {
+                                    const dropdownItems = menu.querySelectorAll('.dropdown-item');
+                                    dropdownItems.forEach((item, index) => {
+                                        item.style.display = 'block';
+                                        item.style.opacity = '1';
+                                        item.style.visibility = 'visible';
+                                    });
+                                }, 10);
+                            } else {
+                                menu.classList.remove('show');
+                                this.classList.remove('active');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // ===== FIXED: عرض جميع عناصر dropdown عند فتح القائمة =====
+            function ensureAllDropdownItemsVisible() {
+                if (window.innerWidth <= 768) {
+                    const dropdownItems = document.querySelectorAll('.dropdown-item');
+                    dropdownItems.forEach(item => {
+                        item.style.display = 'block';
+                        item.style.opacity = '1';
+                        item.style.visibility = 'visible';
+                        item.style.height = 'auto';
+                        item.style.overflow = 'visible';
+                    });
+                    
+                    // تأكد من أن dropdown menu يمكنه استيعاب جميع العناصر
+                    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+                    dropdownMenus.forEach(menu => {
+                        if (menu.classList.contains('show')) {
+                            menu.style.maxHeight = '400px';
+                            menu.style.overflowY = 'auto';
+                        }
+                    });
+                }
+            }
+            
+            // ===== فتح روابط dropdown عند النقر عليها - MODIFIED =====
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            closeAllMenus();
+                        }, 300);
+                    }
+                    
+                    // احفظ href في متغير قبل أي تغيير
+                    const href = this.getAttribute('href');
+                    
+                    // منع السلوك الافتراضي مؤقتاً للتعامل مع القائمة
+                    e.preventDefault();
+                    
+                    // إذا كان الرابط يشير إلى صفحة HTML
+                    if (href && href.includes('.html')) {
+                        // إغلاق القائمة أولاً (خاصة في الموبايل)
+                        closeAllMenus();
+                        
+                        // الانتقال للصفحة بعد تأخير بسيط
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 300);
+                    }
+                });
+            });
+            
+            // إغلاق القائمة عند النقر على رابط عادي (في الموبايل)
+            const navLinksItems = document.querySelectorAll('.nav-links a:not(.dropdown-toggle, .dropdown-item)');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // إذا كان الرابط يشير إلى صفحة HTML
+                    const href = this.getAttribute('href');
+                    if (href && href.includes('.html') && !href.includes('index.html')) {
+                        // منع السلوك الافتراضي مؤقتاً
+                        e.preventDefault();
+                        
+                        if (window.innerWidth <= 768) {
+                            // إغلاق القائمة أولاً
+                            closeAllMenus();
+                            
+                            // الانتقال للصفحة بعد تأخير بسيط
+                            setTimeout(() => {
+                                window.location.href = href;
+                            }, 300);
+                        } else {
+                            // في الكمبيوتر الانتقال مباشرة
+                            window.location.href = href;
+                        }
+                    }
+                });
+            });
+            
+            // ===== تكييف الواجهة مع تغيير حجم النافذة =====
+            function handleResize() {
+                if (window.innerWidth > 768) {
+                    // وضع الكمبيوتر - إغلاق كل شيء
+                    closeAllMenus();
+                    menuBtn.innerHTML = '☰';
+                    
+                    // إخفاء زر المينيو في الكمبيوتر
+                    menuBtn.style.display = 'none';
+                    
+                    // إعادة تعيين أنماط الموبايل
+                    const dropdownItems = document.querySelectorAll('.dropdown-item');
+                    dropdownItems.forEach(item => {
+                        item.style = '';
+                    });
+                } else {
+                    // وضع الموبايل - إظهار زر المينيو
+                    menuBtn.style.display = 'flex';
+                    
+                    // تأكد من ظهور جميع عناصر dropdown
+                    ensureAllDropdownItemsVisible();
+                }
+                
+                // تعطيل تأثير dropdown الكمبيوتر في الموبايل
+                if (window.innerWidth <= 768 && navbar) {
+                    navbar.classList.remove('dropdown-active');
+                }
+                
+                // التأكد من أن dropdowns الموبايل مغلقة عند التبديل للكمبيوتر
+                if (window.innerWidth > 768) {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+                    document.querySelectorAll('.dropdown-toggle').forEach(toggle => toggle.classList.remove('active'));
+                }
+            }
+            
+            // استدعاء الدالة عند التحميل وعند تغيير الحجم
+            window.addEventListener('load', handleResize);
+            window.addEventListener('resize', handleResize);
+            
+            // ===== البحث =====
+            const searchForm = document.querySelector('#search');
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const searchValue = this.querySelector('input').value.trim();
+                    if (searchValue) {
+                        alert('سيتم البحث عن: ' + searchValue);
+                    }
+                });
+            }
+            
+            // ===== تحسين أزرار Login/Signup - MODIFIED =====
+            const loginBtn = document.querySelector('.login-btn a');
+            const signupBtn = document.querySelector('.signup-btn a');
+            
+            if (loginBtn) {
+                loginBtn.parentElement.parentElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                });
+            }
+            
+            if (signupBtn) {
+                signupBtn.parentElement.parentElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'signup.html';
+                });
+            }
+            
+            // ===== الروابط - MODIFIED =====
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const url = this.getAttribute('href');
+                    
+                    if (!url || url === '#' || url.startsWith('#')) {
+                        return;
+                    }
+                    
+                    // إذا كان الرابط لصفحة HTML (ماعدا index.html)
+                    if (url.includes('.html') && !url.includes('index.html')) {
+                        e.preventDefault();
+                        
+                        // الانتقال مباشرة للصفحة
+                        window.location.href = url;
+                    }
+                });
+            });
+            
+            // تهيئة أولية
+            handleResize();
+            
+            // إضافة event listener إضافي لضمان ظهور العناصر
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    if (e.target.classList.contains('dropdown-toggle') || 
+                        e.target.closest('.dropdown-toggle')) {
+                        setTimeout(ensureAllDropdownItemsVisible, 50);
+                    }
+                }
+            });
+        });
+
+    // ===== Search داخل الصفحة + Redirect على Error Page ===== //
+    const searchForm = document.querySelector('#search');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = this.querySelector('input').value.toLowerCase().trim();
+            const books = document.querySelectorAll('.book-card');
+            let found = false;
+
+            books.forEach(book => {
+                const title = book.querySelector('.book-title').innerText.toLowerCase();
+                const author = book.querySelector('.book-author').innerText.toLowerCase();
+                const desc = book.querySelector('.book-description').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || author.includes(searchValue) || desc.includes(searchValue)) {
+                    book.style.display = 'block';
+                    found = true;
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+
+            if (!found) window.location.href = "error.html";
+        });
+    }
+
+    // ===== Redirect لأي رابط غير موجود أو فارغ مع استثناء الروابط المعروفة ===== //
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+
+            // استثناء الروابط الأساسية للنيف بار و dropdown
+            const exemptLinks = ['#', '', 'index.html', 'qoutes.html', 'connect-us.html', 'about.html', 'login.html', 'signup.html'];
+            if (exemptLinks.includes(url) || this.classList.contains('dropdown-toggle') || this.classList.contains('dropdown-item')) {
+                return; // السماح بالانتقال الطبيعي
+            }
+
+            // تحقق من وجود الصفحة فقط للروابط الجديدة
+            fetch(url, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        e.preventDefault();
+                        window.location.href = "error.html";
+                    }
+                })
+                .catch(() => {
+                    e.preventDefault();
+                    window.location.href = "error.html";
+                });
+        });
+    });
+
+
+
+// ===== دوال خارج DOMContentLoaded ===== //
+// فتح الكتاب في تبويب جديد
+function openBook(url) {
+    if (url) {
+        window.open(url, '_blank');
+    } else {
+        window.location.href = "error.html";
+    }
+}
+
+// Scroll بسلاسة لقسم الكتب
+function scrollToBooks() {
+    const booksSection = document.getElementById('books-section');
+    if (booksSection) {
+        booksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = "error.html";
+    }
+}
+</script>
+</body>
+</html>

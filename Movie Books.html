@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>كتب تحولت لأفلام</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 🌰 إعدادات الصفحة العامة */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4B2E05, #8B5E3C, #F5E0B7);
+            color: #2E2E2E;
+            margin: 0;
+            padding: 0;
+            min-height: 110vh;
+            overflow-x: hidden;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            margin-top: 120px;
+            padding: 40px 20px;
+            direction: ltr;
+        }
+
+        /* العنوان في مربع */
+        .title-container {
+            background: rgba(75, 46, 5, 0.8);
+            border: 3px solid #E7B10A;
+            border-radius: 20px;
+            padding: 25px 40px;
+            text-align: center;
+            margin: 0 auto 60px;
+            max-width: 800px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+        }
+
+        .page-title {
+            color: #FFF8E7;
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .title-sub {
+            color: #F5E0B7;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* الاستيكر */
+        .sticker {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            transform: rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        /* قسم المؤلف */
+        .author-section {
+            margin-bottom: 80px;
+            background: rgba(255, 248, 231, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(75, 46, 5, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .author-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+        }
+
+        /* معلومات المؤلف */
+        .author-info {
+            flex: 0 0 300px;
+            text-align: center;
+            background: rgba(255, 248, 231, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* تعديل الصورة لتكون مربعة وأكبر */
+        .author-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 4px solid #E7B10A;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .author-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .author-name {
+            color: #4B2E05;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .author-bio {
+            color: #2E2E2E;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* كاروسل الكتب */
+        .books-container {
+            flex: 1;
+            min-height: 500px;
+        }
+
+        .gallery {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: visible;
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            justify-content: center;
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 420px;
+            background: #FAF3E0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid transparent;
+            background: linear-gradient(145deg, #FAF3E0, #E6DDD0);
+            cursor: pointer;
+        }
+
+        .card.active {
+            transform: translateY(-15px) scale(1.05);
+            z-index: 10;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 3px solid #E7B10A;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #E7B10A, #D98E04, #E7B10A);
+            z-index: 2;
+        }
+
+        /* تصغير حجم الصور في الكروت */
+        .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 3px solid #E7B10A;
+            transition: all 0.3s ease;
+        }
+
+        .card.active .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card-title {
+            color: #4B2E05;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-year {
+            color: #8B5E3C;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .card-description {
+            color: #2E2E2E;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            flex: 1;
+            margin-bottom: 10px;
+        }
+
+        /* جعل زر الفيلم ثابتًا في الأسفل ويظهر فوق الـ hover */
+        .card-film {
+            padding: 8px 12px;
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            border-radius: 8px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(217, 142, 4, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+            text-decoration: none;
+            display: block;
+        }
+
+        .card-film:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(217, 142, 4, 0.4);
+        }
+
+        /* تفاصيل الكتاب عند التمرير */
+        .book-details {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(75, 46, 5, 0.95);
+            color: #F5E0B7;
+            padding: 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .card:hover .book-details {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .book-details-title {
+            color: #E7B10A;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .book-details-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .book-transformation {
+            background: rgba(231, 177, 10, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #E7B10A;
+        }
+
+        .book-transformation h4 {
+            color: #E7B10A;
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .book-transformation p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* عناصر التحكم */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #D98E04, #E7B10A);
+            color: #4B2E05;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .indicators {
+            display: flex;
+            gap: 12px;
+        }
+
+        .indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #E6DDD0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .indicator.active {
+            background: #E7B10A;
+            transform: scale(1.3);
+            box-shadow: 0 4px 12px rgba(231, 177, 10, 0.4);
+        }
+
+        .indicator:hover {
+            transform: scale(1.2);
+            background: #D98E04;
+        }
+
+        /* التذييل */
+        .footer {
+            background: rgba(75, 46, 5, 0.9);
+            color: #F5E0B7;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-top: 3px solid #E7B10A;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* تأثيرات للهواتف */
+        @media (max-width: 768px) {
+            .author-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .author-info {
+                flex: none;
+                width: 100%;
+                height: auto;
+            }
+            
+            .author-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .gallery {
+                height: 420px;
+            }
+            
+            .card {
+                width: 250px;
+                height: 380px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .author-name {
+                font-size: 1.8rem;
+            }
+            
+            .title-container {
+                padding: 20px;
+            }
+            
+            .controls {
+                gap: 15px;
+            }
+            
+            .control-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1 class="logo">READFIY</h1>
+        <ul class="nav-links">
+            <li class="active"><a href="index.html">Home</a></li>
+            
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoriesDropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu" id="categoriesMenu">
+                    <li><a class="dropdown-item" href="religious.html">Religious</a></li>
+                    <li><a class="dropdown-item" href="kids.html">Kids</a></li>
+                    <li><a class="dropdown-item" href="history.html">History</a></li>
+                    <li><a class="dropdown-item" href="self-development.html">Self-Development</a></li>
+                    <li><a class="dropdown-item" href="literature.html">Literature</a></li>
+                    <li><a class="dropdown-item" href="science.html">Science</a></li>
+                    <li><a class="dropdown-item" href="audiobooks.html">Audiobooks</a></li>
+                    <li><a class="dropdown-item" href="Movie Books.html">Movie Books</a></li>
+                    <li><a class="dropdown-item" href="Reading tips.html">Reading Tips</a></li>
+                    <li><a class="dropdown-item" href="authers.html">Authers</a></li>
+                    <li><a class="dropdown-item" href="book-quiz.html">Book Quiz</a></li>
+                </ul>
+            </li>
+
+            <!-- Hidden items when dropdown is open -->
+            <li class="nav-item hidden-on-dropdown"><a href="qoutes.html">Quotes</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="connect-us.html">Connect Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="about.html">About Us</a></li>
+            <li class="nav-item hidden-on-dropdown"><a href="user review.html">Review</a></li>
+            
+            <li class="nav-item hidden-on-dropdown">
+                <form class="d-flex" id="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </li>
+            
+            <!-- Login/Signup Buttons - IMPROVED -->
+            <li class="nav-item hidden-on-dropdown">
+                <div class="login-signup-container">
+                    <button class="ctn signup-btn">
+                        <a href="signup.html">Sign Up</a>
+                    </button>
+                    <button class="ctn login-btn">
+                        <a href="login.html">Login</a>
+                    </button>
+                </div>
+            </li>
+        </ul>
+        <!-- زر المينيو - سيظهر فقط في الموبايل -->
+        <button class="menu-btn" id="mobileMenuBtn">☰</button>
+    </nav>
+
+    <div class="main-content">
+        <!-- العنوان في مربع مع الاستيكر -->
+        <div class="title-container">
+            <div class="sticker">الأكثر مشاهدة</div>
+            <h1 class="page-title">كتب تحولت إلى أفلام رائعة</h1>
+            <div class="title-sub">اكتشف القصص التي انتقلت من الصفحات إلى الشاشة الكبيرة</div>
+        </div>
+        
+        <!-- المؤلف الأول - نجيب محفوظ -->
+        <section class="author-section" id="author1">
+            <div class="author-info">
+                <img src="https://s3.amazonaws.com/new.contributors.hindawi.org/Images/71616385.jpg" alt="نجيب محفوظ" class="author-image">
+                <h2 class="author-name">نجيب محفوظ</h2>
+                <p class="author-bio">أديب مصري حائز على جائزة نوبل في الأدب عام 1988، ويعد من أبرز الروائيين العرب. تميزت أعماله بالواقعية والنقد الاجتماعي، وتحولت معظم رواياته إلى أفلام سينمائية ومسلسلات تلفزيونية ناجحة.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery1">
+                    <ul class="cards" id="cards1">
+                        <!-- كتاب 1 -->
+                        <li class="card active" data-index="0">
+                            <img src="https://upload.wikimedia.org/wikipedia/ar/5/53/%D8%A7%D9%84%D9%84%D8%B5_%D9%88%D8%A7%D9%84%D9%83%D9%84%D8%A7%D8%A8.jpg" alt="اللص والكلاب" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">اللص والكلاب</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1961
+                                </div>
+                                <p class="card-description">رواية تدور حول سجين هارب يبحث عن الانتقام ممن خانه، تعكس صراع الفرد ضد المجتمع.</p>
+                                <a href="https://youtu.be/vzn7_i0HMw8?si=eanVUKjU3tTvLhen" class="card-film" target="_blank">فيلم اللص والكلاب</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">اللص والكلاب</h3>
+                                <p class="book-details-text">تعتبر هذه الرواية من أهم أعمال محفوظ التي تناقش قضية العدالة الاجتماعية والخيانة. تميز الفيلم بأداء رائع للممثل شكري سرحان.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت الرواية إلى فيلم عام 1962 من إخراج كمال الشيخ، ويعد من أشهر الأفلام المصرية الكلاسيكية التي تناولت قضايا اجتماعية عميقة.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 2 -->
+                        <li class="card" data-index="1">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeVFUGMwEX8nGyXbE7Q-x8DAvc8SjQQbkoCw&s" alt="بداية ونهاية" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">بداية ونهاية</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1960
+                                </div>
+                                <p class="card-description">قصة عائلة تكافح من أجل البقاء بعد وفاة الأب، تتعامل مع قضايا الفقر والطبقات الاجتماعية.</p>
+                                <a href="https://youtu.be/JkSToRsFthc?si=sA26hi1cX-ctHToV" class="card-film" target="_blank">فيلم بداية ونهاية</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">بداية ونهاية</h3>
+                                <p class="book-details-text">الرواية تقدم تحليلًا عميقًا للعلاقات الأسرية والصراع الطبقي. الفيلم نجح في نقل هذه الأجواء ببراعة.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1960 من إخراج صلاح أبو سيف، ويعد من الأعمال السينمائية المهمة التي صورت الحياة المصرية في منتصف القرن العشرين.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 3 -->
+                        <li class="card" data-index="2">
+                            <img src="https://www.ktbbh.com/wp-content/uploads/2023/06/kutub-pdf.net_n8E5y.jpg.pagespeed.ce_.g6LEYXY3Oq.jpg" alt="الثلاثية" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">الثلاثية</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1956
+                                </div>
+                                <p class="card-description">ملحمة أدبية تروي قصة عائلة عبد الجواد عبر ثلاثة أجيال في القاهرة ما قبل الثورة.</p>
+                                <a href="https://youtu.be/0X4O1AugiWA?si=7lzN0PLmNIzyb-Lt" class="card-film" target="_blank">أفلام ومسلسلات الثلاثية</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">الثلاثية</h3>
+                                <p class="book-details-text">تعتبر الثلاثية من أعظم الأعمال الأدبية العربية، وتقدم صورة شاملة للمجتمع المصري خلال فترة مهمة من تاريخه.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت الثلاثية إلى مسلسل تلفزيوني ناجح عام 1987، كما تم إنتاج أفلام مستقلة عن أجزاء منها.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 4 -->
+                        <li class="card" data-index="3">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZtdOnk9isevtokLNwOIdmWekuiB4yTF85rg&s" alt="زقاق المدق" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">زقاق المدق</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1947
+                                </div>
+                                <p class="card-description">رواية ترصد حياة سكان حي شعبي في القاهرة وتناقش قضايا الحب والخيانة والصراع الطبقي.</p>
+                                <a href="#" class="card-film" target="_blank">فيلم زقاق المدق</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">زقاق المدق</h3>
+                                <p class="book-details-text">الرواية تقدم نقدًا لاذعًا للطبقات الاجتماعية والعلاقات الإنسانية في المجتمع المصري التقليدي.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1963 من إخراج حسن الإمام، وتميز بتصوير واقعي للحياة الشعبية في القاهرة القديمة.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 5 -->
+                        <li class="card" data-index="4">
+                            <img src="https://downloads.hindawi.org/covers/svg/270x360/85804642.svg?v=2" alt="ميرامار" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">ميرامار</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1967
+                                </div>
+                                <p class="card-description">تدور أحداث الرواية في بنسيون ميرامار بالإسكندرية وترصد التغيرات الاجتماعية بعد ثورة 1952.</p>
+                                <a href="https://youtu.be/-fWWtRbkSDE?si=xm0HTOawNOgq1BJS" class="card-film" target="_blank">فيلم ميرامار</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">ميرامار</h3>
+                                <p class="book-details-text">تمثل الرواية مرحلة مهمة في تطور فكر محفوظ، حيث تنتقل من الهم الاجتماعي إلى الهم السياسي والوجودي.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1969 من إخراج كمال الشيخ، وتميز بطابعه السياسي والاجتماعي العميق.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" onclick="prevSlide(1)">السابق</button>
+                    <div class="indicators" id="indicators1">
+                        <div class="indicator active" data-index="0" onclick="goToSlide(1, 0)"></div>
+                        <div class="indicator" data-index="1" onclick="goToSlide(1, 1)"></div>
+                        <div class="indicator" data-index="2" onclick="goToSlide(1, 2)"></div>
+                        <div class="indicator" data-index="3" onclick="goToSlide(1, 3)"></div>
+                        <div class="indicator" data-index="4" onclick="goToSlide(1, 4)"></div>
+                    </div>
+                    <button class="control-btn next-btn" onclick="nextSlide(1)">التالي</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- المؤلف الثاني - إحسان عبد القدوس -->
+        <section class="author-section" id="author2">
+            <div class="author-info">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdnccZKu08IDr7GM3RmNgrD2qdhFN1r-iGHw&s" alt="إحسان عبد القدوس" class="author-image">
+                <h2 class="author-name">إحسان عبد القدوس</h2>
+                <p class="author-bio">روائي وصحفي مصري، يعد من أهم كتاب الرواية والقصص القصيرة في الأدب العربي الحديث. تميزت أعماله بالجرأة في تناول القضايا الاجتماعية والسياسية، وتحولت العديد من رواياته إلى أفلام سينمائية ناجحة.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery2">
+                    <ul class="cards" id="cards2">
+                        <!-- كتاب 1 -->
+                        <li class="card active" data-index="0">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5P2DjSs-w4xsiU5JLB8s6_UieBU0icxEtpQ&s" alt="لا أنام" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">لا أنام</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1957
+                                </div>
+                                <p class="card-description">قصة امرأة تواجه تقاليد المجتمع وتكافح من أجل حريتها واستقلالها.</p>
+                                <a href="#" class="card-film" target="_blank">فيلم لا أنام</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">لا أنام</h3>
+                                <p class="book-details-text">الرواية تعتبر من الأعمال الرائدة في تناول قضية تحرر المرأة في المجتمع الشرقي.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1957 من إخراج صلاح أبو سيف، ويعد من الأفلام المهمة التي ناقشت قضية حرية المرأة.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 2 -->
+                        <li class="card" data-index="1">
+                            <img src="https://img.youm7.com/ArticleImgs/2020/1/22/25839-%D9%81%D9%8A-%D8%A8%D9%8A%D8%AA%D9%86%D8%A7--%D8%B1%D8%AC%D9%84.jpg" alt="في بيتنا رجل" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">في بيتنا رجل</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1961
+                                </div>
+                                <p class="card-description">رواية سياسية تتناول الصراع بين الإخوان المسلمين والنظام الحاكم في مصر.</p>
+                                <a href="https://youtu.be/Ff1_XcngQr0?si=ESPA83bxZfHmxP2F" class="card-film" target="_blank">فيلم في بيتنا رجل</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">في بيتنا رجل</h3>
+                                <p class="book-details-text">تعتبر من أكثر روايات عبد القدوس جرأة في تناول القضايا السياسية الحساسة.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1961 من إخراج أحمد ضياء الدين، وواجهت صعوبات في العرض بسبب طابعها السياسي.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 3 -->
+                        <li class="card" data-index="2">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiSZKVCa8YKurlVr5YoTI1Z7eB2lrKKuw7jF8yQRJG9kwos1HywoSE5LTdv1vlNgbaK2Dc7eBCy9t7K97h9nd6pcrJ5RJs4HTrsp-9VxmFs_OSo5BAWp3gMoT1IURXx0KR0sTZOPFQgPFZP/s666/ka574.jpg" alt="أنا حرة" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">أنا حرة</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1959
+                                </div>
+                                <p class="card-description">قصة امرأة شابة ترفض القيود الاجتماعية وتناضل من أجل تحقيق ذاتها وحريتها.</p>
+                                <a href="https://youtu.be/eIW-9bNVQp0?si=JVEBqp03mniOaqHe" class="card-film" target="_blank">فيلم أنا حرة</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">أنا حرة</h3>
+                                <p class="book-details-text">الرواية كانت بمثابة بيان لتحرر المرأة المصرية في الخمسينيات.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1959 من إخراج صلاح أبو سيف، وساهمت في تغيير نظرة المجتمع للمرأة العاملة.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 4 -->
+                        <li class="card" data-index="3">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPbbIzRMXP1DXu7bpQxwUro4agpbGO5iX3UQ&s" alt="الوسادة الخالية" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">الوسادة الخالية</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1956
+                                </div>
+                                <p class="card-description">دراما عاطفية تروي قصة حب معقدة بين شاب وفتاة من خلفيات اجتماعية مختلفة.</p>
+                                <a href="https://youtu.be/-RFM1UjhQA0?si=y_RKPQF9JShu25z-" class="card-film" target="_blank">فيلم الوسادة الخالية</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">الوسادة الخالية</h3>
+                                <p class="book-details-text">من أنجح الروايات الرومانسية في الأدب العربي الحديث.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1956 من إخراج أحمد ضياء الدين، وتميز بأداء رائع لفاتن حمامة وعمر الشريف.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 5 -->
+                        <li class="card" data-index="4">
+                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1655730750i/61420232.jpg" alt="أبي فوق الشجرة" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">أبي فوق الشجرة</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1969
+                                </div>
+                                <p class="card-description">كوميديا اجتماعية عن أب يقرر تغيير نمط حياته والعيش على شجرة احتجاجًا على أسرته.</p>
+                                <a href="https://youtu.be/nBdG_Btm3SM?si=o0lvHJxG-CIQ0hrH" class="card-film" target="_blank">فيلم أبي فوق الشجرة</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">أبي فوق الشجرة</h3>
+                                <p class="book-details-text">تميزت الرواية بنقدها الساخر للعلاقات الأسرية والتقاليد البالية.</p>
+                                <div class="book-transformation">
+                                    <h4>لماذا تحول إلى فيلم؟</h4>
+                                    <p>تحولت إلى فيلم عام 1969 من إخراج حسين كمال، وكان من أنجح الكوميديات في السينما المصرية.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" onclick="prevSlide(2)">السابق</button>
+                    <div class="indicators" id="indicators2">
+                        <div class="indicator active" data-index="0" onclick="goToSlide(2, 0)"></div>
+                        <div class="indicator" data-index="1" onclick="goToSlide(2, 1)"></div>
+                        <div class="indicator" data-index="2" onclick="goToSlide(2, 2)"></div>
+                        <div class="indicator" data-index="3" onclick="goToSlide(2, 3)"></div>
+                        <div class="indicator" data-index="4" onclick="goToSlide(2, 4)"></div>
+                    </div>
+                    <button class="control-btn next-btn" onclick="nextSlide(2)">التالي</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- المؤلف الثالث - أجاثا كريستي -->
+        <section class="author-section" id="author3">
+            <div class="author-info">
+                <img src="https://i0.wp.com/oldtowncrier.com/wp-content/uploads/2020/09/last-word-agatha-christie.jpg?fit=794%2C1024&ssl=1" alt="أجاثا كريستي" class="author-image">
+                <h2 class="author-name">Agatha Christie</h2>
+                <p class="author-bio">An English author renowned for her crime and mystery novels, she is one of the best-selling authors in history. Many of her novels have been adapted into successful films and television series, and her characters have become icons of detective literature.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery3">
+                    <ul class="cards" id="cards3">
+                        <!-- كتاب 1 -->
+                        <li class="card active" data-index="0">
+                            <img src="https://m.media-amazon.com/images/I/81tlk1inIhL._AC_UF894,1000_QL80_.jpg" alt="Murder on the Orient Express" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Murder on the Orient Express</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1934
+                                </div>
+                                <p class="card-description">Hercule Poirot investigates a murder that occurred on a snowbound train</p>
+                                <a href="https://youtu.be/VZHwN5PQAR4?si=GyO8MOb0KSmBs8mM" class="card-film" target="_blank">Murder on the Orient Express</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Murder on the Orient Express</h3>
+                                <p class="book-details-text">Considered one of the most famous detective novels in the world, known for its complex plot and diverse characters.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a film in 1974 directed by Sidney Lumet, then remade in 2017 by Kenneth Branagh.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 2 -->
+                        <li class="card" data-index="1">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqBZSuPtWciTW1R-l0f70gfouSIT2FZMxA_Q&s" alt="Death on the Nile" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Death on the Nile</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1937
+                                </div>
+                                <p class="card-description">Poirot investigates a murder that occurred on a cruise ship on the Nile River during a tourist trip.</p>
+                                <a href="https://youtu.be/IyZ9550zmw0?si=yYhTIRhfLspYfIoz" class="card-film" target="_blank">Death on the Nile</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Death on the Nile</h3>
+                                <p class="book-details-text">The novel combines mystery and romance against the beautiful backdrop of Egypt.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a film in 1978 and remade in 2022, featuring stunning cinematography of the Nile and Luxor.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 3 -->
+                        <li class="card" data-index="2">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT91ubzLlg3ktlFVnlCblC07AZMXKdB2Wb-xA&s" alt="Hercule Poirot's Christmas" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Hercule Poirot's Christmas</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1938
+                                </div>
+                                <p class="card-description">Poirot investigates a murder that occurred in a family home during Christmas celebrations.</p>
+                                <a href="https://youtu.be/89pmoH2rndk?si=G8qeA98701rWH5I4" class="card-film" target="_blank">Hercule Poirot's Christmas</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Hercule Poirot's Christmas</h3>
+                                <p class="book-details-text">The novel is distinguished by its traditional British Christmas atmosphere mixed with mystery and crime.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into an episode of the Poirot TV series in 1994, then into a film in 2018.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 4 -->
+                        <li class="card" data-index="3">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNEMg1sqeAtjWSu88vA4rOcgbMxbvf-_8Uyg&s" alt="Mrs McGinty's Dead" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Mrs McGinty's Dead</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1953
+                                </div>
+                                <p class="card-description">Miss Marple investigates a series of mysterious crimes occurring in a small village.</p>
+                                <a href="https://youtu.be/VVMvzHFLmk4?si=9EsCQPvQ8CF4ugLC" class="card-film" target="_blank">Mrs McGinty's Dead</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Mrs McGinty's Dead</h3>
+                                <p class="book-details-text">One of the few novels that brings together Poirot and Miss Marple in one story.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into an episode of the Miss Marple TV series in 2008, known for its peaceful English village atmosphere.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 5 -->
+                        <li class="card" data-index="4">
+                            <img src="https://thegreencapsuleblog.wordpress.com/wp-content/uploads/2023/06/easytokill.jpg?w=500" alt="Easy to Kill" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Easy to Kill</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1939
+                                </div>
+                                <p class="card-description">Poirot investigates a murder that appears to be suicide but is actually a carefully planned crime.</p>
+                                <a href="https://youtu.be/sUmWLclVEK0?si=IrqD485tMTTDKFFy" class="card-film" target="_blank">Easy to Kill</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Easy to Kill</h3>
+                                <p class="book-details-text">Considered one of Christie's most complex novels in terms of plot and multiple suspects.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a film in 1990 then into a Poirot series episode in 2003, known for its complex plot.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" onclick="prevSlide(3)">السابق</button>
+                    <div class="indicators" id="indicators3">
+                        <div class="indicator active" data-index="0" onclick="goToSlide(3, 0)"></div>
+                        <div class="indicator" data-index="1" onclick="goToSlide(3, 1)"></div>
+                        <div class="indicator" data-index="2" onclick="goToSlide(3, 2)"></div>
+                        <div class="indicator" data-index="3" onclick="goToSlide(3, 3)"></div>
+                        <div class="indicator" data-index="4" onclick="goToSlide(3, 4)"></div>
+                    </div>
+                    <button class="control-btn next-btn" onclick="nextSlide(3)">التالي</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- المؤلف الرابع - ستيفن كينغ -->
+        <section class="author-section" id="author4">
+            <div class="author-info">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjXMNUhyy2MSXYCm4WxVS4I5Iv0rTszSfccnDy8c9O0A_nf09ZXeG_GHfQCH4XqDX2xk9Jz5FdFVeXZZqXkWWbNl8wCMzTW7EC4AynhdtxbOHZnu2HXpfECguP9etdWjF04I2V8DavrVwio/s640/%25D8%25B3%25D8%25AA.jpg" alt="ستيفن كينغ" class="author-image">
+                <h2 class="author-name">Stephen King</h2>
+                <p class="author-bio">An American author known for his horror and fantasy novels. Many of his novels have been adapted into successful films and television series, making him one of the most frequently adapted authors in the film industry.</p>
+            </div>
+            
+            <div class="books-container">
+                <div class="gallery" id="gallery4">
+                    <ul class="cards" id="cards4">
+                        <!-- كتاب 1 -->
+                        <li class="card active" data-index="0">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6slQO4bZZfr5qHF1TeHlJu-ThFLFFR3uxbQ&s" alt="The Shining" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">The Shining</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1977
+                                </div>
+                                <p class="card-description">A writer moves with his family to an isolated hotel during winter, where terrifying events begin to occur.</p>
+                                <a href="https://youtu.be/0tWMbYGAF00?si=TipuQlz2XLI_BIhX" class="card-film" target="_blank">The Shining</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">The Shining</h3>
+                                <p class="book-details-text">The novel is considered one of the most important works of modern horror literature, and the film featured an outstanding performance by Jack Nicholson.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Considered one of the most famous horror films in history.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 2 -->
+                        <li class="card" data-index="1">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz6Cy0zmY5kRSm45MjRpWH-GTRX5T0IBKfqw&s" alt="Misery" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Misery</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1987
+                                </div>
+                                <p class="card-description">A successful novelist is rescued from a car accident by an obsessive nurse, and their relationship turns into a nightmare.</p>
+                                <a href="https://youtu.be/cWB9HIJ0boo?si=BqEeMoTAs-XaMzAA" class="card-film" target="_blank">Misery</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Misery</h3>
+                                <p class="book-details-text">Considered one of King's most successful novels in portraying psychological horror and complex human relationships.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a film in 1990 directed by Rob Reiner, with Kathy Bates winning an Oscar for Best Actress for her role.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 3 -->
+                        <li class="card" data-index="2">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbPMr1g8ovu19ihy4eL2W6U7dJbqH2xnHoqg&s" alt="The Green Mile" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">The Green Mile</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1996
+                                </div>
+                                <p class="card-description">A death row prisoner discovers supernatural abilities that change his understanding of justice and life.</p>
+                                <a href="https://youtu.be/NwXx1Vzi_ds?si=i6gipI0xdvsfYTv7" class="card-film" target="_blank">The Green Mile</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">The Green Mile</h3>
+                                <p class="book-details-text">The novel is distinguished by combining elements of fantasy with deep human drama.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a film in 1999 directed by Frank Darabont, nominated for three Academy Awards.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 4 -->
+                        <li class="card" data-index="3">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiipBf15to2InLu8djGX00ul0yBqLnzRNeZg&s" alt="IT" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">IT</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1986
+                                </div>
+                                <p class="card-description">A group of children confront an evil entity that takes the form of a clown, and return as adults to face it again.</p>
+                                <a href="https://youtu.be/_6U_lUjN4pU?si=Z6fT3vbL3ohNrg93" class="card-film" target="_blank">IT</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">IT</h3>
+                                <p class="book-details-text">Considered one of King's longest and most complex novels, known for combining horror with character development.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a TV series in 1990, then into successful film series in 2017 and 2019.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 5 -->
+                        <li class="card" data-index="4">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2g6_j2QsxR6TRj6vo3nYakxIrlb5dB1aW1g&s" alt="Rose Madder" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Rose Madder</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>1995
+                                </div>
+                                <p class="card-description">A woman suffering from domestic violence escapes her husband and starts a new life, but her past haunts her.</p>
+                                <a href="#" class="card-film" target="_blank">Rose Madder</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">Rose Madder</h3>
+                                <p class="book-details-text">One of the few King novels that focuses on female protagonists and their experiences with violence and liberation.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a TV film in 2002, known for its strong critique of violence against women.</p>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- كتاب 6 -->
+                        <li class="card" data-index="5">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROGl78NNTYZvja6AgcYoBJsmMuggoZ9teUBg&s" alt="11/22/63" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">11/22/63</h3>
+                                <div class="card-year">
+                                    <i class="fas fa-calendar-alt"></i>2011
+                                </div>
+                                <p class="card-description">A man prevents the assassination of the US president, discovering his ability to travel through time and change the past.</p>
+                                <a href="https://www.youtube.com/live/35FQjHInPEg?si=v8UrLHZC0UJHvEdP" class="card-film" target="_blank">11/22/63</a>
+                            </div>
+                            <div class="book-details">
+                                <h3 class="book-details-title">11/22/63</h3>
+                                <p class="book-details-text">The novel is distinguished by its accurate historical research and combination of science fiction and historical novel.</p>
+                                <div class="book-transformation">
+                                    <h4>Transformation to Film</h4>
+                                    <p>Adapted into a TV series in 2016 produced by Hulu, known for blending science fiction with history.</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="controls">
+                    <button class="control-btn prev-btn" onclick="prevSlide(4)">السابق</button>
+                    <div class="indicators" id="indicators4">
+                        <div class="indicator active" data-index="0" onclick="goToSlide(4, 0)"></div>
+                        <div class="indicator" data-index="1" onclick="goToSlide(4, 1)"></div>
+                        <div class="indicator" data-index="2" onclick="goToSlide(4, 2)"></div>
+                        <div class="indicator" data-index="3" onclick="goToSlide(4, 3)"></div>
+                        <div class="indicator" data-index="4" onclick="goToSlide(4, 4)"></div>
+                        <div class="indicator" data-index="5" onclick="goToSlide(4, 5)"></div>
+                    </div>
+                    <button class="control-btn next-btn" onclick="nextSlide(4)">التالي</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>© 2023 READFIY - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        // حالات الكاروسلات
+        const carouselStates = {
+            1: { currentIndex: 0, totalItems: 5 },
+            2: { currentIndex: 0, totalItems: 5 },
+            3: { currentIndex: 0, totalItems: 5 },
+            4: { currentIndex: 0, totalItems: 6 }
+        };
+
+        // تحديث موضع الكروت
+        function updateCardsPosition(galleryId) {
+            const state = carouselStates[galleryId];
+            const cardsContainer = document.getElementById(`cards${galleryId}`);
+            const cards = cardsContainer.querySelectorAll('.card');
+            const indicatorsContainer = document.getElementById(`indicators${galleryId}`);
+            const indicators = indicatorsContainer.querySelectorAll('.indicator');
+            
+            const centerIndex = state.currentIndex;
+            
+            cards.forEach((card, index) => {
+                const distance = Math.abs(index - centerIndex);
+                const position = (index - centerIndex) * 90;
+                
+                card.style.transform = `translateX(${position}px) scale(${1 - distance * 0.1})`;
+                card.style.zIndex = state.totalItems - distance;
+                
+                if (distance === 0) {
+                    card.classList.add('active');
+                    card.style.opacity = '1';
+                    card.style.filter = 'none';
+                } else {
+                    card.classList.remove('active');
+                    card.style.opacity = `${1 - distance * 0.3}`;
+                    card.style.filter = `blur(${distance * 2}px)`;
+                }
+            });
+            
+            // تحديث المؤشرات
+            indicators.forEach((indicator, index) => {
+                if (index === state.currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        // دوال التنقل
+        function nextSlide(galleryId) {
+            const state = carouselStates[galleryId];
+            if (state.currentIndex < state.totalItems - 1) {
+                state.currentIndex++;
+                updateCardsPosition(galleryId);
+            }
+        }
+
+        function prevSlide(galleryId) {
+            const state = carouselStates[galleryId];
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                updateCardsPosition(galleryId);
+            }
+        }
+
+        function goToSlide(galleryId, slideIndex) {
+            const state = carouselStates[galleryId];
+            if (slideIndex >= 0 && slideIndex < state.totalItems) {
+                state.currentIndex = slideIndex;
+                updateCardsPosition(galleryId);
+            }
+        }
+
+        // تهيئة الكاروسلات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحديث جميع الكاروسلات
+            for (let i = 1; i <= 4; i++) {
+                updateCardsPosition(i);
+            }
+        });
+
+        // JavaScript الخاص بالتنقل
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر DOM الأساسية
+            const categoriesDropdown = document.getElementById('categoriesDropdown');
+            const categoriesMenu = document.getElementById('categoriesMenu');
+            const navbar = document.querySelector('.navbar');
+            const hiddenItems = document.querySelectorAll('.hidden-on-dropdown');
+            const menuBtn = document.querySelector('.menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const body = document.body;
+            
+            // إنشاء طبقة Overlay للإغلاق
+            const menuOverlay = document.createElement('div');
+            menuOverlay.className = 'menu-overlay';
+            document.body.appendChild(menuOverlay);
+            
+            // ===== دالة إغلاق القائمة والdropdowns =====
+            function closeAllMenus() {
+                // إغلاق القائمة المتنقلة
+                navLinks.classList.remove('mobile-menu');
+                body.classList.remove('menu-open');
+                menuBtn.innerHTML = '☰';
+                
+                // إغلاق dropdowns الكمبيوتر
+                if (categoriesDropdown) categoriesDropdown.classList.remove('active');
+                if (categoriesMenu) categoriesMenu.classList.remove('show');
+                if (navbar) navbar.classList.remove('dropdown-active');
+                
+                // إغلاق dropdowns الموبايل
+                document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+                document.querySelectorAll('.dropdown-toggle').forEach(toggle => toggle.classList.remove('active'));
+            }
+            
+            // ===== دالة فتح/إغلاق القائمة المتنقلة =====
+            function toggleMobileMenu() {
+                navLinks.classList.toggle('mobile-menu');
+                body.classList.toggle('menu-open');
+                
+                // تغيير أيقونة الزر
+                if (navLinks.classList.contains('mobile-menu')) {
+                    menuBtn.innerHTML = '✕';
+                    menuBtn.setAttribute('aria-label', 'Close menu');
+                } else {
+                    menuBtn.innerHTML = '☰';
+                    menuBtn.setAttribute('aria-label', 'Open menu');
+                    closeAllMenus();
+                }
+            }
+            
+            // ===== سلوك dropdown للكمبيوتر فقط =====
+            if (categoriesDropdown && categoriesMenu) {
+                categoriesDropdown.addEventListener('click', function(e) {
+                    // تنفيذ فقط في وضع الكمبيوتر
+                    if (window.innerWidth > 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const isActive = this.classList.contains('active');
+                        closeAllMenus();
+                        if (!isActive) {
+                            this.classList.add('active');
+                            categoriesMenu.classList.add('show');
+                            if (navbar && hiddenItems.length > 0) {
+                                navbar.classList.add('dropdown-active');
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // ===== النقر خارج dropdown يغلقه (للحاسوب) =====
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth > 768) {
+                    if (categoriesDropdown && categoriesMenu) {
+                        if (!categoriesDropdown.contains(e.target) && !categoriesMenu.contains(e.target)) {
+                            closeAllMenus();
+                        }
+                    }
+                }
+            });
+            
+            // ===== النقر على Overlay يغلق القائمة (للموبايل) =====
+            menuOverlay.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeAllMenus();
+                }
+            });
+            
+            // ===== النقر في أي مكان خارج القائمة يغلقها (للموبايل) =====
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    // إذا كانت القائمة مفتوحة
+                    if (navLinks.classList.contains('mobile-menu')) {
+                        // إذا النقر ليس داخل القائمة ولا على زر المينيو
+                        if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+                            closeAllMenus();
+                        }
+                    }
+                }
+            });
+            
+            // ===== إغلاق القائمة عند الضغط على ESC =====
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllMenus();
+                }
+            });
+            
+            // ===== سلوك الموبايل =====
+            // فتح/إغلاق القائمة المتنقلة
+            if (menuBtn && navLinks) {
+                menuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // ===== سلوك dropdowns في الموبايل - FIXED =====
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    // للموبايل فقط
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const menu = this.nextElementSibling;
+                        
+                        // التأكد من أن menu موجود وهو dropdown-menu
+                        if (menu && menu.classList.contains('dropdown-menu')) {
+                            const isActive = menu.classList.contains('show');
+                            
+                            // إغلاق جميع dropdowns الأخرى
+                            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                                if (m !== menu) m.classList.remove('show');
+                            });
+                            document.querySelectorAll('.dropdown-toggle').forEach(t => {
+                                if (t !== this) t.classList.remove('active');
+                            });
+                            
+                            // تبديل حالة dropdown الحالي
+                            if (!isActive) {
+                                menu.classList.add('show');
+                                this.classList.add('active');
+                                
+                                // إصلاح إضافي: تأكد من عرض جميع العناصر
+                                setTimeout(() => {
+                                    const dropdownItems = menu.querySelectorAll('.dropdown-item');
+                                    dropdownItems.forEach((item, index) => {
+                                        item.style.display = 'block';
+                                        item.style.opacity = '1';
+                                        item.style.visibility = 'visible';
+                                    });
+                                }, 10);
+                            } else {
+                                menu.classList.remove('show');
+                                this.classList.remove('active');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            // ===== فتح روابط dropdown عند النقر عليها - MODIFIED =====
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        setTimeout(() => {
+                            closeAllMenus();
+                        }, 300);
+                    }
+                    
+                    // احفظ href في متغير قبل أي تغيير
+                    const href = this.getAttribute('href');
+                    
+                    // منع السلوك الافتراضي مؤقتاً للتعامل مع القائمة
+                    e.preventDefault();
+                    
+                    // إذا كان الرابط يشير إلى صفحة HTML
+                    if (href && href.includes('.html')) {
+                        // إغلاق القائمة أولاً (خاصة في الموبايل)
+                        closeAllMenus();
+                        
+                        // الانتقال للصفحة بعد تأخير بسيط
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 300);
+                    }
+                });
+            });
+            
+            // إغلاق القائمة عند النقر على رابط عادي (في الموبايل)
+            const navLinksItems = document.querySelectorAll('.nav-links a:not(.dropdown-toggle, .dropdown-item)');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // إذا كان الرابط يشير إلى صفحة HTML
+                    const href = this.getAttribute('href');
+                    if (href && href.includes('.html') && !href.includes('index.html')) {
+                        // منع السلوك الافتراضي مؤقتاً
+                        e.preventDefault();
+                        
+                        if (window.innerWidth <= 768) {
+                            // إغلاق القائمة أولاً
+                            closeAllMenus();
+                            
+                            // الانتقال للصفحة بعد تأخير بسيط
+                            setTimeout(() => {
+                                window.location.href = href;
+                            }, 300);
+                        } else {
+                            // في الكمبيوتر الانتقال مباشرة
+                            window.location.href = href;
+                        }
+                    }
+                });
+            });
+            
+            // ===== البحث =====
+            const searchForm = document.querySelector('#search');
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const searchValue = this.querySelector('input').value.trim();
+                    if (searchValue) {
+                        alert('سيتم البحث عن: ' + searchValue);
+                    }
+                });
+            }
+            
+            // ===== تحسين أزرار Login/Signup - MODIFIED =====
+            const loginBtn = document.querySelector('.login-btn a');
+            const signupBtn = document.querySelector('.signup-btn a');
+            
+            if (loginBtn) {
+                loginBtn.parentElement.parentElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'login.html';
+                });
+            }
+            
+            if (signupBtn) {
+                signupBtn.parentElement.parentElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'signup.html';
+                });
+            }
+        });
+
+        // Auto Toggle Mobile Menu on Resize
+        function handleResize() {
+            const navLinks = document.querySelector('.nav-links');
+            if (!navLinks) return;
+
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('mobile-menu');
+            }
+        }
+
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>404 | Readify</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+  :root {
+    --dark-brown:#4B2E05;
+    --mid-brown:#8B5E3C;
+    --light-gold:#F5E0B7;
+    --beige:#FAF3E0;
+    --gray:#E6DDD0;
+    --text:#2E2E2E;
+    --heading:#E7B10A;
+    --orange:#D98E04;
+  }
+
+  body {
+    margin:0;
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(135deg,#FAF3E0,#F5E0B7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    height:100vh;
+    text-align:center;
+    color:var(--text);
+  }
+
+  .logo {
+    position:absolute;
+    top:25px;
+    left:40px;
+    font-size:28px;
+    font-weight:800;
+    background:linear-gradient(90deg,var(--heading),var(--orange));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  h1 {
+    font-size:120px;
+    font-weight:800;
+    color:var(--dark-brown);
+    margin:0;
+    animation: float 2.5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-10px); }
+  }
+
+  h2 {
+    color:var(--mid-brown);
+    font-size:28px;
+    margin:10px 0 25px;
+  }
+
+  p {
+    max-width:500px;
+    margin:0 auto 30px;
+    font-size:17px;
+    color:var(--text);
+  }
+
+  .btns {
+    display:flex;
+    gap:20px;
+    justify-content:center;
+  }
+
+  a.btn {
+    background:linear-gradient(90deg,var(--orange),var(--heading));
+    color:#fff;
+    padding:12px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:700;
+    transition:.3s;
+  }
+
+  a.btn:hover {
+    transform:scale(1.07);
+    box-shadow:0 5px 15px rgba(0,0,0,0.25);
+  }
+
+</style>
+</head>
+<body>
+  <div class="logo">📖 Readify</div>
+
+  <h1>404</h1>
+  <h2>Oops! Page Not Found</h2>
+  <p>Looks like this page doesn’t exist. Don’t worry — you can always return home or contact us for help.</p>
+
+  <div class="btns">
+    <a href="index.html" class="btn">🏠 Back to Home</a>
+    <a href="connect-us.html" class="btn">💌 Contact Us</a>
+  </div>
+</body>
+</html>

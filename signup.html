@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - READFIY</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-brown: #4B2E05;
+      --secondary-brown: #8B5E3C;
+      --accent-gold: #E7B10A;
+      --light-gold: #F5E0B7;
+      --cream: #FAF3E0;
+      --dark-text: #2E2E2E;
+      --white: #FFFFFF;
+      --shadow: 0 10px 30px rgba(75, 46, 5, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-brown) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-text);
+    }
+
+    .signup-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1000px;
+      width: 90%;
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 650px;
+    }
+
+    .signup-left {
+      background: linear-gradient(135deg, var(--primary-brown) 0%, var(--secondary-brown) 100%);
+      color: var(--white);
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .signup-left::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(231, 177, 10, 0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+      background-size: cover;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .welcome-content h1 {
+      font-size: 2.3rem;
+      margin-bottom: 15px;
+      color: var(--light-gold);
+    }
+
+    .welcome-content p {
+      color: var(--light-gold);
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 25px;
+    }
+
+    .floating-books {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    .floating-book {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.2;
+      animation: float 6s ease-in-out infinite;
+      color: var(--accent-gold);
+    }
+
+    .floating-book:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .floating-book:nth-child(2) { top: 30%; right: 20%; animation-delay: 2s; }
+    .floating-book:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .signup-right {
+      background: var(--cream);
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .signup-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .signup-header h2 {
+      font-size: 2rem;
+      color: var(--primary-brown);
+      margin-bottom: 10px;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary-brown);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group label i {
+      color: var(--accent-gold);
+    }
+
+    .form-control {
+      padding: 15px 20px;
+      border: 2px solid var(--light-gold);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 3px rgba(231, 177, 10, 0.1);
+    }
+
+    .signup-btn {
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #D98E04 100%);
+      color: var(--primary-brown);
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(231, 177, 10, 0.3);
+    }
+
+    .signup-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #D98E04 0%, var(--accent-gold) 100%);
+      box-shadow: 0 6px 20px rgba(231, 177, 10, 0.4);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--primary-brown);
+    }
+
+    .login-link a {
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .signup-container {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+      .signup-left { display: none; }
+      .signup-right { padding: 40px 30px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="signup-container">
+    <!-- Left Panel -->
+    <div class="signup-left">
+      <div class="floating-books">
+        <div class="floating-book"><i class="fas fa-book"></i></div>
+        <div class="floating-book"><i class="fas fa-book-open"></i></div>
+        <div class="floating-book"><i class="fas fa-bookmark"></i></div>
+      </div>
+
+      <div class="welcome-content">
+        <h1>Join READFIY Today!</h1>
+        <p>Create your account and start your reading adventure.</p>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="signup-right">
+      <div class="signup-header">
+        <h2>Create Account</h2>
+        <p>Fill in your details to get started</p>
+      </div>
+
+      <form class="signup-form" id="signupForm">
+        <div class="form-group">
+          <label for="name"><i class="fas fa-user"></i> Full Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword"><i class="fas fa-lock"></i> Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+        </div>
+
+        <button type="submit" class="signup-btn"><i class="fas fa-user-plus"></i> Sign Up</button>
+      </form>
+
+      <div class="login-link">
+        Already have an account? <a href="login.html">Sign in here</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const signupForm = document.getElementById('signupForm');
+
+      signupForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (!name || !email || !password || !confirmPassword) {
+          alert('Please fill in all fields.');
+          return;
+        }
+
+        const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert('Please enter a valid email.');
+          return;
+        }
+
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters.');
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          alert('Passwords do not match.');
+          return;
+        }
+
+        const signupBtn = signupForm.querySelector('.signup-btn');
+        signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+        signupBtn.disabled = true;
+
+        setTimeout(() => {
+          alert('Account created successfully! Redirecting to login...');
+          window.location.href = 'login.html';
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>
